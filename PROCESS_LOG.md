@@ -128,3 +128,23 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 - Mood/Occasion/Dish live in one file (`Flow.jsx`) rather than three, for speed.
 - Added a "look for at the store" tip to each card (not in the brief) to support the grocery-store use case.
 - Fixed a bug where backing out of profile editing left the app in "editing" mode.
+
+---
+
+## 2026-09-23 — Milestone 4: Premium previews + paywall + communities teaser
+
+**Prompt:** Continuing the approved plan (no new prompt).
+
+**Built:**
+- `Premium.jsx` (hub): two locked "Premium · Preview" feature cards, plus a **Taste communities** carousel (Gin Lovers, Natural Wine, Hoppy Hour, Home Mixologists) marked "Coming soon", with in-memory "Notify me" toggles. Reachable from the ✨ Premium header button and from the "Already at the store?" card on results.
+- `CartPhoto.jsx`: a real upload/camera input that previews the photo, or "Try it with a sample cart". Then a scripted scan animation, then "Here's what we spotted" (chicken thighs, lemons, garlic, arugula, parmesan, olive oil). Two clarifying questions follow (cooking method; what the parmesan is for). The result names a meal and a top pick that changes with the cooking method (roasted → oaked Chardonnay, grilled → dry rosé, pan-fried → Prosecco). Two more picks and a shopping list sit blurred behind an upgrade prompt. A "Demo: results are scripted" banner is always visible.
+- `ReverseFlow.jsx`: "Here's what I'm drinking" input + example chips. Recognized drinks show one food idea (from the drink's classic-pairing list in the dataset) with the pairing principle; more ideas and a recipe are blurred behind the upgrade prompt. Unrecognized drinks fall back to a labeled Pinot Noir sample.
+- `Paywall.jsx`: a Free vs. Premium comparison table, monthly/yearly plan toggle and a "Start 7-day free trial" button that opens a "this is a class prototype, no payment is taken" note.
+- `UpgradePrompt.jsx`: a reusable blur + lock + "Upgrade to Premium" overlay.
+
+**Testing:** A Playwright click-through covered the premium hub → notify → cart demo (sample cart, grilled + salad) → upgrade → paywall → trial note → back navigation → reverse flow (known and unknown drinks) → exiting the premium area back to the screen it was opened from. No JS errors.
+
+**Decisions / issues:**
+- Placeholder pricing: **$3.99/month or $29.99/year (save 37%)** with a 7-day free trial.
+- The paywall's Premium column also lists "Save favorites & shopping lists" as a plausible premium perk. This isn't in the brief, so it's flagged for approval.
+- Fixed a carousel alignment bug (cards snapping flush to the screen edge).

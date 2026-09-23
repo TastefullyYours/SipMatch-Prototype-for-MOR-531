@@ -4,6 +4,10 @@ import { AgeGate, Underage } from './screens/AgeGate.jsx'
 import { OnboardingBasics, OnboardingTaste } from './screens/Onboarding.jsx'
 import { Dish, Mood, Occasion } from './screens/Flow.jsx'
 import Results from './screens/Results.jsx'
+import Premium from './screens/Premium.jsx'
+import CartPhoto from './screens/CartPhoto.jsx'
+import ReverseFlow from './screens/ReverseFlow.jsx'
+import Paywall from './screens/Paywall.jsx'
 
 // All state lives here in React (no backend, no browser storage).
 const EMPTY_PROFILE = { ageGroup: null, budget: null, sweetness: null, tastes: [], dislikes: [] }
@@ -13,7 +17,8 @@ const EMPTY_MOOD = { feeling: null, social: null }
 const PROGRESS_STEPS = ['basics', 'taste', 'mood', 'occasion', 'dish']
 
 // Where "Back" goes from each step.
-const BACK = { underage: 'age', taste: 'basics', occasion: 'mood', dish: 'occasion' }
+const BACK = { underage: 'age', taste: 'basics', occasion: 'mood', dish: 'occasion', cart: 'premium', reverse: 'premium' }
+const PREMIUM_STEPS = ['premium', 'cart', 'reverse', 'paywall']
 
 export default function App() {
   const [step, setStep] = useState('age')
@@ -22,14 +27,20 @@ export default function App() {
   const [occasion, setOccasion] = useState(null)
   const [dish, setDish] = useState('')
   const [editing, setEditing] = useState(false) // editing profile from results
-  const [premiumReturn, setPremiumReturn] = useState('mood')
+  const [premiumReturn, setPremiumReturn] = useState('mood') // where to go when leaving the premium area
+  const [paywallReturn, setPaywallReturn] = useState('premium')
 
   useEffect(() => window.scrollTo(0, 0), [step])
 
   const onboarded = profile.sweetness && !['age', 'underage', 'basics', 'taste'].includes(step)
   const openPremium = () => {
-    setPremiumReturn(step)
+    if (!PREMIUM_STEPS.includes(step)) setPremiumReturn(step)
     setStep('premium')
+  }
+  const openPaywall = () => {
+    if (!PREMIUM_STEPS.includes(step)) setPremiumReturn(step)
+    setPaywallReturn(step)
+    setStep('paywall')
   }
 
   const startOver = () => {
@@ -46,6 +57,8 @@ export default function App() {
   }
   if (step === 'taste' && editing) back = () => setStep('basics')
   if (step === 'results') back = () => setStep('dish')
+  if (step === 'premium') back = () => setStep(premiumReturn)
+  if (step === 'paywall') back = () => setStep(paywallReturn)
 
   const progressIndex = PROGRESS_STEPS.indexOf(step)
   const progress = progressIndex >= 0 && !editing ? (progressIndex + 1) / (PROGRESS_STEPS.length + 1) : null
@@ -119,6 +132,18 @@ export default function App() {
         />
       )
       break
+    case 'premium':
+      screen = <Premium onCart={() => setStep('cart')} onReverse={() => setStep('reverse')} onPaywall={openPaywall} />
+      break
+    case 'cart':
+      screen = <CartPhoto onUpgrade={openPaywall} />
+      break
+    case 'reverse':
+      screen = <ReverseFlow onUpgrade={openPaywall} />
+      break
+    case 'paywall':
+      screen = <Paywall onClose={() => setStep(paywallReturn)} />
+      break
     default:
       screen = null
   }
@@ -130,7 +155,7 @@ export default function App() {
           <Header
             onBack={back}
             onLogo={onboarded ? startOver : null}
-            onPremium={onboarded && step !== 'premium' ? openPremium : null}
+            onPremium={onboarded && !PREMIUM_STEPS.includes(step) ? openPremium : null}
             progress={progress}
           />
         )
