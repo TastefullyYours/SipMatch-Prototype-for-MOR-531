@@ -23,7 +23,7 @@ function PriceTag({ price, overBudget }) {
   )
 }
 
-export default function DrinkCard({ pick, primary = false, dishLabel }) {
+export default function DrinkCard({ pick, primary = false, dishLabel, contrast }) {
   const [open, setOpen] = useState(primary)
   const { drink, principle, moodLine, price, overBudget, classic } = pick
 
@@ -33,6 +33,11 @@ export default function DrinkCard({ pick, primary = false, dishLabel }) {
     >
       {primary && (
         <div className="bg-berry px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white">⭐ Your top match</div>
+      )}
+      {contrast && (
+        <div className="bg-berry-light px-5 py-2 text-sm font-semibold text-berry">
+          {contrast.emoji} {contrast.text}
+        </div>
       )}
 
       <button type="button" onClick={() => !primary && setOpen(!open)} className="flex w-full items-start gap-3 p-5 text-left" disabled={primary}>

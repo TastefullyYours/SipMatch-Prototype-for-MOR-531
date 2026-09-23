@@ -74,7 +74,11 @@ export function Dish({ dish, setDish, occasion, onNext, onSkip }) {
       <ScreenTitle
         eyebrow="Step 4 · The food"
         title="What's on the menu?"
-        sub={isParty ? 'Type a dish, or skip it and we’ll match classic party snacks.' : 'Type the dish you’re making or ordering.'}
+        sub={
+          isParty
+            ? 'Type a dish, or skip it and we’ll match classic party snacks.'
+            : 'Type the dish you’re making or ordering, or skip it and we’ll match your mood and occasion.'
+        }
       />
 
       <form
@@ -108,11 +112,9 @@ export function Dish({ dish, setDish, occasion, onNext, onSkip }) {
           <Button disabled={!dish.trim()} onClick={onNext}>
             Find my match ✨
           </Button>
-          {isParty && (
-            <Button variant="ghost" onClick={onSkip}>
-              Skip, it's just party snacks 🍿
-            </Button>
-          )}
+          <Button variant="ghost" onClick={onSkip}>
+            {isParty ? "Skip, it's just party snacks 🍿" : 'Skip, no dish yet ⏭️'}
+          </Button>
         </div>
       </BottomBar>
     </>

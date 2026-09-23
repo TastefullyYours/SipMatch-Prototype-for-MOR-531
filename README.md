@@ -11,8 +11,9 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 2. Two-screen profile: age group, budget, sweet vs. dry, flavors you like, things you don't
 3. Mood (cheerful / stressed / sad–low energy) + social vs. solo
 4. Occasion (party, duo/date, small group)
-5. Dish (free text; skippable for parties)
+5. Dish (free text; always skippable)
 6. Results: a top match + 2 alternates, each with *why it works*, *the pairing principle*, *why it fits your mood*, *a fun fact*, *what to look for at the store* and a price tier
+   - **"Don't like these?"** opens 3 more options (one wine, one beer or cider, one spirit or cocktail), each labeled with how it differs from the top pick ("a little sweeter", "a little drier", "less bitter", "lighter", "some bubbles"…)
 7. Try a different dish, start over, or edit your profile
 
 **Premium (locked previews)**
@@ -25,9 +26,9 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 
 Everything runs in the browser from a local dataset. There are no APIs, no keys, no backend and no browser storage.
 
-- `src/data/drinks.json`: 33 curated drinks tagged by sweetness (1–5), price tier, taste tags, mood fit, social/solo vibe, occasion fit, food-flavor affinities and "classic pairing" dishes.
-- `src/data/dishes.js`: about 120 dish keywords mapped to flavor tags (e.g. `taco → spicy, savory, acidic`, `salmon → fatty, rich`). Unknown dishes fall back to a neutral "savory" profile; skipped party dishes use a "party snacks" profile.
-- `src/logic/recommend.js`: scores every drink. Dish-flavor fit and classic pairings count most, with penalties for known clashes (e.g. high alcohol with spicy food). Sweetness preference, mood, social/solo, occasion, liked flavors and budget also count. Disliked drinks are excluded. It returns the top 3, spanning at least 2 drink types.
+- `src/data/drinks.json`: 61 curated drinks (17 wines, 6 beers + 1 cider, 10 spirits, 27 cocktails) tagged by sweetness (1–5), price tier, taste tags, mood fit, social/solo vibe, occasion fit, food-flavor affinities and "classic pairing" dishes.
+- `src/data/dishes.js`: about 140 dish keywords mapped to flavor tags (e.g. `taco → spicy, savory, acidic`, `salmon → fatty, rich`). Unknown dishes fall back to a neutral "savory" profile; a skipped dish uses a "party snacks" profile for parties, and otherwise lets mood, occasion and taste decide.
+- `src/logic/recommend.js`: scores every drink. Dish-flavor fit and classic pairings count most, with penalties for known clashes (e.g. high alcohol with spicy food). Sweetness preference, mood, social/solo, occasion, liked flavors and budget also count. Disliked drinks are excluded. It returns the top 3 (spanning at least 2 drink types), plus 3 "Don't like these?" alternatives, one per category, chosen so they go in different directions (ideally one sweeter and one drier than the top pick).
 
 ### Mood & taste
 | Mood | What research suggests | What SipMatch does |
@@ -39,7 +40,7 @@ Everything runs in the browser from a local dataset. There are no APIs, no keys,
 Sources supplied by the team: [Sensient](https://www.sensientflavorsandextracts.com/insights/mood-food-studying-the-connection-between-feeling-and-consumption/), [Erik Yang (Medium)](https://medium.com/@erik.yang/flavours-that-feel-how-affective-sensory-state-drives-our-food-choice-d145b2829635), [Ratio Coffee](https://ratiocoffee.com/blogs/coffee-guides/behind-the-brew-how-your-mood-can-affect-flavor-perception), [ScienceDirect](https://www.sciencedirect.com/science/article/pii/S1878450X24002130), [OMG Cheers](https://omgcheers.com/blogs/news/the-psychology-of-taste-why-we-prefer-certain-drinks). Only the ScienceDirect article is peer-reviewed.
 
 ### Facts to double-check
-Drinks whose fun fact should be verified before presenting carry a `"factCheck": "VERIFY: …"` field in `drinks.json`: Mexican lager, IPA, hard cider, mojito, Aperol spritz, hot toddy, sangria and espresso martini.
+Drinks whose fun fact should be verified before presenting carry a `"factCheck": "VERIFY: …"` field in `drinks.json`: Mexican lager, IPA, hard cider, mojito, Aperol spritz, hot toddy, red sangria, espresso martini, shandy, Bloody Mary, Manhattan, Negroni, Mai Tai and Lemon Drop.
 
 ## Run locally
 Requires Node 18+.

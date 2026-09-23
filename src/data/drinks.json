@@ -1157,7 +1157,8 @@
       "chips",
       "charcuterie",
       "pizza"
-    ]
+    ],
+    "wineBased": true
   },
   {
     "id": "paloma",
@@ -1285,47 +1286,6 @@
     ]
   },
   {
-    "id": "sangria",
-    "name": "Sangria",
-    "type": "cocktail",
-    "emoji": "🍓",
-    "style": "Red wine punch with fruit: juicy, sweet, easy",
-    "sweetness": 4,
-    "priceTier": 1,
-    "tasteTags": [
-      "fruity",
-      "bright",
-      "familiar",
-      "light"
-    ],
-    "moodFit": [
-      "cheerful"
-    ],
-    "vibe": [
-      "social"
-    ],
-    "occasions": [
-      "party",
-      "group"
-    ],
-    "affinities": [
-      "spicy",
-      "salty",
-      "fried",
-      "fatty",
-      "savory"
-    ],
-    "why": "Juicy, fruity and made by the pitcher, so everyone is happy. Great with tapas, grilled meats and snacky spreads.",
-    "principle": "Salt loves bubbles & fruit",
-    "funFact": "Sangria gets its name from \"sangre,\" Spanish for blood, because of its deep red color. In the EU, only sangria made in Spain or Portugal can be sold under that name.",
-    "factCheck": "VERIFY: The EU labeling rule (2014 regulation on aromatized wine products) is believed accurate but worth confirming.",
-    "lookFor": "A cheap Spanish red (like Garnacha), chopped fruit, orange juice and a splash of brandy. Make it ahead.",
-    "classicWith": [
-      "tapas",
-      "paella"
-    ]
-  },
-  {
     "id": "espresso-martini",
     "name": "Espresso Martini",
     "type": "cocktail",
@@ -1410,5 +1370,1235 @@
       "dumpling",
       "fried rice"
     ]
+  },
+  {
+    "id": "merlot",
+    "name": "Merlot",
+    "type": "wine",
+    "emoji": "🍷",
+    "style": "Soft red wine: plum, black cherry, smooth and round",
+    "sweetness": 2,
+    "priceTier": 2,
+    "tasteTags": [
+      "smooth",
+      "fruity",
+      "familiar",
+      "warm"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "group",
+      "date",
+      "party"
+    ],
+    "affinities": [
+      "meaty",
+      "savory",
+      "earthy",
+      "rich"
+    ],
+    "why": "Plush, plummy and gentle, a red with soft edges and no harsh grip. Easy with burgers, roast chicken and mushroom dishes.",
+    "principle": "Match weight with weight",
+    "funFact": "Merlot is one of the main grapes of Bordeaux, and Pétrus, one of the world's most famous and expensive wines, is made almost entirely from it.",
+    "lookFor": "Merlot from California, Washington State or Chile for soft, fruity bottles.",
+    "classicWith": [
+      "burger",
+      "roast chicken",
+      "mushroom",
+      "steak"
+    ]
+  },
+  {
+    "id": "zinfandel",
+    "name": "Zinfandel",
+    "type": "wine",
+    "emoji": "🍓",
+    "style": "Jammy red wine: ripe berries, black pepper, bold",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "fruity",
+      "bold",
+      "warm",
+      "spiced"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "party",
+      "date"
+    ],
+    "affinities": [
+      "smoky",
+      "meaty",
+      "sweet",
+      "fatty"
+    ],
+    "why": "Big, jammy and a little peppery. Its ripe fruit is a natural match for sweet-and-smoky BBQ sauce, ribs and pizza.",
+    "principle": "Like with like",
+    "funFact": "DNA testing showed that Zinfandel is the same grape as Italy's Primitivo and Croatia's Crljenak Kaštelanski. (Sweet pink \"White Zinfandel\" is made from it too.)",
+    "lookFor": "Red Zinfandel from California (Lodi and Sonoma are classic regions).",
+    "classicWith": [
+      "bbq",
+      "barbecue",
+      "rib",
+      "pizza",
+      "burger"
+    ]
+  },
+  {
+    "id": "syrah",
+    "name": "Syrah / Shiraz",
+    "type": "wine",
+    "emoji": "🌶️",
+    "style": "Dark red wine: blackberry, black pepper, smoky",
+    "sweetness": 2,
+    "priceTier": 2,
+    "tasteTags": [
+      "bold",
+      "spiced",
+      "smoky",
+      "warm",
+      "tannic"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "meaty",
+      "smoky",
+      "fatty",
+      "rich",
+      "savory"
+    ],
+    "why": "Dark, peppery and a little smoky. It stands up to lamb, grilled steak and sausages like it was made for them.",
+    "principle": "Tannin loves protein",
+    "funFact": "Syrah and Shiraz are the same grape. \"Shiraz\" is the name Australia made famous, and it usually signals a riper, jammier style.",
+    "lookFor": "Australian Shiraz for juicy and bold; French Côtes du Rhône for a smoother, earthier red.",
+    "classicWith": [
+      "lamb",
+      "steak",
+      "sausage",
+      "smoked"
+    ]
+  },
+  {
+    "id": "red-blend",
+    "name": "Red Blend",
+    "type": "wine",
+    "emoji": "🍇",
+    "style": "Crowd-pleasing red: ripe dark fruit, smooth, a touch sweet",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "fruity",
+      "smooth",
+      "familiar",
+      "warm"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "meaty",
+      "smoky",
+      "savory",
+      "fatty",
+      "salty"
+    ],
+    "why": "Juicy, smooth and easy to like, the \"something for everyone\" red. Great with burgers, pizza and a cheese board.",
+    "principle": "Match intensity",
+    "funFact": "Blending isn't cheating. Most red Bordeaux is a blend of grapes like Cabernet Sauvignon and Merlot, mixed to get the best of each.",
+    "lookFor": "Any bottle labeled \"Red Blend.\" California blends are fruit-forward and smooth.",
+    "classicWith": [
+      "burger",
+      "pizza",
+      "bbq",
+      "cheese board"
+    ]
+  },
+  {
+    "id": "sparkling-rose",
+    "name": "Sparkling Rosé",
+    "type": "wine",
+    "emoji": "🩷",
+    "style": "Pink bubbly: strawberry, cream, lively bubbles",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "fizzy",
+      "fruity",
+      "bright",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "fried",
+      "salty",
+      "light",
+      "sweet",
+      "spicy"
+    ],
+    "why": "Strawberry-scented bubbles with a soft, slightly sweet finish. It turns brunch, seafood or fried chicken into a celebration.",
+    "principle": "Bubbles scrub the palate",
+    "funFact": "Rosé Champagne is one of the few European wines where winemakers may make pink wine by blending a little red wine into white.",
+    "lookFor": "Sparkling rosé from Spain (Cava Rosado), France (Crémant Rosé) or California.",
+    "classicWith": [
+      "brunch",
+      "strawberry",
+      "strawberries",
+      "seafood",
+      "fried chicken"
+    ]
+  },
+  {
+    "id": "shandy",
+    "name": "Shandy",
+    "type": "beer",
+    "emoji": "🍋",
+    "style": "Beer + lemonade: light, citrusy, refreshing",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "citrus",
+      "fizzy",
+      "light",
+      "bright",
+      "familiar"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "light",
+      "salty",
+      "fried",
+      "herby",
+      "spicy"
+    ],
+    "why": "Half beer, half lemonade: lighter, sweeter and super refreshing. Perfect for brunch, salads and a sunny afternoon.",
+    "principle": "Delicate with delicate",
+    "funFact": "In Germany it's called a Radler (\"cyclist\"). The popular story is that a Bavarian innkeeper created it in the 1920s to stretch his beer for a crowd of thirsty cyclists.",
+    "factCheck": "VERIFY: The Radler/Franz Kugler cyclist story (1922) is widely repeated but may be legend.",
+    "lookFor": "A pre-mixed lemon shandy or Radler, or mix a light lager with lemonade 50/50.",
+    "classicWith": [
+      "brunch",
+      "sausage",
+      "salad",
+      "fish and chips"
+    ]
+  },
+  {
+    "id": "vodka",
+    "name": "Vodka (Ice-Cold)",
+    "type": "spirit",
+    "emoji": "🧊",
+    "style": "Clean, neutral spirit: crisp, smooth, served very cold",
+    "sweetness": 1,
+    "priceTier": 2,
+    "tasteTags": [
+      "smooth",
+      "boozy",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "party",
+      "date"
+    ],
+    "affinities": [
+      "salty",
+      "fatty",
+      "acidic",
+      "light"
+    ],
+    "why": "Clean and ice-cold, sipped in small amounts. It's the classic partner for salty, rich bites like smoked salmon, caviar and pickles.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "The word \"vodka\" comes from the Slavic word for water (\"voda\"), so it roughly means \"little water.\"",
+    "lookFor": "A mid-priced vodka kept in the freezer; serve in small, chilled glasses.",
+    "classicWith": [
+      "caviar",
+      "smoked salmon",
+      "pickle"
+    ]
+  },
+  {
+    "id": "gin",
+    "name": "Gin",
+    "type": "spirit",
+    "emoji": "🌿",
+    "style": "Botanical spirit: juniper, citrus peel, herbs",
+    "sweetness": 1,
+    "priceTier": 2,
+    "tasteTags": [
+      "herby",
+      "citrus",
+      "bright",
+      "boozy"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "date",
+      "party"
+    ],
+    "affinities": [
+      "herby",
+      "salty",
+      "light",
+      "acidic"
+    ],
+    "why": "Piney, herbal and citrusy. A gin & tonic with seafood, oysters or charcuterie is fresh, zingy and easy.",
+    "principle": "Echo the herbs",
+    "funFact": "Gin gets its signature piney flavor from juniper berries, and its name comes from \"genever,\" the Dutch juniper spirit it descends from.",
+    "lookFor": "A London Dry gin plus tonic water and a lime or cucumber slice.",
+    "classicWith": [
+      "oyster",
+      "seafood",
+      "charcuterie"
+    ]
+  },
+  {
+    "id": "irish-whiskey",
+    "name": "Irish Whiskey",
+    "type": "spirit",
+    "emoji": "☘️",
+    "style": "Smooth whiskey: honey, vanilla, light and mellow",
+    "sweetness": 2,
+    "priceTier": 2,
+    "tasteTags": [
+      "smooth",
+      "warm",
+      "nostalgic",
+      "familiar",
+      "boozy"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "rich",
+      "meaty",
+      "sweet",
+      "savory"
+    ],
+    "why": "Smooth, honeyed and gentle, one of the easiest whiskeys to sip. Cozy with stew, chocolate or bread pudding.",
+    "principle": "Match weight with weight",
+    "funFact": "Irish whiskey is traditionally distilled three times, one reason it's known for being so smooth. And it's spelled with an \"e,\" unlike Scotch whisky.",
+    "lookFor": "Any Irish whiskey; sip neat, on ice, or with a splash of water.",
+    "classicWith": [
+      "stew",
+      "chocolate",
+      "bread pudding"
+    ]
+  },
+  {
+    "id": "cognac",
+    "name": "Cognac / Brandy",
+    "type": "spirit",
+    "emoji": "🍂",
+    "style": "Aged grape brandy: dried fruit, caramel, warm spice",
+    "sweetness": 2,
+    "priceTier": 3,
+    "tasteTags": [
+      "warm",
+      "smooth",
+      "nostalgic",
+      "oaky",
+      "boozy"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "rich",
+      "sweet",
+      "meaty",
+      "salty"
+    ],
+    "why": "Warm and velvety with dried fruit and caramel. A slow, after-dinner sip with aged cheese, dark chocolate or a special steak dinner.",
+    "principle": "Match weight with weight",
+    "funFact": "Cognac is brandy that must come from the Cognac region of France. The letters on the label (VS, VSOP, XO) tell you how long it was aged.",
+    "lookFor": "VS or VSOP Cognac; any French or American brandy is a budget-friendly swap.",
+    "classicWith": [
+      "cheese board",
+      "chocolate",
+      "steak"
+    ]
+  },
+  {
+    "id": "spiced-rum",
+    "name": "Spiced Rum",
+    "type": "spirit",
+    "emoji": "🏝️",
+    "style": "Rum with vanilla and baking spice: sweet, warm",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "spiced",
+      "warm",
+      "smooth",
+      "familiar",
+      "boozy"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "smoky",
+      "sweet",
+      "meaty"
+    ],
+    "why": "Vanilla, cinnamon and brown sugar. Mixed with cola or ginger beer, it's great with jerk chicken, BBQ and pineapple desserts.",
+    "principle": "Like with like",
+    "funFact": "Most rum is made from molasses, the dark, sticky by-product of turning sugarcane into sugar. Spiced rum adds flavors like vanilla and cinnamon.",
+    "lookFor": "Any spiced rum; mix with cola or ginger beer and a lime wedge.",
+    "classicWith": [
+      "jerk",
+      "bbq",
+      "barbecue",
+      "pineapple"
+    ]
+  },
+  {
+    "id": "mimosa",
+    "name": "Mimosa",
+    "type": "cocktail",
+    "emoji": "🍊",
+    "style": "Sparkling wine + orange juice: bright, bubbly, brunchy",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "fizzy",
+      "citrus",
+      "fruity",
+      "bright",
+      "light",
+      "familiar"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "light",
+      "fatty",
+      "salty",
+      "sweet"
+    ],
+    "why": "Sunny orange juice plus bubbles, light and easy. Brunch's best friend with eggs, pastries and fruit.",
+    "principle": "Bubbles scrub the palate",
+    "funFact": "It's named after the yellow mimosa flower, which matches its sunny color. Britain's Buck's Fizz is a close cousin with more bubbles and less juice.",
+    "lookFor": "An inexpensive dry sparkling wine (Cava or Prosecco) and pulp-free orange juice.",
+    "classicWith": [
+      "brunch",
+      "egg",
+      "pastry",
+      "pastries",
+      "croissant",
+      "fruit"
+    ],
+    "wineBased": true
+  },
+  {
+    "id": "french-75",
+    "name": "French 75",
+    "type": "cocktail",
+    "emoji": "🥂",
+    "style": "Gin, lemon, sugar, Champagne: crisp, citrusy, elegant",
+    "sweetness": 2,
+    "priceTier": 2,
+    "tasteTags": [
+      "fizzy",
+      "citrus",
+      "bright",
+      "boozy"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "party"
+    ],
+    "affinities": [
+      "salty",
+      "light",
+      "fried",
+      "fatty"
+    ],
+    "why": "Crisp lemon, a little gin and a fizzy Champagne top. Elegant with oysters, seafood and brunch bites.",
+    "principle": "Bubbles scrub the palate",
+    "funFact": "It's named after the French 75mm field gun of World War I, because it was said to hit with similar force.",
+    "lookFor": "Gin, fresh lemon, simple syrup and any dry sparkling wine.",
+    "classicWith": [
+      "oyster",
+      "seafood",
+      "brunch",
+      "appetizer"
+    ],
+    "wineBased": true
+  },
+  {
+    "id": "bloody-mary",
+    "name": "Bloody Mary",
+    "type": "cocktail",
+    "emoji": "🍅",
+    "style": "Vodka + spiced tomato juice: savory, tangy, spicy",
+    "sweetness": 1,
+    "priceTier": 1,
+    "tasteTags": [
+      "bright",
+      "bold",
+      "spiced"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "party"
+    ],
+    "affinities": [
+      "salty",
+      "fatty",
+      "acidic",
+      "umami"
+    ],
+    "why": "Savory, tangy and a little spicy, almost a meal in a glass. The brunch classic with eggs, bacon and burgers.",
+    "principle": "Match acid with acid",
+    "funFact": "Its origin is disputed, but a popular claim credits bartender Fernand Petiot at Harry's New York Bar in Paris in the 1920s.",
+    "factCheck": "VERIFY: Fernand Petiot / Harry's New York Bar origin is the most common claim but contested.",
+    "lookFor": "Vodka, a good Bloody Mary mix, and a celery stalk (plus pickles or olives if you like).",
+    "classicWith": [
+      "brunch",
+      "egg",
+      "bacon",
+      "burger"
+    ]
+  },
+  {
+    "id": "gin-martini",
+    "name": "Gin Martini",
+    "type": "cocktail",
+    "emoji": "🍸",
+    "style": "Gin + dry vermouth: crisp, herbal, ice-cold",
+    "sweetness": 1,
+    "priceTier": 2,
+    "tasteTags": [
+      "herby",
+      "boozy",
+      "bright",
+      "bold"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date"
+    ],
+    "affinities": [
+      "salty",
+      "fatty",
+      "rich",
+      "light"
+    ],
+    "why": "Ice-cold, crisp and herbal, a classic grown-up sip. Great with oysters, olives, charcuterie or a steak dinner.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "The original martini was made with gin. Vodka martinis only became popular in the mid-20th century.",
+    "lookFor": "London Dry gin, dry vermouth and a lemon twist or olive.",
+    "classicWith": [
+      "oyster",
+      "olive",
+      "steak",
+      "charcuterie"
+    ]
+  },
+  {
+    "id": "whiskey-sour",
+    "name": "Whiskey Sour",
+    "type": "cocktail",
+    "emoji": "🍋",
+    "style": "Whiskey, lemon, sugar: tart, sweet, smooth",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "citrus",
+      "smooth",
+      "warm",
+      "bright",
+      "boozy"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "date",
+      "party"
+    ],
+    "affinities": [
+      "fatty",
+      "fried",
+      "smoky",
+      "salty",
+      "meaty"
+    ],
+    "why": "Tart lemon and warm whiskey balanced with a little sugar. Its tang cuts right through burgers, fried chicken and BBQ.",
+    "principle": "Acid & bubbles cut fat",
+    "funFact": "Sours show up in Jerry Thomas's 1862 bartender's guide, one of the first cocktail books ever published.",
+    "lookFor": "Bourbon, fresh lemon juice and simple syrup (egg white optional, for foam).",
+    "classicWith": [
+      "burger",
+      "fried chicken",
+      "bbq",
+      "barbecue"
+    ]
+  },
+  {
+    "id": "manhattan",
+    "name": "Manhattan",
+    "type": "cocktail",
+    "emoji": "🍒",
+    "style": "Whiskey, sweet vermouth, bitters: rich, smooth, spiced",
+    "sweetness": 2,
+    "priceTier": 2,
+    "tasteTags": [
+      "warm",
+      "boozy",
+      "smooth",
+      "bold",
+      "nostalgic"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date"
+    ],
+    "affinities": [
+      "meaty",
+      "rich",
+      "fatty",
+      "savory",
+      "salty"
+    ],
+    "why": "Rich, smooth and a little spiced, with a cherry on top. A classic with steak, pork or a charcuterie board.",
+    "principle": "Match weight with weight",
+    "funFact": "A popular story says Winston Churchill's mother invented it at a New York party in the 1870s, but she was in England at the time, so historians consider it a myth.",
+    "factCheck": "VERIFY: The Jennie Jerome story is widely considered a myth; confirm wording.",
+    "lookFor": "Rye or bourbon, sweet vermouth, Angostura bitters and a cocktail cherry.",
+    "classicWith": [
+      "steak",
+      "pork",
+      "charcuterie"
+    ]
+  },
+  {
+    "id": "negroni",
+    "name": "Negroni",
+    "type": "cocktail",
+    "emoji": "🍊",
+    "style": "Gin, Campari, sweet vermouth: bittersweet, bold",
+    "sweetness": 2,
+    "priceTier": 2,
+    "tasteTags": [
+      "bitter",
+      "bold",
+      "citrus",
+      "boozy"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "salty",
+      "fatty",
+      "acidic",
+      "savory"
+    ],
+    "why": "Bittersweet orange and herbs, bold and grown-up. Its bitterness wakes up the palate before pizza, salami and cheese.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "The classic story says Count Camillo Negroni asked a bartender in Florence around 1919 to make his Americano stronger by swapping the soda water for gin.",
+    "factCheck": "VERIFY: The Count Negroni origin is the standard story but some historians question it.",
+    "lookFor": "Equal parts gin, Campari and sweet vermouth, with an orange peel.",
+    "classicWith": [
+      "pizza",
+      "charcuterie",
+      "cheese board"
+    ]
+  },
+  {
+    "id": "pina-colada",
+    "name": "Piña Colada",
+    "type": "cocktail",
+    "emoji": "🍍",
+    "style": "Rum, pineapple, coconut: creamy, sweet, tropical",
+    "sweetness": 5,
+    "priceTier": 1,
+    "tasteTags": [
+      "creamy",
+      "fruity",
+      "smooth",
+      "familiar"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "sweet",
+      "smoky",
+      "light"
+    ],
+    "why": "Creamy coconut and sweet pineapple, basically a vacation in a glass. It cools down spicy jerk chicken and loves shrimp and tropical fruit.",
+    "principle": "Sweet & low-alcohol tame heat",
+    "funFact": "The Piña Colada has been the official national drink of Puerto Rico since 1978.",
+    "lookFor": "White rum, pineapple juice and cream of coconut, blended with ice.",
+    "classicWith": [
+      "jerk",
+      "shrimp",
+      "tropical",
+      "pineapple"
+    ]
+  },
+  {
+    "id": "cosmopolitan",
+    "name": "Cosmopolitan",
+    "type": "cocktail",
+    "emoji": "💗",
+    "style": "Vodka, cranberry, lime, orange liqueur: tart, fruity",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "fruity",
+      "citrus",
+      "bright",
+      "boozy"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "salty",
+      "light",
+      "acidic",
+      "fatty"
+    ],
+    "why": "Tart cranberry and lime with a pretty pink color. A fun, fruity match for appetizers, seafood and cheese.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "The Cosmo was around before, but the TV show Sex and the City made it a worldwide star in the late 1990s.",
+    "lookFor": "Citrus vodka, triple sec, cranberry juice and fresh lime.",
+    "classicWith": [
+      "appetizer",
+      "seafood",
+      "cheese"
+    ]
+  },
+  {
+    "id": "moscow-mule",
+    "name": "Moscow Mule",
+    "type": "cocktail",
+    "emoji": "🫚",
+    "style": "Vodka, ginger beer, lime: spicy-sweet, fizzy",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "fizzy",
+      "citrus",
+      "spiced",
+      "bright",
+      "familiar"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "fried",
+      "salty",
+      "meaty"
+    ],
+    "why": "Zingy ginger, lime and bubbles over lots of ice. It's refreshing next to tacos, spicy food and burgers.",
+    "principle": "Sweet & low-alcohol tame heat",
+    "funFact": "It was created in the early 1940s as a way to sell more vodka and ginger beer, and the copper mug became its trademark.",
+    "lookFor": "Vodka, ginger beer and a lime wedge. A copper mug is fun but optional.",
+    "classicWith": [
+      "taco",
+      "spicy",
+      "burger"
+    ]
+  },
+  {
+    "id": "daiquiri",
+    "name": "Classic Daiquiri",
+    "type": "cocktail",
+    "emoji": "🍋",
+    "style": "Rum, lime, sugar: tart, clean, refreshing",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "citrus",
+      "bright",
+      "light",
+      "boozy"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "acidic",
+      "light",
+      "salty",
+      "spicy"
+    ],
+    "why": "Just rum, lime and sugar: bright, tart and refreshing (not the frozen slushie!). Great with ceviche, shrimp and Cuban food.",
+    "principle": "Match acid with acid",
+    "funFact": "It's named after Daiquirí, a beach and small town near Santiago de Cuba.",
+    "lookFor": "White rum, fresh lime juice and simple syrup, shaken and served straight up.",
+    "classicWith": [
+      "ceviche",
+      "shrimp",
+      "cuban"
+    ]
+  },
+  {
+    "id": "mai-tai",
+    "name": "Mai Tai",
+    "type": "cocktail",
+    "emoji": "🌴",
+    "style": "Rum, lime, orange, almond syrup: tropical, rich",
+    "sweetness": 4,
+    "priceTier": 2,
+    "tasteTags": [
+      "fruity",
+      "citrus",
+      "boozy",
+      "warm"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "sweet",
+      "smoky",
+      "spicy",
+      "umami"
+    ],
+    "why": "Tropical, nutty and fruity with a rum kick. Fun with poke, grilled pork and tropical fruit.",
+    "principle": "Like with like",
+    "funFact": "Trader Vic said he created it in Oakland, California in 1944. \"Maita'i\" is Tahitian for \"good.\"",
+    "factCheck": "VERIFY: Trader Vic vs. Donn Beach origin is disputed; the 1944 Trader Vic claim is the common version.",
+    "lookFor": "Aged rum, lime, orange curaçao and orgeat (almond syrup).",
+    "classicWith": [
+      "poke",
+      "pork",
+      "tropical"
+    ]
+  },
+  {
+    "id": "white-russian",
+    "name": "White Russian",
+    "type": "cocktail",
+    "emoji": "🥛",
+    "style": "Vodka, coffee liqueur, cream: creamy, sweet, dessert-y",
+    "sweetness": 5,
+    "priceTier": 2,
+    "tasteTags": [
+      "creamy",
+      "smooth",
+      "nostalgic",
+      "familiar"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "sweet",
+      "creamy",
+      "rich"
+    ],
+    "why": "Coffee, cream and a little vodka, like a boozy iced latte. A cozy dessert match for brownies, chocolate and ice cream.",
+    "principle": "Drink sweeter than dessert",
+    "funFact": "It isn't Russian at all; the name comes from the vodka. The Big Lebowski turned it into a cult classic.",
+    "lookFor": "Vodka, coffee liqueur and heavy cream or whole milk over ice.",
+    "classicWith": [
+      "brownie",
+      "chocolate",
+      "ice cream"
+    ]
+  },
+  {
+    "id": "lemon-drop",
+    "name": "Lemon Drop",
+    "type": "cocktail",
+    "emoji": "🍬",
+    "style": "Vodka, lemon, sugar rim: sweet-tart, candy-like",
+    "sweetness": 4,
+    "priceTier": 2,
+    "tasteTags": [
+      "citrus",
+      "bright",
+      "fruity",
+      "boozy"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "date"
+    ],
+    "affinities": [
+      "acidic",
+      "light",
+      "salty",
+      "sweet"
+    ],
+    "why": "Sweet-tart lemon with a sugared rim, like grown-up lemonade candy. Bright with seafood, appetizers and cheesecake.",
+    "principle": "Match acid with acid",
+    "funFact": "It's believed to have been invented in San Francisco in the 1970s, named after the classic lemon-drop candy.",
+    "factCheck": "VERIFY: The 1970s San Francisco (Henry Africa's) origin is commonly cited but not firmly documented.",
+    "lookFor": "Citrus vodka, fresh lemon, triple sec and simple syrup, with a sugar rim.",
+    "classicWith": [
+      "seafood",
+      "appetizer",
+      "cheesecake"
+    ]
+  },
+  {
+    "id": "dirty-martini",
+    "name": "Dirty Martini",
+    "type": "cocktail",
+    "emoji": "🫒",
+    "style": "Vodka or gin + olive brine: salty, savory, ice-cold",
+    "sweetness": 1,
+    "priceTier": 2,
+    "tasteTags": [
+      "boozy",
+      "bold",
+      "bright"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "salty",
+      "fatty",
+      "fried",
+      "rich"
+    ],
+    "why": "Salty, briny and ice-cold, for people who love olives. Great with oysters, fries and a charcuterie board.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "\"Dirty\" just means a splash of olive brine is added. The more brine, the dirtier it is.",
+    "lookFor": "Vodka or gin, a little dry vermouth, olive brine and green olives.",
+    "classicWith": [
+      "oyster",
+      "olive",
+      "fries",
+      "charcuterie"
+    ]
+  },
+  {
+    "id": "mint-julep",
+    "name": "Mint Julep",
+    "type": "cocktail",
+    "emoji": "🌱",
+    "style": "Bourbon, mint, sugar, crushed ice: cool, sweet, minty",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "herby",
+      "warm",
+      "boozy",
+      "nostalgic"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "fried",
+      "smoky",
+      "sweet",
+      "herby"
+    ],
+    "why": "Cool mint and sweet bourbon over mounds of crushed ice. A Southern classic with fried chicken, BBQ and pecan pie.",
+    "principle": "Echo the herbs",
+    "funFact": "The Mint Julep has been the official drink of the Kentucky Derby since 1939.",
+    "lookFor": "Bourbon, fresh mint, simple syrup and lots of crushed ice.",
+    "classicWith": [
+      "fried chicken",
+      "bbq",
+      "barbecue",
+      "pecan pie"
+    ]
+  },
+  {
+    "id": "red-sangria",
+    "name": "Red Sangria",
+    "type": "cocktail",
+    "emoji": "🍷",
+    "style": "Red wine punch with fruit: juicy, sweet, easy",
+    "sweetness": 4,
+    "priceTier": 1,
+    "tasteTags": [
+      "fruity",
+      "bright",
+      "familiar",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "salty",
+      "fried",
+      "fatty",
+      "savory",
+      "smoky"
+    ],
+    "why": "Juicy, fruity and made by the pitcher, so everyone is happy. Great with tapas, paella and grilled meats.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "Sangria gets its name from \"sangre,\" Spanish for blood, because of its deep red color. In the EU, only sangria made in Spain or Portugal can be sold under that name.",
+    "factCheck": "VERIFY: The EU labeling rule (2014 regulation on aromatized wine products) is believed accurate but worth confirming.",
+    "lookFor": "A cheap Spanish red (like Garnacha), chopped fruit, orange juice and a splash of brandy. Make it ahead.",
+    "classicWith": [
+      "tapas",
+      "paella",
+      "grilled",
+      "kebab"
+    ],
+    "wineBased": true
+  },
+  {
+    "id": "white-sangria",
+    "name": "White Sangria",
+    "type": "cocktail",
+    "emoji": "🍑",
+    "style": "White wine punch with peaches and citrus: light, sweet",
+    "sweetness": 4,
+    "priceTier": 1,
+    "tasteTags": [
+      "fruity",
+      "bright",
+      "citrus",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "light",
+      "salty",
+      "acidic",
+      "sweet",
+      "herby"
+    ],
+    "why": "Crisp white wine with peaches, citrus and a little fizz. A lighter, brighter pitcher for seafood, salads, fruit and brunch.",
+    "principle": "Delicate with delicate",
+    "funFact": "Red may have given sangria its name, but white versions (\"sangría blanca\") are popular in Spain too, made with the same fruit-and-wine idea.",
+    "lookFor": "A dry Spanish white (like Albariño or Verdejo), peaches, citrus and a splash of soda.",
+    "classicWith": [
+      "seafood",
+      "salad",
+      "fruit",
+      "brunch"
+    ],
+    "wineBased": true
   }
 ]

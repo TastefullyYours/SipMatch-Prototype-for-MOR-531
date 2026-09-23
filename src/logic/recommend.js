@@ -41,7 +41,7 @@ const DISLIKE_RULES = {
   smoky: (d) => d.tasteTags.includes('smoky'),
   verySweet: (d) => d.sweetness >= 5,
   beer: (d) => d.type === 'beer',
-  wine: (d) => d.type === 'wine',
+  wine: (d) => d.type === 'wine' || d.wineBased, // includes wine cocktails like sangria and mimosas
 }
 
 // Onboarding "tastes I like" → drink taste tag.
@@ -154,17 +154,89 @@ function explain(drink, dishTags) {
   return own ? own[1] : PRINCIPLES.savory
 }
 
+// "Don't like these?" alternatives: one per category, each labeled with how it
+// differs from the top pick (sweeter, drier, less bitter, lighter...).
+export const ALT_CATEGORIES = [
+  { key: 'wine', label: 'Wine', emoji: '🍷', types: ['wine'] },
+  { key: 'beer', label: 'Beer or cider', emoji: '🍺', types: ['beer', 'cider'] },
+  { key: 'mixed', label: 'Spirit or cocktail', emoji: '🍸', types: ['spirit', 'cocktail'] },
+]
+
+export const CONTRASTS = {
+  sweeter: { emoji: '🍭', text: 'If you want something a little sweeter' },
+  drier: { emoji: '🌵', text: 'If you want something a little drier' },
+  lessBitter: { emoji: '🌿', text: 'If you want something less bitter' },
+  lighter: { emoji: '🪶', text: 'If you want something lighter' },
+  bolder: { emoji: '💪', text: 'If you want something bolder' },
+  bubbly: { emoji: '🫧', text: 'If you want some bubbles' },
+  still: { emoji: '🧊', text: "If you'd rather skip the bubbles" },
+  different: { emoji: '🔀', text: 'If you want to try a different style' },
+}
+
+const isBitter = (d) => d.tasteTags.includes('bitter') || d.tasteTags.includes('tannic')
+const isBold = (d) => d.tasteTags.includes('bold') || d.tasteTags.includes('boozy')
+
+// How does `alt` differ from the reference drink? Most noticeable difference first.
+function contrastOf(alt, ref) {
+  if (alt.sweetness >= ref.sweetness + 1) return 'sweeter'
+  if (alt.sweetness <= ref.sweetness - 1) return 'drier'
+  if (isBitter(ref) && !isBitter(alt)) return 'lessBitter'
+  if (isBold(ref) && !isBold(alt) && alt.tasteTags.includes('light')) return 'lighter'
+  if (!isBold(ref) && isBold(alt)) return 'bolder'
+  const refFizzy = ref.tasteTags.includes('fizzy')
+  if (refFizzy !== alt.tasteTags.includes('fizzy')) return refFizzy ? 'still' : 'bubbly'
+  return 'different'
+}
+
+function pickAlternatives(scored, mainIds, ref) {
+  const used = new Set(mainIds)
+  const remaining = scored.filter((p) => !used.has(p.drink.id))
+  // Top few candidates per category (falls back to any category if one is empty, e.g. the user dislikes wine).
+  const slots = ALT_CATEGORIES.map((cat) => {
+    let cands = remaining.filter((p) => cat.types.includes(p.drink.type)).slice(0, 5)
+    let fallback = false
+    if (cands.length === 0) {
+      cands = remaining.slice(0, 5)
+      fallback = true
+    }
+    return { cat, fallback, cands: cands.map((p) => ({ ...p, contrast: contrastOf(p.drink, ref) })) }
+  })
+
+  // Try combinations and prefer ones that cover different directions,
+  // ideally including both a sweeter and a drier option.
+  let best = null
+  const walk = (i, chosen) => {
+    if (i === slots.length) {
+      const ids = new Set(chosen.map((c) => c.drink.id))
+      if (ids.size < chosen.length) return
+      const contrasts = chosen.map((c) => c.contrast)
+      let total = chosen.reduce((sum, c) => sum + c.score, 0)
+      total += new Set(contrasts).size * 3
+      if (contrasts.includes('sweeter')) total += 2
+      if (contrasts.includes('drier')) total += 2
+      total -= contrasts.filter((c) => c === 'different').length * 3
+      if (!best || total > best.total) best = { total, chosen }
+      return
+    }
+    for (const c of slots[i].cands) walk(i + 1, [...chosen, c])
+  }
+  walk(0, [])
+  if (!best) return []
+  return best.chosen.map((c, i) => ({ ...c, category: slots[i].fallback ? null : slots[i].cat }))
+}
+
 /**
  * @param profile  { budget: 1|2|3, sweetness: 'dry'|'between'|'sweet', dislikes: string[], tastes: string[] }
  * @param mood     { feeling: 'cheerful'|'stressed'|'sad', social: 'social'|'solo' }
  * @param occasion 'party'|'date'|'group'
- * @param dish     string ('' when skipped on party)
- * @returns { picks: [...3], dishInfo }
+ * @param dish     string ('' when skipped)
+ * @returns { picks: [...3], alternatives: [...3], dishInfo }
  */
 export function recommend({ profile, mood, occasion, dish }) {
   const skipped = !dish || !dish.trim()
   const dishInfo = skipped
-    ? { tags: PARTY_SNACK_PROFILE, matched: [], recognized: true, skipped: true }
+    ? // Skipped: parties get a snack profile; otherwise no dish scoring (mood, occasion and taste decide).
+      { tags: occasion === 'party' ? PARTY_SNACK_PROFILE : [], matched: [], recognized: true, skipped: true }
     : { ...profileDish(dish), skipped: false }
 
   // Hard-exclude disliked drinks, unless that would leave fewer than 3 options.
@@ -189,18 +261,23 @@ export function recommend({ profile, mood, occasion, dish }) {
     if (other) picks[2] = other
   }
 
-  return {
-    dishInfo,
-    picks: picks.map((p) => ({
-      drink: p.drink,
-      score: p.score,
-      overBudget: p.overBudget,
-      classic: p.classic,
-      principle: explain(p.drink, dishInfo.tags),
-      moodLine: moodLine(p.drink, mood.feeling),
-      price: PRICE_TIERS[p.drink.priceTier],
-    })),
-  }
+  const present = (p) => ({
+    drink: p.drink,
+    score: p.score,
+    overBudget: p.overBudget,
+    classic: p.classic,
+    principle: explain(p.drink, dishInfo.tags),
+    moodLine: moodLine(p.drink, mood.feeling),
+    price: PRICE_TIERS[p.drink.priceTier],
+  })
+
+  const alternatives = pickAlternatives(
+    scored,
+    picks.map((p) => p.drink.id),
+    picks[0].drink,
+  ).map((a) => ({ ...present(a), contrast: CONTRASTS[a.contrast], category: a.category }))
+
+  return { dishInfo, picks: picks.map(present), alternatives }
 }
 
 export { DRINKS }
