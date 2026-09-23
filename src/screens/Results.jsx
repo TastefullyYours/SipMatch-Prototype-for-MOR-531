@@ -8,14 +8,22 @@ export default function Results({ profile, mood, occasion, dish, onChangeDish, o
   const { picks, alternatives, dishInfo } = useMemo(() => recommend({ profile, mood, occasion, dish }), [profile, mood, occasion, dish])
   const [showAlts, setShowAlts] = useState(false)
   const [top, ...alts] = picks
-  const dishLabel = dishInfo.skipped ? 'party snacks' : dish.trim()
+  const dishLabel = dishInfo.skipped ? (occasion === 'party' ? 'party snacks' : null) : dish.trim()
 
   return (
     <>
       <div className="mb-5">
         <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-berry/70">Your SipMatch</p>
         <h1 className="font-display text-3xl leading-tight">
-          Here's what to grab for <span className="text-berry">{dishLabel}</span>
+          {dishLabel ? (
+            <>
+              Here's what to grab for <span className="text-berry">{dishLabel}</span>
+            </>
+          ) : (
+            <>
+              Here's what to sip <span className="text-berry">tonight</span>
+            </>
+          )}
         </h1>
         <div className="mt-3 flex flex-wrap gap-1.5 text-xs">
           <span className="rounded-full bg-white px-2.5 py-1">
@@ -78,7 +86,7 @@ export default function Results({ profile, mood, occasion, dish, onChangeDish, o
       </button>
 
       <div className="mt-6 flex flex-col gap-2">
-        <Button onClick={onChangeDish}>Try a different dish</Button>
+        <Button onClick={onChangeDish}>{dishInfo.skipped && occasion !== 'party' ? 'Add a dish' : 'Try a different dish'}</Button>
         <div className="grid grid-cols-2 gap-2">
           <Button variant="secondary" onClick={onStartOver}>
             Start over

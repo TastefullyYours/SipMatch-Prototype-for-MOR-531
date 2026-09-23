@@ -229,13 +229,14 @@ function pickAlternatives(scored, mainIds, ref) {
  * @param profile  { budget: 1|2|3, sweetness: 'dry'|'between'|'sweet', dislikes: string[], tastes: string[] }
  * @param mood     { feeling: 'cheerful'|'stressed'|'sad', social: 'social'|'solo' }
  * @param occasion 'party'|'date'|'group'
- * @param dish     string ('' when skipped on party)
+ * @param dish     string ('' when skipped)
  * @returns { picks: [...3], alternatives: [...3], dishInfo }
  */
 export function recommend({ profile, mood, occasion, dish }) {
   const skipped = !dish || !dish.trim()
   const dishInfo = skipped
-    ? { tags: PARTY_SNACK_PROFILE, matched: [], recognized: true, skipped: true }
+    ? // Skipped: parties get a snack profile; otherwise no dish scoring (mood, occasion and taste decide).
+      { tags: occasion === 'party' ? PARTY_SNACK_PROFILE : [], matched: [], recognized: true, skipped: true }
     : { ...profileDish(dish), skipped: false }
 
   // Hard-exclude disliked drinks, unless that would leave fewer than 3 options.

@@ -189,3 +189,18 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 - The requested totals said 62 drinks / 28 cocktails, but the listed additions produce **61 / 27** (33 − generic Sangria + 29). The app uses the 61 listed drinks.
 - Removed "spicy food" from Zinfandel's affinities: it's high in alcohol, and high alcohol makes chili heat feel hotter (one of the app's own principles).
 - The alternatives are collapsed behind the tab by default so the main 3 stay the focus.
+
+---
+
+## 2026-09-23: Milestone 7: Dish step skippable for every occasion
+
+**Prompt (verbatim):** "also on the food section, allow users to skip options"
+
+**Built / changed:**
+- The dish screen always shows a skip button: "Skip, it's just party snacks 🍿" for parties (unchanged) and **"Skip, no dish yet ⏭️"** for duo/date and small group. The subtitle explains what skipping does.
+- Recommender: a skipped non-party dish adds no dish-flavor scoring, so mood, occasion, sweet/dry preference, liked flavors and budget decide. Each card explains its drink's own signature pairing principle.
+- Results: the headline reads "Here's what to sip tonight" when no dish was given, and the main button changes from "Try a different dish" to **"Add a dish"**. The "Don't like these?" alternatives still work.
+
+**Testing:** Node scenarios for skipped date/group/party (e.g. sad + solo + date → Bourbon / Irish Whiskey / Manhattan with $$ budget and dry taste). Playwright confirmed the skip → results → "Add a dish" round trip. All four earlier click-through scripts still pass with no app errors.
+
+**Decisions / issues:** Kept the party skip copy and "party snacks" profile as before; only the non-party skip is new.

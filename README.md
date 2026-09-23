@@ -11,7 +11,7 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 2. Two-screen profile: age group, budget, sweet vs. dry, flavors you like, things you don't
 3. Mood (cheerful / stressed / sad–low energy) + social vs. solo
 4. Occasion (party, duo/date, small group)
-5. Dish (free text; skippable for parties)
+5. Dish (free text; always skippable)
 6. Results: a top match + 2 alternates, each with *why it works*, *the pairing principle*, *why it fits your mood*, *a fun fact*, *what to look for at the store* and a price tier
    - **"Don't like these?"** opens 3 more options (one wine, one beer or cider, one spirit or cocktail), each labeled with how it differs from the top pick ("a little sweeter", "a little drier", "less bitter", "lighter", "some bubbles"…)
 7. Try a different dish, start over, or edit your profile
@@ -27,7 +27,7 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 Everything runs in the browser from a local dataset. There are no APIs, no keys, no backend and no browser storage.
 
 - `src/data/drinks.json`: 61 curated drinks (17 wines, 6 beers + 1 cider, 10 spirits, 27 cocktails) tagged by sweetness (1–5), price tier, taste tags, mood fit, social/solo vibe, occasion fit, food-flavor affinities and "classic pairing" dishes.
-- `src/data/dishes.js`: about 140 dish keywords mapped to flavor tags (e.g. `taco → spicy, savory, acidic`, `salmon → fatty, rich`). Unknown dishes fall back to a neutral "savory" profile; skipped party dishes use a "party snacks" profile.
+- `src/data/dishes.js`: about 140 dish keywords mapped to flavor tags (e.g. `taco → spicy, savory, acidic`, `salmon → fatty, rich`). Unknown dishes fall back to a neutral "savory" profile; a skipped dish uses a "party snacks" profile for parties, and otherwise lets mood, occasion and taste decide.
 - `src/logic/recommend.js`: scores every drink. Dish-flavor fit and classic pairings count most, with penalties for known clashes (e.g. high alcohol with spicy food). Sweetness preference, mood, social/solo, occasion, liked flavors and budget also count. Disliked drinks are excluded. It returns the top 3 (spanning at least 2 drink types), plus 3 "Don't like these?" alternatives, one per category, chosen so they go in different directions (ideally one sweeter and one drier than the top pick).
 
 ### Mood & taste
