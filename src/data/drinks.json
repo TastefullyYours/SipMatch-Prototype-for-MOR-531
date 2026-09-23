@@ -1,0 +1,1414 @@
+[
+  {
+    "id": "prosecco",
+    "name": "Prosecco",
+    "type": "wine",
+    "emoji": "🥂",
+    "style": "Italian sparkling wine: crisp, bubbly, green-apple fruity",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "fizzy",
+      "bright",
+      "fruity",
+      "light",
+      "familiar"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "fried",
+      "salty",
+      "light",
+      "fatty",
+      "spicy"
+    ],
+    "why": "Light, bubbly and fruity without being heavy. It's basically a celebration in a glass that goes with almost any snack.",
+    "principle": "Bubbles scrub the palate",
+    "funFact": "On Prosecco labels, \"Extra Dry\" is actually sweeter than \"Brut.\" Wine labels confuse everyone, so you're in good company.",
+    "lookFor": "Any Prosecco DOC. \"Brut\" if you like it drier, \"Extra Dry\" if you like it a touch sweeter.",
+    "classicWith": [
+      "chips",
+      "popcorn",
+      "fried chicken",
+      "brunch"
+    ]
+  },
+  {
+    "id": "champagne",
+    "name": "Champagne",
+    "type": "wine",
+    "emoji": "🍾",
+    "style": "French sparkling wine: toasty, crisp, fine bubbles",
+    "sweetness": 1,
+    "priceTier": 3,
+    "tasteTags": [
+      "fizzy",
+      "bright",
+      "nostalgic",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "date",
+      "party"
+    ],
+    "affinities": [
+      "fried",
+      "salty",
+      "fatty",
+      "light",
+      "creamy"
+    ],
+    "why": "Crisp, toasty and full of tiny bubbles. It makes any meal feel like an occasion, even fried chicken or potato chips (a famously great match).",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "In most of the world, only sparkling wine from the Champagne region of France can be called Champagne. Similar bubbles from elsewhere in France are called Crémant, often at a fraction of the price.",
+    "lookFor": "Any \"Brut\" Champagne. On a budget? Try a French Crémant instead.",
+    "classicWith": [
+      "fried chicken",
+      "chips",
+      "oyster",
+      "caviar",
+      "fries"
+    ]
+  },
+  {
+    "id": "sauvignon-blanc",
+    "name": "Sauvignon Blanc",
+    "type": "wine",
+    "emoji": "🍋",
+    "style": "Zesty white wine: citrus, green herbs, mouthwatering",
+    "sweetness": 1,
+    "priceTier": 1,
+    "tasteTags": [
+      "citrus",
+      "bright",
+      "herby",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "group",
+      "date",
+      "party"
+    ],
+    "affinities": [
+      "herby",
+      "acidic",
+      "light",
+      "salty",
+      "creamy"
+    ],
+    "why": "Zingy and fresh, like a squeeze of lime with a handful of herbs. It wakes up salads, seafood, goat cheese and anything green.",
+    "principle": "Match acid with acid",
+    "funFact": "Sancerre (Sauvignon Blanc from France's Loire Valley) and Crottin de Chavignol goat cheese come from the same area. Sommeliers sum it up as \"what grows together goes together.\"",
+    "lookFor": "New Zealand bottles for big citrus flavor; Sancerre or Touraine from France for something subtler.",
+    "classicWith": [
+      "goat cheese",
+      "salad",
+      "fish",
+      "ceviche",
+      "pesto"
+    ]
+  },
+  {
+    "id": "riesling",
+    "name": "Off-Dry Riesling",
+    "type": "wine",
+    "emoji": "🍑",
+    "style": "Aromatic white wine: peach, lime, a touch of sweetness",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "fruity",
+      "bright",
+      "citrus",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "spicy",
+      "umami",
+      "sweet",
+      "salty",
+      "light"
+    ],
+    "why": "Juicy and peachy with a hint of sweetness and lots of freshness. It's the classic answer to \"what do I drink with spicy takeout?\"",
+    "principle": "Sweet & low-alcohol tame heat",
+    "funFact": "Thanks to its high acidity, Riesling is one of the few white wines that can age for decades.",
+    "lookFor": "German \"Kabinett\" or \"Spätlese,\" or any label that says \"off-dry\" or \"medium sweet.\"",
+    "classicWith": [
+      "pad thai",
+      "thai",
+      "curry",
+      "sichuan",
+      "szechuan",
+      "sushi",
+      "orange chicken"
+    ]
+  },
+  {
+    "id": "pinot-grigio",
+    "name": "Pinot Grigio",
+    "type": "wine",
+    "emoji": "🍐",
+    "style": "Easygoing white wine: light, crisp, pear and lemon",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "light",
+      "familiar",
+      "bright",
+      "citrus"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "light",
+      "salty",
+      "herby",
+      "acidic"
+    ],
+    "why": "Light, crisp and uncomplicated, the easy-drinking white. It won't overpower delicate food like fish, salads or light pasta.",
+    "principle": "Delicate with delicate",
+    "funFact": "Pinot Grigio and Pinot Gris are the same grape: Grigio is the Italian name, Gris the French. Both mean \"gray,\" after the grape's grayish-pink skin.",
+    "lookFor": "Italian Pinot Grigio from Alto Adige or Friuli tends to have more flavor than the cheapest bottles.",
+    "classicWith": [
+      "fish",
+      "shrimp",
+      "salad",
+      "seafood"
+    ]
+  },
+  {
+    "id": "chardonnay",
+    "name": "Oaked Chardonnay",
+    "type": "wine",
+    "emoji": "🧈",
+    "style": "Full, rich white wine: butter, vanilla, baked apple",
+    "sweetness": 2,
+    "priceTier": 2,
+    "tasteTags": [
+      "creamy",
+      "smooth",
+      "oaky",
+      "warm",
+      "familiar"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "creamy",
+      "rich",
+      "fatty",
+      "savory"
+    ],
+    "why": "Round, creamy and a little buttery. It has the body to match creamy pastas, roast chicken and anything with a rich sauce.",
+    "principle": "Creamy with round",
+    "funFact": "Chardonnay is the grape behind white Burgundy, and Champagne labeled \"Blanc de Blancs\" is made from 100% Chardonnay.",
+    "lookFor": "California Chardonnay usually signals \"buttery and oaky\"; the back label often mentions oak or vanilla.",
+    "classicWith": [
+      "lobster",
+      "crab",
+      "alfredo",
+      "roast chicken",
+      "mac and cheese",
+      "carbonara"
+    ]
+  },
+  {
+    "id": "rose",
+    "name": "Dry Rosé",
+    "type": "wine",
+    "emoji": "🌸",
+    "style": "Pink wine: strawberry, watermelon, crisp and dry",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "fruity",
+      "bright",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "light",
+      "salty",
+      "acidic",
+      "spicy",
+      "herby"
+    ],
+    "why": "Fresh strawberry and watermelon flavors with a crisp, dry finish. It's the ultimate \"works with everything\" wine for picnics and snack boards.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "Most rosé is made from red grapes. The pink color comes from letting the juice touch the grape skins for just a few hours instead of weeks.",
+    "lookFor": "Provence-style rosé (pale pink) for dry and crisp.",
+    "classicWith": [
+      "salad",
+      "shrimp",
+      "charcuterie",
+      "cheese board"
+    ]
+  },
+  {
+    "id": "pinot-noir",
+    "name": "Pinot Noir",
+    "type": "wine",
+    "emoji": "🍒",
+    "style": "Light red wine: cherry, earthy, silky and smooth",
+    "sweetness": 2,
+    "priceTier": 2,
+    "tasteTags": [
+      "smooth",
+      "earthy",
+      "fruity",
+      "light",
+      "bright"
+    ],
+    "moodFit": [
+      "sad",
+      "cheerful"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "earthy",
+      "fatty",
+      "savory",
+      "umami",
+      "light"
+    ],
+    "why": "A light, silky red with cherry and earthy notes. It's gentle enough for salmon but has enough flavor for mushrooms and roast chicken.",
+    "principle": "Echo earthy flavors",
+    "funFact": "After the 2004 movie Sideways, where the main character raves about Pinot Noir (and trashes Merlot), US Pinot Noir sales jumped. Economists call it \"the Sideways effect.\"",
+    "lookFor": "Oregon, California's Central Coast, or \"Bourgogne Rouge\" from France.",
+    "classicWith": [
+      "salmon",
+      "mushroom",
+      "turkey",
+      "roast chicken"
+    ]
+  },
+  {
+    "id": "cabernet",
+    "name": "Cabernet Sauvignon",
+    "type": "wine",
+    "emoji": "🥩",
+    "style": "Bold red wine: blackcurrant, oak, firm and dry",
+    "sweetness": 1,
+    "priceTier": 2,
+    "tasteTags": [
+      "bold",
+      "oaky",
+      "tannic",
+      "warm"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "meaty",
+      "fatty",
+      "rich",
+      "salty",
+      "smoky"
+    ],
+    "why": "Big, bold and dry with dark-fruit flavor. It's the classic steakhouse red because it stands up to juicy, fatty meat.",
+    "principle": "Tannin loves protein",
+    "funFact": "In the 1990s, DNA testing at UC Davis showed Cabernet Sauvignon is a natural cross between Cabernet Franc and Sauvignon Blanc: a red and a white grape.",
+    "lookFor": "California, Washington State or Chile for fruit-forward, approachable bottles.",
+    "classicWith": [
+      "steak",
+      "burger",
+      "lamb"
+    ]
+  },
+  {
+    "id": "malbec",
+    "name": "Malbec",
+    "type": "wine",
+    "emoji": "🍇",
+    "style": "Juicy red wine: plum, blackberry, smooth and plush",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "bold",
+      "fruity",
+      "smooth",
+      "warm",
+      "familiar"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "group",
+      "date",
+      "party"
+    ],
+    "affinities": [
+      "meaty",
+      "smoky",
+      "savory",
+      "fatty"
+    ],
+    "why": "Plummy and plush with softer edges than Cabernet. It's a crowd-pleasing red for burgers, BBQ and grilled anything.",
+    "principle": "Like with like",
+    "funFact": "Malbec originally comes from southwest France (around Cahors), but Argentina made it famous. Most Malbec you'll see today is from Mendoza.",
+    "lookFor": "Argentine Malbec from Mendoza, which is great value under $15.",
+    "classicWith": [
+      "burger",
+      "steak",
+      "bbq",
+      "barbecue",
+      "kebab"
+    ]
+  },
+  {
+    "id": "chianti",
+    "name": "Chianti",
+    "type": "wine",
+    "emoji": "🍅",
+    "style": "Tuscan red wine: tart cherry, herbs, tangy",
+    "sweetness": 1,
+    "priceTier": 1,
+    "tasteTags": [
+      "earthy",
+      "bright",
+      "herby"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "date",
+      "party"
+    ],
+    "affinities": [
+      "acidic",
+      "savory",
+      "meaty",
+      "herby",
+      "fatty"
+    ],
+    "why": "Tangy red with tart cherry and herbs. Its natural zip is exactly what tomato sauce needs, which is why it's the red-sauce Italian classic.",
+    "principle": "Match acid with acid",
+    "funFact": "The old-school straw-wrapped Chianti bottle is called a \"fiasco.\" In Italian that just means \"flask.\"",
+    "lookFor": "\"Chianti\" or \"Chianti Classico\" (look for the black rooster on the neck).",
+    "classicWith": [
+      "pizza",
+      "spaghetti",
+      "lasagna",
+      "bolognese",
+      "marinara",
+      "meatball",
+      "margherita"
+    ]
+  },
+  {
+    "id": "moscato",
+    "name": "Moscato d'Asti",
+    "type": "wine",
+    "emoji": "🍯",
+    "style": "Sweet, lightly fizzy white wine: peach, honey, orange blossom",
+    "sweetness": 5,
+    "priceTier": 1,
+    "tasteTags": [
+      "fizzy",
+      "fruity",
+      "light",
+      "familiar"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "party",
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "sweet",
+      "spicy",
+      "light"
+    ],
+    "why": "Sweet, peachy and gently fizzy, with low alcohol. Perfect with fruity desserts, and it cools down spicy food too.",
+    "principle": "Drink sweeter than dessert",
+    "funFact": "Moscato d'Asti is usually only about 5 to 6% alcohol, roughly the same as a beer, which makes it an easy-going sipper.",
+    "lookFor": "\"Moscato d'Asti\" from Italy, which is fresher and more delicate than generic Moscato.",
+    "classicWith": [
+      "fruit",
+      "cake",
+      "pie",
+      "cheesecake"
+    ]
+  },
+  {
+    "id": "mexican-lager",
+    "name": "Mexican Lager",
+    "type": "beer",
+    "emoji": "🍺",
+    "style": "Light, crisp beer, great with a lime wedge",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "fizzy",
+      "light",
+      "bright",
+      "familiar",
+      "citrus"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "fried",
+      "salty",
+      "light",
+      "acidic"
+    ],
+    "why": "Ice-cold, crisp and refreshing. It puts out the fire from spicy food and keeps you coming back for another chip.",
+    "principle": "Sweet & low-alcohol tame heat",
+    "funFact": "Mexico's brewing tradition got a boost from German and Austrian immigrants in the 1800s, which is why some Mexican beers are amber \"Vienna-style\" lagers.",
+    "factCheck": "VERIFY: Austrian/German brewing influence on Mexican lager (commonly linked to the Maximilian era, 1860s). Widely repeated but double-check the phrasing.",
+    "lookFor": "Any Mexican-style lager; add a lime wedge.",
+    "classicWith": [
+      "taco",
+      "nacho",
+      "burrito",
+      "fajita",
+      "quesadilla",
+      "enchilada"
+    ]
+  },
+  {
+    "id": "ipa",
+    "name": "IPA",
+    "type": "beer",
+    "emoji": "🌲",
+    "style": "Hoppy beer: citrusy, piney, pleasantly bitter",
+    "sweetness": 1,
+    "priceTier": 1,
+    "tasteTags": [
+      "bitter",
+      "bold",
+      "citrus"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "party"
+    ],
+    "affinities": [
+      "fatty",
+      "fried",
+      "salty",
+      "rich",
+      "meaty"
+    ],
+    "why": "Hoppy, citrusy and a little bitter. That bitterness is a great reset button after rich, cheesy, greasy bites like burgers.",
+    "principle": "Bubbles scrub the palate",
+    "funFact": "The name \"India Pale Ale\" comes from hoppy pale ales shipped from England to British India in the 1800s. Hops helped preserve the beer on the long voyage.",
+    "factCheck": "VERIFY: The IPA origin story is popular but partly debated by beer historians. The version here is kept deliberately modest.",
+    "lookFor": "West Coast IPAs are more bitter and piney; Hazy/New England IPAs are juicier and softer.",
+    "classicWith": [
+      "burger",
+      "wing",
+      "chicken wing",
+      "curry"
+    ]
+  },
+  {
+    "id": "hefeweizen",
+    "name": "Hefeweizen (Wheat Beer)",
+    "type": "beer",
+    "emoji": "🌾",
+    "style": "Cloudy German wheat beer: banana, clove, soft and bubbly",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "fruity",
+      "fizzy",
+      "smooth",
+      "light",
+      "spiced"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "party"
+    ],
+    "affinities": [
+      "light",
+      "spicy",
+      "salty",
+      "herby"
+    ],
+    "why": "Soft, bubbly and fruity with almost no bitterness. It's great with brunch, sausages, salads and lightly spicy food.",
+    "principle": "Delicate with delicate",
+    "funFact": "The banana and clove flavors in Hefeweizen don't come from fruit or spices. They're made naturally by the special yeast.",
+    "lookFor": "German Hefeweizen or any American \"wheat beer.\"",
+    "classicWith": [
+      "sausage",
+      "brunch",
+      "egg",
+      "salad"
+    ]
+  },
+  {
+    "id": "stout",
+    "name": "Stout",
+    "type": "beer",
+    "emoji": "☕",
+    "style": "Dark beer: roasted coffee, chocolate, creamy",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "creamy",
+      "bold",
+      "warm",
+      "nostalgic",
+      "smooth"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "sweet",
+      "rich",
+      "meaty",
+      "salty",
+      "smoky"
+    ],
+    "why": "Roasty, chocolatey and creamy, like coffee and dessert in one glass. It loves chocolate cake, hearty stews and even oysters.",
+    "principle": "Like with like",
+    "funFact": "Guinness looks black, but hold it up to the light and it's actually a very dark ruby red. Stout and oysters is also a classic Irish pairing.",
+    "lookFor": "Guinness or any \"milk stout\" (a sweeter, softer style).",
+    "classicWith": [
+      "oyster",
+      "chocolate",
+      "brownie",
+      "stew"
+    ]
+  },
+  {
+    "id": "saison",
+    "name": "Saison",
+    "type": "beer",
+    "emoji": "🚜",
+    "style": "Belgian farmhouse ale: dry, peppery, lively bubbles",
+    "sweetness": 1,
+    "priceTier": 2,
+    "tasteTags": [
+      "fizzy",
+      "bright",
+      "herby",
+      "spiced"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "herby",
+      "fatty",
+      "earthy",
+      "salty",
+      "light"
+    ],
+    "why": "Dry, peppery and super bubbly. It's one of the most food-friendly beers out there, from cheese boards to roast chicken.",
+    "principle": "Bubbles scrub the palate",
+    "funFact": "Saisons (French for \"seasons\") were originally brewed on farms in the French-speaking part of Belgium as a refreshing drink for seasonal farm workers.",
+    "lookFor": "Saison Dupont is the classic; many craft breweries make one too.",
+    "classicWith": [
+      "cheese board",
+      "roast chicken",
+      "cheese"
+    ]
+  },
+  {
+    "id": "cider",
+    "name": "Hard Cider",
+    "type": "cider",
+    "emoji": "🍎",
+    "style": "Fermented apple drink: crisp, fruity, lightly sweet",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "fruity",
+      "fizzy",
+      "bright",
+      "familiar",
+      "nostalgic"
+    ],
+    "moodFit": [
+      "cheerful",
+      "sad"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "fatty",
+      "salty",
+      "savory",
+      "sweet",
+      "creamy"
+    ],
+    "why": "Crisp apple, a little sweet and bubbly. Apples and pork are best friends, and cider brings that same magic to pork chops, sausages and cheese.",
+    "principle": "Acid & bubbles cut fat",
+    "funFact": "Johnny Appleseed's apple trees were mostly the tart kind used for cider, not for eating. In early America, cider was an everyday drink.",
+    "factCheck": "VERIFY: The Johnny Appleseed/cider claim is popular (e.g. Michael Pollan's The Botany of Desire) but worth confirming before presenting as fact.",
+    "lookFor": "\"Dry\" cider if you like it less sweet. Technically not a beer, but it lives in the beer aisle.",
+    "classicWith": [
+      "pork",
+      "pork chop",
+      "pulled pork",
+      "cheese",
+      "sausage"
+    ]
+  },
+  {
+    "id": "bourbon",
+    "name": "Bourbon",
+    "type": "spirit",
+    "emoji": "🥃",
+    "style": "American whiskey: caramel, vanilla, warm and sweet-ish",
+    "sweetness": 2,
+    "priceTier": 2,
+    "tasteTags": [
+      "warm",
+      "bold",
+      "oaky",
+      "boozy",
+      "nostalgic",
+      "smooth"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "smoky",
+      "meaty",
+      "sweet",
+      "rich"
+    ],
+    "why": "Warm caramel and vanilla, sipped neat or on one big ice cube. It's a natural with smoky BBQ and pecan pie.",
+    "principle": "Like with like",
+    "funFact": "Bourbon must be aged in brand-new charred oak containers (that's where the caramel and vanilla come from). And it doesn't have to be made in Kentucky; any US state works.",
+    "lookFor": "A \"wheated\" bourbon for a softer, smoother sip.",
+    "classicWith": [
+      "bbq",
+      "barbecue",
+      "brisket",
+      "rib",
+      "pie",
+      "pulled pork"
+    ]
+  },
+  {
+    "id": "tequila",
+    "name": "Tequila Blanco",
+    "type": "spirit",
+    "emoji": "🌵",
+    "style": "Unaged agave spirit: peppery, citrusy, bright",
+    "sweetness": 1,
+    "priceTier": 2,
+    "tasteTags": [
+      "bright",
+      "citrus",
+      "bold",
+      "boozy"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "acidic",
+      "salty",
+      "herby",
+      "light"
+    ],
+    "why": "Bright, peppery and fresh. Sip it slowly with lime alongside ceviche, grilled fish or anything with fresh salsa.",
+    "principle": "Match acid with acid",
+    "funFact": "Real tequila must be made from blue Weber agave, mostly in the Mexican state of Jalisco. The agave plant takes years to mature before it's harvested.",
+    "lookFor": "Labels that say \"100% de agave.\"",
+    "classicWith": [
+      "ceviche",
+      "taco"
+    ]
+  },
+  {
+    "id": "aged-rum",
+    "name": "Aged Rum",
+    "type": "spirit",
+    "emoji": "🏴‍☠️",
+    "style": "Golden rum: brown sugar, vanilla, warm spice",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "warm",
+      "smooth",
+      "spiced",
+      "nostalgic",
+      "boozy"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "sweet",
+      "smoky",
+      "rich"
+    ],
+    "why": "Smooth brown sugar and vanilla, like dessert you can sip. Lovely with grilled pineapple, caramel desserts or smoky meat.",
+    "principle": "Drink sweeter than dessert",
+    "funFact": "Britain's Royal Navy gave sailors a daily ration of rum (a \"tot\") for over 300 years, until it ended on July 31, 1970, a day still known as \"Black Tot Day.\"",
+    "lookFor": "Rums from Barbados, Jamaica or Guatemala labeled \"aged\" or \"añejo.\"",
+    "classicWith": [
+      "pie",
+      "ice cream"
+    ]
+  },
+  {
+    "id": "scotch",
+    "name": "Smoky Scotch",
+    "type": "spirit",
+    "emoji": "🔥",
+    "style": "Peated Scotch whisky: campfire smoke, sea salt, bold",
+    "sweetness": 1,
+    "priceTier": 3,
+    "tasteTags": [
+      "smoky",
+      "bold",
+      "boozy",
+      "warm"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo"
+    ],
+    "occasions": [
+      "date"
+    ],
+    "affinities": [
+      "smoky",
+      "salty",
+      "rich",
+      "fatty"
+    ],
+    "why": "Big campfire smoke with a salty edge. An adventurous pick, amazing with smoked meats, aged cheese or dark chocolate.",
+    "principle": "Like with like",
+    "funFact": "That smoky flavor comes from drying malted barley over peat fires. It's most famous on the Scottish island of Islay.",
+    "lookFor": "Islay single malts. Add a few drops of water to soften it.",
+    "classicWith": [
+      "smoked",
+      "cheese board",
+      "chocolate"
+    ]
+  },
+  {
+    "id": "irish-cream",
+    "name": "Irish Cream Liqueur",
+    "type": "spirit",
+    "emoji": "🍫",
+    "style": "Cream liqueur: chocolate, vanilla, whiskey, silky",
+    "sweetness": 5,
+    "priceTier": 2,
+    "tasteTags": [
+      "creamy",
+      "smooth",
+      "warm",
+      "nostalgic",
+      "familiar"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "sweet",
+      "creamy",
+      "rich"
+    ],
+    "why": "Silky, sweet and chocolatey, like a grown-up milkshake. Pour it over ice with dessert or into your coffee.",
+    "principle": "Drink sweeter than dessert",
+    "funFact": "Baileys, the original Irish cream, was launched in 1974. Blending cream with whiskey so it stays fresh on the shelf was a big food-science challenge.",
+    "lookFor": "Baileys or a store-brand Irish cream; serve over ice.",
+    "classicWith": [
+      "cheesecake",
+      "brownie",
+      "ice cream"
+    ]
+  },
+  {
+    "id": "margarita",
+    "name": "Classic Margarita",
+    "type": "cocktail",
+    "emoji": "🍹",
+    "style": "Tequila, lime, orange liqueur: tangy, bright, salty rim",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "citrus",
+      "bright",
+      "boozy",
+      "fruity"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "spicy",
+      "salty",
+      "acidic",
+      "fried"
+    ],
+    "why": "Tangy lime, a little sweetness and a salty rim. It was practically built for tacos and chips-and-guac night.",
+    "principle": "Match acid with acid",
+    "funFact": "At least half a dozen people claim to have invented the margarita, and nobody agrees on who really did. Everyone wants credit for a hit.",
+    "lookFor": "Tequila blanco, triple sec and fresh limes (2 : 1 : 1). Salt the rim.",
+    "classicWith": [
+      "taco",
+      "nacho",
+      "guac",
+      "fajita",
+      "enchilada"
+    ]
+  },
+  {
+    "id": "mojito",
+    "name": "Mojito",
+    "type": "cocktail",
+    "emoji": "🌿",
+    "style": "Rum, lime, mint, soda: minty, fizzy, refreshing",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "citrus",
+      "herby",
+      "fizzy",
+      "bright",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "herby",
+      "light",
+      "fried",
+      "salty"
+    ],
+    "why": "Cool mint, fresh lime and bubbles. It's like air-conditioning for spicy or fried food.",
+    "principle": "Echo the herbs",
+    "funFact": "The mojito comes from Cuba and is often linked to Ernest Hemingway, though historians doubt that the famous \"My mojito in La Bodeguita\" note was really written by him.",
+    "factCheck": "VERIFY: The Hemingway/La Bodeguita attribution is widely considered apocryphal. The copy says so, but confirm before presenting.",
+    "lookFor": "White rum, fresh mint, limes, sugar and club soda.",
+    "classicWith": [
+      "pho",
+      "falafel"
+    ]
+  },
+  {
+    "id": "martini",
+    "name": "Vodka Martini (with Olives)",
+    "type": "cocktail",
+    "emoji": "🫒",
+    "style": "Vodka, dry vermouth, olives: crisp, cold, savory",
+    "sweetness": 1,
+    "priceTier": 2,
+    "tasteTags": [
+      "boozy",
+      "bright",
+      "bold"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date"
+    ],
+    "affinities": [
+      "salty",
+      "fatty",
+      "rich",
+      "light"
+    ],
+    "why": "Ice-cold, crisp and savory from the olive brine. It's a classy match for salty, rich bites like oysters, cheese or a fancy dinner.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "James Bond made the vodka martini \"shaken, not stirred\" one of the most famous drink orders in pop culture. Bartenders usually stir martinis, which is exactly why Bond's order stood out.",
+    "lookFor": "A good vodka, dry vermouth and green olives (add a splash of brine for a \"dirty\" martini).",
+    "classicWith": [
+      "oyster",
+      "charcuterie"
+    ]
+  },
+  {
+    "id": "aperol-spritz",
+    "name": "Aperol Spritz",
+    "type": "cocktail",
+    "emoji": "🍊",
+    "style": "Aperol, Prosecco, soda: bittersweet orange, bubbly",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "fizzy",
+      "bright",
+      "citrus",
+      "bitter",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "salty",
+      "fatty",
+      "fried",
+      "light"
+    ],
+    "why": "Bubbly, bittersweet orange that's light on alcohol and big on sunshine. It's Italy's favorite pre-dinner drink with salty snacks.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "Aperol was created in Padua, Italy in 1919. \"Spritz\" comes from the German word for \"splash,\" reportedly from Austrian soldiers who added a splash of water to Veneto wines in the 1800s.",
+    "factCheck": "VERIFY: The Aperol 1919/Padua date is well established; the Austrian-soldiers origin of \"spritz\" is a common story but less certain.",
+    "lookFor": "Aperol, Prosecco, soda water and an orange slice (3 : 2 : 1).",
+    "classicWith": [
+      "chips",
+      "charcuterie",
+      "pizza"
+    ]
+  },
+  {
+    "id": "paloma",
+    "name": "Paloma",
+    "type": "cocktail",
+    "emoji": "🕊️",
+    "style": "Tequila and grapefruit soda: tart, fizzy, refreshing",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "citrus",
+      "fizzy",
+      "bright",
+      "fruity"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "fried",
+      "salty",
+      "acidic"
+    ],
+    "why": "Tart grapefruit, a pinch of salt and lots of bubbles. It's lighter and easier than a margarita, and great with spicy tacos.",
+    "principle": "Sweet & low-alcohol tame heat",
+    "funFact": "\"Paloma\" means \"dove\" in Spanish. It's a simple two-ingredient highball: tequila plus grapefruit soda.",
+    "lookFor": "Tequila blanco and grapefruit soda (Jarritos or Squirt), plus a squeeze of lime.",
+    "classicWith": [
+      "taco",
+      "nacho",
+      "ceviche"
+    ]
+  },
+  {
+    "id": "old-fashioned",
+    "name": "Old Fashioned",
+    "type": "cocktail",
+    "emoji": "🍊",
+    "style": "Whiskey, sugar, bitters, orange: rich, warm, smooth",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "warm",
+      "boozy",
+      "nostalgic",
+      "smooth",
+      "bold",
+      "oaky"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "smoky",
+      "meaty",
+      "sweet",
+      "rich",
+      "savory"
+    ],
+    "why": "Warm whiskey rounded off with a little sugar and orange. It's cozy and classic, great with steak, burgers or a brownie.",
+    "principle": "Like with like",
+    "funFact": "It's one of the oldest cocktails around. An 1806 newspaper defined a \"cock-tail\" as spirits, sugar, water and bitters, which is basically an Old Fashioned.",
+    "lookFor": "Bourbon or rye, a sugar cube, Angostura bitters and an orange peel.",
+    "classicWith": [
+      "steak",
+      "burger",
+      "brownie"
+    ]
+  },
+  {
+    "id": "hot-toddy",
+    "name": "Hot Toddy",
+    "type": "cocktail",
+    "emoji": "🍵",
+    "style": "Whiskey, honey, lemon, hot water: warm and soothing",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "warm",
+      "nostalgic",
+      "citrus",
+      "smooth",
+      "familiar",
+      "spiced"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "sweet",
+      "light",
+      "savory",
+      "rich"
+    ],
+    "why": "Warm honey and lemon with a gentle whiskey glow, like a hug in a mug. Nice with soups, simple roasts or cookies.",
+    "principle": "Match intensity",
+    "funFact": "Hot toddies have been a cold-weather staple in Scotland and Ireland for generations, and a classic folk remedy for sore throats (not a medical one!).",
+    "factCheck": "VERIFY: Keep this generic. Specific origin stories for the word \"toddy\" (e.g. from a Hindi word for palm wine) are debated.",
+    "lookFor": "Any whiskey, honey, a lemon and a cinnamon stick if you have one.",
+    "classicWith": [
+      "soup"
+    ]
+  },
+  {
+    "id": "sangria",
+    "name": "Sangria",
+    "type": "cocktail",
+    "emoji": "🍓",
+    "style": "Red wine punch with fruit: juicy, sweet, easy",
+    "sweetness": 4,
+    "priceTier": 1,
+    "tasteTags": [
+      "fruity",
+      "bright",
+      "familiar",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "salty",
+      "fried",
+      "fatty",
+      "savory"
+    ],
+    "why": "Juicy, fruity and made by the pitcher, so everyone is happy. Great with tapas, grilled meats and snacky spreads.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "Sangria gets its name from \"sangre,\" Spanish for blood, because of its deep red color. In the EU, only sangria made in Spain or Portugal can be sold under that name.",
+    "factCheck": "VERIFY: The EU labeling rule (2014 regulation on aromatized wine products) is believed accurate but worth confirming.",
+    "lookFor": "A cheap Spanish red (like Garnacha), chopped fruit, orange juice and a splash of brandy. Make it ahead.",
+    "classicWith": [
+      "tapas",
+      "paella"
+    ]
+  },
+  {
+    "id": "espresso-martini",
+    "name": "Espresso Martini",
+    "type": "cocktail",
+    "emoji": "☕",
+    "style": "Vodka, espresso, coffee liqueur: rich, sweet, frothy",
+    "sweetness": 3,
+    "priceTier": 2,
+    "tasteTags": [
+      "creamy",
+      "bold",
+      "smooth"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "sweet",
+      "creamy",
+      "rich"
+    ],
+    "why": "Coffee, a little sweetness and a frothy top. It's dessert and an after-dinner coffee in one, great with tiramisu or chocolate.",
+    "principle": "Drink sweeter than dessert",
+    "funFact": "London bartender Dick Bradsell created it in the 1980s, reportedly for a customer who asked for a drink that would \"wake me up.\"",
+    "factCheck": "VERIFY: Dick Bradsell and the 1980s are well established; the exact customer quote varies between retellings, so it's kept vague.",
+    "lookFor": "Vodka, cold espresso or cold brew concentrate and coffee liqueur. Shake hard for the foam.",
+    "classicWith": [
+      "tiramisu",
+      "chocolate",
+      "cake"
+    ]
+  },
+  {
+    "id": "highball",
+    "name": "Whisky Highball",
+    "type": "cocktail",
+    "emoji": "🧊",
+    "style": "Whisky and soda over ice: light, crisp, bubbly",
+    "sweetness": 1,
+    "priceTier": 2,
+    "tasteTags": [
+      "fizzy",
+      "light",
+      "smooth",
+      "bright",
+      "familiar"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "group",
+      "party",
+      "date"
+    ],
+    "affinities": [
+      "fried",
+      "salty",
+      "umami",
+      "light",
+      "smoky"
+    ],
+    "why": "Whisky stretched with lots of cold bubbles, so it's light, crisp and refreshing. It's amazing with fried chicken, yakitori and sushi.",
+    "principle": "Bubbles scrub the palate",
+    "funFact": "Whisky highballs are a staple at Japanese izakayas (casual pubs), where they're famously paired with karaage fried chicken.",
+    "lookFor": "Any smooth whisky (Japanese blends are classic), very cold club soda and lots of ice.",
+    "classicWith": [
+      "karaage",
+      "fried chicken",
+      "sushi",
+      "dumpling",
+      "fried rice"
+    ]
+  }
+]
