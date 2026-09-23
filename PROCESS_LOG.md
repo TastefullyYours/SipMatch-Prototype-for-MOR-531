@@ -90,7 +90,7 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 
 **Built:**
 - `src/data/drinks.json`: 33 drinks (12 wine, 5 beer, 1 cider, 5 spirits, 10 cocktails). Each is tagged with sweetness (1–5), price tier ($/$$/$$$), taste tags, mood fit, social/solo vibe, occasion fit, food-flavor affinities and "classic pairing" dish keywords. Each also has beginner copy: why it works, a principle, a fun fact and a "look for" shopping tip.
-- `src/data/dishes.js`: about 130 dish keywords mapped to 15 flavor tags. Matching is whole-word, plural-tolerant and longest-first ("fried chicken" beats "chicken"). Unrecognized dishes fall back to a neutral "savory" profile; a party with the dish skipped uses a salty/fried/fatty snack profile.
+- `src/data/dishes.js`: about 120 dish keywords mapped to 15 flavor tags. Matching is whole-word, plural-tolerant and longest-first ("fried chicken" beats "chicken"). Unrecognized dishes fall back to a neutral "savory" profile; a party with the dish skipped uses a salty/fried/fatty snack profile.
 - `src/logic/recommend.js`: weighted scoring. Dish-flavor overlap is weighted highest (+3 per tag, +4 for a classic pairing), with penalties for known clashes (e.g. high alcohol or tannin with spicy food, a dry drink with dessert). Sweetness distance from the user's preference, mood, social/solo, occasion, taste likes and budget (over-budget is penalized, not hidden) also count. Disliked drinks are excluded. The top 3 always span at least 2 drink types.
 - Each result carries a plain-language pairing principle (15 established principles such as "Acid & bubbles cut fat" and "Tannin loves protein") and a mood line.
 
