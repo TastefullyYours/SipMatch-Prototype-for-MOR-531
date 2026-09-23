@@ -106,3 +106,25 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **Decisions / issues:**
 - Early tests put a margarita top-3 for salmon and left Chianti out for pizza. Fixes: a "classic pairing" bonus, removing "fatty" from the margarita's affinities, and principle explanations that only claim a mechanism the drink actually has (e.g. no "tannin loves protein" for a white wine).
 - Cider gets its own type ("Cider") rather than being lumped into beer.
+
+---
+
+## 2026-09-23 — Milestone 3: Free-tier flow (end to end)
+
+**Prompt:** Continuing the approved plan (no new prompt).
+
+**Built:**
+- `App.jsx`: all state in React (`step`, `profile`, `mood`, `occasion`, `dish`), a step-based "router", per-step Back targets, and a progress bar across the 5 input steps.
+- `AgeGate.jsx`: splash + "Are you 21 or older?". "Not yet" leads to a friendly come-back-later screen.
+- `Onboarding.jsx`: 2 screens. (1) Age group + budget. (2) Sweet/in-between/dry + flavor likes (chips) + dislikes (chips).
+- `Flow.jsx`: Mood (3 feelings + social/solo, with an expandable "Why does mood matter?" note), Occasion (party / duo-date / small group), and Dish (free text + example chips; "Skip, it's just party snacks" appears only for party).
+- `Results.jsx` + `DrinkCard.jsx`: a top match card (expanded) plus 2 alternates (tap to expand). Each card shows why it works, the pairing principle (named for the user's dish), why it fits your mood, a fun fact, a "look for at the store" tip, the price tier with range, a "splurge" flag if over budget and a "Classic pairing" badge. Unrecognized dishes show a friendly note. Actions: try a different dish, start over (keeps the profile), edit profile (returns straight to updated results). There's also a locked "Already at the store?" teaser that leads to Premium.
+- Layout: phone-width shell (centered card with shadow on desktop), sticky header with Back / logo / ✨ Premium, and a "Please drink responsibly. For adults 21+ only." footer on every screen.
+
+**Testing:** A headless-browser (Playwright) click-through at 390×844 covered age gate → onboarding → stressed/social/date/"spicy chicken tacos" (→ Paloma, Margarita, Dry Rosé), expanding an alternate, editing the profile, starting over → party + skip (→ Prosecco, Aperol Spritz, Sangria), and an unrecognized dish. No JS errors.
+
+**Decisions / issues:**
+- Mood and social/solo sit on **one** screen (two sections) instead of the planned two screens, to save a tap.
+- Mood/Occasion/Dish live in one file (`Flow.jsx`) rather than three, for speed.
+- Added a "look for at the store" tip to each card (not in the brief) to support the grocery-store use case.
+- Fixed a bug where backing out of profile editing left the app in "editing" mode.
