@@ -148,3 +148,18 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 - Placeholder pricing: **$3.99/month or $29.99/year (save 37%)** with a 7-day free trial.
 - The paywall's Premium column also lists "Save favorites & shopping lists" as a plausible premium perk. This isn't in the brief, so it's flagged for approval.
 - Fixed a carousel alignment bug (cards snapping flush to the screen edge).
+
+---
+
+## 2026-09-23 — Milestone 5: Polish, README & deploy docs
+
+**Prompt:** Continuing the approved plan (no new prompt).
+
+**Built / changed:**
+- Full `README.md`: product summary, feature list, how the recommender works, a mood & taste table with the supplied sources, the list of facts to verify, run-locally steps and deploy steps for **Vercel** (primary) and **GitHub Pages** (fallback, via `npx gh-pages -d dist`).
+- Desktop check: the app renders as a centered phone-width card; fixed the "✨ Premium" header pill wrapping onto two lines.
+- Re-ran both Playwright click-throughs (free flow + premium) after the final changes: all passed with no app errors.
+
+**Decisions / issues:**
+- No GitHub Actions workflow was added for Pages, to avoid a failing CI job if Pages isn't enabled. The manual `gh-pages` command is documented instead.
+- Google Fonts (Fraunces/Inter) couldn't load in the sandboxed test browser (proxy certificate). The app falls back to system serif/sans fonts, and fonts load normally once deployed.

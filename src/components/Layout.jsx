@@ -18,7 +18,7 @@ export function Header({ onBack, onLogo, onPremium, progress }) {
           {onPremium && (
             <button
               onClick={onPremium}
-              className="rounded-full bg-gold/20 px-2.5 py-1 text-xs font-semibold text-[#8a6412] hover:bg-gold/30"
+              className="whitespace-nowrap rounded-full bg-gold/20 px-2.5 py-1 text-xs font-semibold text-[#8a6412] hover:bg-gold/30"
             >
               ✨ Premium
             </button>
