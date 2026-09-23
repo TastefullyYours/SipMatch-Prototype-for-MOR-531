@@ -1,11 +1,12 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { recommend } from '../logic/recommend.js'
 import { FEELINGS, OCCASIONS, label } from '../data/options.js'
 import DrinkCard from '../components/DrinkCard.jsx'
 import { Button, LockBadge } from '../components/ui.jsx'
 
 export default function Results({ profile, mood, occasion, dish, onChangeDish, onStartOver, onEditProfile, onPremium }) {
-  const { picks, dishInfo } = useMemo(() => recommend({ profile, mood, occasion, dish }), [profile, mood, occasion, dish])
+  const { picks, alternatives, dishInfo } = useMemo(() => recommend({ profile, mood, occasion, dish }), [profile, mood, occasion, dish])
+  const [showAlts, setShowAlts] = useState(false)
   const [top, ...alts] = picks
   const dishLabel = dishInfo.skipped ? 'party snacks' : dish.trim()
 
@@ -39,6 +40,28 @@ export default function Results({ profile, mood, occasion, dish, onChangeDish, o
         {alts.map((p) => (
           <DrinkCard key={p.drink.id} pick={p} dishLabel={dishLabel} />
         ))}
+      </div>
+
+      <div className="mt-7 overflow-hidden rounded-3xl border-2 border-berry/15 bg-white/60">
+        <button
+          onClick={() => setShowAlts(!showAlts)}
+          aria-expanded={showAlts}
+          className="flex w-full items-center gap-3 p-4 text-left transition hover:bg-white"
+        >
+          <span className="text-3xl">🤔</span>
+          <span className="flex-1">
+            <span className="block font-semibold">Don't like these?</span>
+            <span className="block text-sm text-muted">Try a wine, a beer and a spirit or cocktail that go a different direction.</span>
+          </span>
+          <span className={`text-berry transition ${showAlts ? 'rotate-180' : ''}`}>⌄</span>
+        </button>
+        {showAlts && (
+          <div className="flex flex-col gap-3 border-t border-berry/10 p-3 pb-4">
+            {alternatives.map((a) => (
+              <DrinkCard key={a.drink.id} pick={a} dishLabel={dishLabel} contrast={a.contrast} />
+            ))}
+          </div>
+        )}
       </div>
 
       <button

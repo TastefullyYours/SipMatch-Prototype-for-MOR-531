@@ -163,3 +163,29 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **Decisions / issues:**
 - No GitHub Actions workflow was added for Pages, to avoid a failing CI job if Pages isn't enabled. The manual `gh-pages` command is documented instead.
 - Google Fonts (Fraunces/Inter) couldn't load in the sandboxed test browser (proxy certificate). The app falls back to system serif/sans fonts, and fonts load normally once deployed.
+
+---
+
+## 2026-09-23: Milestone 6: "Don't like these?" alternatives + dataset expanded to 61 drinks
+
+**Prompt (verbatim, first part):** "wait i would like it to have a few more alternatives at the end, based on if you don't like sweetness bitterness or other aspects of the drink. like "if you want something a little sweeter/drier" at the end, like alternatives if they don't like what's at the end. I would ideally like to include a few more items like a total 3 main and 3 alts. If they don't like the options the app chooses, lets have a bottom tab that says "don't like these? " and it gives a wine beer and spirit/cocktail suggestion and those are the 3 alts"
+
+**Prompt (summary, second part):** The user supplied tables of 29 drinks to add (5 wines, 1 beer, 5 spirits, 18 cocktails), each with sweetness, price, mood fit and classic pairings, and asked to replace the generic Sangria with Red and White Sangria.
+
+**Context:** PR #1 had already been merged into `main` (and deployed via Vercel), so this work restarted the branch from the updated `main`.
+
+**Built / changed:**
+- **Results:** the 3 main picks are unchanged. Below them, a **"Don't like these? 🤔"** tab expands to 3 alternatives: one **wine**, one **beer or cider**, one **spirit or cocktail**. Each carries a banner saying how it differs from the top pick: "If you want something a little sweeter / a little drier / less bitter / lighter / bolder / some bubbles / to skip the bubbles / a different style".
+- **Alternative-picking logic** (`recommend.js`): takes the top 5 candidates per category (excluding the main 3 and disliked drinks) and tries the combinations. It favors high scores, 3 different directions, and ideally one sweeter plus one drier option. If a category is empty (e.g. the user dislikes wine), it fills the slot from any category.
+- **Dataset:** 33 → **61 drinks** (17 wine, 6 beer + 1 cider, 10 spirits, 27 cocktails). All 29 requested drinks were added with the user's sweetness, price, mood fit and classic pairings, plus beginner copy, a pairing principle, a fun fact and a store tip for each. The generic Sangria was split into Red and White Sangria.
+- **Dish keywords:** about 120 → about 140 (bacon, jerk, Cuban, smoked salmon, poke, olives, pickles, appetizers, pastries, pecan pie, bread pudding, strawberries, pineapple, tropical, etc.) so every classic pairing in the table can match.
+- The **"Dislike wine"** filter now also excludes wine-based cocktails (sangrias, mimosa, Aperol spritz, French 75).
+
+**Fact-checking:** Six new facts are flagged `VERIFY` (14 total): shandy/Radler origin, Bloody Mary origin, Manhattan/Jennie Jerome myth, Negroni origin, Mai Tai origin and Lemon Drop origin. The Red Sangria entry keeps the EU-labeling flag from the old Sangria.
+
+**Testing:** 14 Node scenarios were checked for sensible main picks and alternatives (e.g. BBQ ribs → Whiskey Sour / Zinfandel / Red Blend; alternatives Malbec "drier", Hard Cider "some bubbles", Red Sangria "sweeter"). Playwright click-throughs of the free flow, the premium screens and the new tab all passed with no app errors.
+
+**Decisions / issues:**
+- The requested totals said 62 drinks / 28 cocktails, but the listed additions produce **61 / 27** (33 − generic Sangria + 29). The app uses the 61 listed drinks.
+- Removed "spicy food" from Zinfandel's affinities: it's high in alcohol, and high alcohol makes chili heat feel hotter (one of the app's own principles).
+- The alternatives are collapsed behind the tab by default so the main 3 stay the focus.
