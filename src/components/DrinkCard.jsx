@@ -25,7 +25,7 @@ function PriceTag({ price, overBudget }) {
 
 export default function DrinkCard({ pick, primary = false, dishLabel, contrast }) {
   const [open, setOpen] = useState(primary)
-  const { drink, principle, moodLine, price, overBudget, classic } = pick
+  const { drink, principle, moodLine, price, overBudget, classic, likeOf } = pick
 
   return (
     <article
@@ -64,6 +64,11 @@ export default function DrinkCard({ pick, primary = false, dishLabel, contrast }
           <Detail icon="🧪" title={`The pairing principle${dishLabel ? ` with ${dishLabel}` : ''}`}>
             <b>{principle.name}.</b> {principle.text}
           </Detail>
+          {likeOf && (
+            <Detail icon="❤️" title="Based on your taste">
+              {likeOf.id === drink.id ? 'One of your favorites! You said you love it.' : `Similar to ${likeOf.name}, which you said you love.`}
+            </Detail>
+          )}
           <Detail icon="🫶" title="Why it fits your mood">
             {moodLine}
           </Detail>

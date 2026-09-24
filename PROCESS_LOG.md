@@ -204,3 +204,42 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **Testing:** Node scenarios for skipped date/group/party (e.g. sad + solo + date → Bourbon / Irish Whiskey / Manhattan with $$ budget and dry taste). Playwright confirmed the skip → results → "Add a dish" round trip. All four earlier click-through scripts still pass with no app errors.
 
 **Decisions / issues:** Kept the party skip copy and "party snacks" profile as before; only the non-party skip is new.
+
+---
+
+## 2026-09-24: Milestone 8: Real taste profile, birthday age gate, richer matching quiz
+
+**Prompt (verbatim):**
+> Profiles should collect the taste preferences, and the budget would adjust more often so that should move external of the profile stage. For birthday, we should ask their actual birthday
+>
+> In the matching quiz it should be also include
+> * Temperature/Style Cues: Iced vs. neat, carbonated vs. still, bold vs. light-bodied.
+>
+> Core Taste & Palate Profile
+> * Favorite/Disliked Flavors: Sweet, bitter, dry, smoky, herbal, acidic, or fruity.
+> * Category Weights: Preference split across beer, wine, spirits, cocktails, and non-alcoholic/coffee options.
+> * Sweetness/ABV Tolerance: Preferred sugar level and alcohol-by-volume ceiling (e.g., session vs. high-proof).
+>
+> Sensory & Chemical Restrictions
+> * Aversions & Allergies: Sulfites, gluten, dairy, artificial sweeteners, specific botanicals (gin/juniper), or oak aging.
+>
+> Calibration History
+> * Baseline Ratings: 3 to 5 rated drinks you love and 2 you hate to seed the algorithm.
+
+**Context:** PR #2 had been merged into `main`, so the branch restarted from the updated `main`.
+
+**Built / changed:**
+- **Age gate:** a birthday date picker replaces "Are you 21?". Age is calculated from the date; under 21 → "come back later". The birthday lives only in React state.
+- **Profile** (4 screens, replacing the old 2): (1) palate: favorite and disliked flavors + a 5-step sweetness scale; (2) what you drink: Never/Rarely/Sometimes/Love-it weights for 5 categories + an ABV ceiling; (3) anything to avoid: 6 allergy/aversion toggles with a "check the label" note; (4) calibration: tap drinks to cycle ❤️ love / 👎 pass (3–5 love, 2 pass), with a skip for true beginners. The old age-group and budget questions were removed from the profile.
+- **Matching quiz:** a new "Tonight" step after Occasion collects **budget** (moved out of the profile) and **style cues** (iced vs. neat, carbonated vs. still, light vs. bold, each with "Either").
+- **Data:** every drink now has approximate **ABV as served**, a **serving temperature** (iced / chilled / room / hot) and **allergens** (sulfites, gluten, dairy, juniper, oak). **6 non-alcoholic/coffee drinks** were added so that category can be recommended: NA beer, alcohol-free sparkling wine, zero-proof spritz, virgin mojito, espresso tonic, cold brew. Total: **67 drinks**.
+- **Scoring:** new factors for favorite/disliked flavors, category weights, similarity to loved/hated drinks (type + shared taste tags + sweetness), style cues and tonight's budget. Hard filters for allergens (never relaxed), ABV ceiling, "Never" categories and passed drinks. The last three are relaxed with a visible notice only if fewer than 3 drinks remain. Stressed still shifts sweetness one step sweeter.
+- **Results:** chips show budget and style cues. A new "❤️ Based on your taste" line appears ("Similar to X, which you love" / "One of your favorites!"), plus a "Change budget or style" button. If filters leave nothing, the screen shows a friendly empty state.
+
+**Testing:** Node scenarios (low ABV, gluten + sulfites, spirits = Never, NA = Love it, calibration, style cues, everything-blocked fallback). A Playwright run covered underage birthday → adult birthday → all 4 profile screens → quiz with style cues → results + "Don't like these?" → change budget/style → edit profile → save. The premium-flow test (with calibration skipped) also passed. No app errors.
+
+**Decisions / issues:**
+- **Artificial sweeteners:** none of the 67 drinks use them as typically made (only some diet mixers or pre-made mixes do), so this toggle currently filters nothing. It's kept for the user's peace of mind and for future brand-level data.
+- **Gluten:** only beers are tagged. Distilled spirits (even grain-based) are generally considered gluten-free by celiac organizations, so they aren't tagged. Worth a mention if asked.
+- ABV values are typical served strengths (a margarita is roughly 20%, a G&T about 10%), used only for the ceiling filter.
+- The "Don't like these?" slots are still wine / beer or cider / spirit or cocktail; NA drinks appear there only as a fallback or in the main picks.

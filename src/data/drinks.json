@@ -41,6 +41,11 @@
       "popcorn",
       "fried chicken",
       "brunch"
+    ],
+    "abv": 11,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -86,6 +91,11 @@
       "oyster",
       "caviar",
       "fries"
+    ],
+    "abv": 12,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -131,6 +141,11 @@
       "fish",
       "ceviche",
       "pesto"
+    ],
+    "abv": 13,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -177,6 +192,11 @@
       "szechuan",
       "sushi",
       "orange chicken"
+    ],
+    "abv": 9,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -218,6 +238,11 @@
       "shrimp",
       "salad",
       "seafood"
+    ],
+    "abv": 12.5,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -263,6 +288,12 @@
       "roast chicken",
       "mac and cheese",
       "carbonara"
+    ],
+    "abv": 14,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites",
+      "oak"
     ]
   },
   {
@@ -305,6 +336,11 @@
       "shrimp",
       "charcuterie",
       "cheese board"
+    ],
+    "abv": 12.5,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -350,6 +386,11 @@
       "mushroom",
       "turkey",
       "roast chicken"
+    ],
+    "abv": 13.5,
+    "serve": "room",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -392,6 +433,12 @@
       "steak",
       "burger",
       "lamb"
+    ],
+    "abv": 14.5,
+    "serve": "room",
+    "allergens": [
+      "sulfites",
+      "oak"
     ]
   },
   {
@@ -437,6 +484,12 @@
       "bbq",
       "barbecue",
       "kebab"
+    ],
+    "abv": 14,
+    "serve": "room",
+    "allergens": [
+      "sulfites",
+      "oak"
     ]
   },
   {
@@ -483,6 +536,11 @@
       "marinara",
       "meatball",
       "margherita"
+    ],
+    "abv": 13,
+    "serve": "room",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -525,6 +583,11 @@
       "cake",
       "pie",
       "cheesecake"
+    ],
+    "abv": 5.5,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -571,6 +634,11 @@
       "fajita",
       "quesadilla",
       "enchilada"
+    ],
+    "abv": 4.5,
+    "serve": "chilled",
+    "allergens": [
+      "gluten"
     ]
   },
   {
@@ -613,6 +681,11 @@
       "wing",
       "chicken wing",
       "curry"
+    ],
+    "abv": 6.5,
+    "serve": "chilled",
+    "allergens": [
+      "gluten"
     ]
   },
   {
@@ -655,6 +728,11 @@
       "brunch",
       "egg",
       "salad"
+    ],
+    "abv": 5,
+    "serve": "chilled",
+    "allergens": [
+      "gluten"
     ]
   },
   {
@@ -699,6 +777,11 @@
       "chocolate",
       "brownie",
       "stew"
+    ],
+    "abv": 4.5,
+    "serve": "chilled",
+    "allergens": [
+      "gluten"
     ]
   },
   {
@@ -740,6 +823,11 @@
       "cheese board",
       "roast chicken",
       "cheese"
+    ],
+    "abv": 6.5,
+    "serve": "chilled",
+    "allergens": [
+      "gluten"
     ]
   },
   {
@@ -787,6 +875,11 @@
       "pulled pork",
       "cheese",
       "sausage"
+    ],
+    "abv": 5.5,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -832,6 +925,11 @@
       "rib",
       "pie",
       "pulled pork"
+    ],
+    "abv": 45,
+    "serve": "room",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -871,7 +969,10 @@
     "classicWith": [
       "ceviche",
       "taco"
-    ]
+    ],
+    "abv": 40,
+    "serve": "room",
+    "allergens": []
   },
   {
     "id": "aged-rum",
@@ -911,6 +1012,11 @@
     "classicWith": [
       "pie",
       "ice cream"
+    ],
+    "abv": 40,
+    "serve": "room",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -950,6 +1056,11 @@
       "smoked",
       "cheese board",
       "chocolate"
+    ],
+    "abv": 43,
+    "serve": "room",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -991,6 +1102,11 @@
       "cheesecake",
       "brownie",
       "ice cream"
+    ],
+    "abv": 17,
+    "serve": "iced",
+    "allergens": [
+      "dairy"
     ]
   },
   {
@@ -1034,7 +1150,10 @@
       "guac",
       "fajita",
       "enchilada"
-    ]
+    ],
+    "abv": 20,
+    "serve": "iced",
+    "allergens": []
   },
   {
     "id": "mojito",
@@ -1076,7 +1195,10 @@
     "classicWith": [
       "pho",
       "falafel"
-    ]
+    ],
+    "abv": 12,
+    "serve": "iced",
+    "allergens": []
   },
   {
     "id": "martini",
@@ -1114,6 +1236,11 @@
     "classicWith": [
       "oyster",
       "charcuterie"
+    ],
+    "abv": 30,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -1158,7 +1285,12 @@
       "charcuterie",
       "pizza"
     ],
-    "wineBased": true
+    "wineBased": true,
+    "abv": 8,
+    "serve": "iced",
+    "allergens": [
+      "sulfites"
+    ]
   },
   {
     "id": "paloma",
@@ -1198,7 +1330,10 @@
       "taco",
       "nacho",
       "ceviche"
-    ]
+    ],
+    "abv": 10,
+    "serve": "iced",
+    "allergens": []
   },
   {
     "id": "old-fashioned",
@@ -1242,6 +1377,11 @@
       "steak",
       "burger",
       "brownie"
+    ],
+    "abv": 32,
+    "serve": "iced",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -1283,6 +1423,11 @@
     "lookFor": "Any whiskey, honey, a lemon and a cinnamon stick if you have one.",
     "classicWith": [
       "soup"
+    ],
+    "abv": 10,
+    "serve": "hot",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -1296,7 +1441,8 @@
     "tasteTags": [
       "creamy",
       "bold",
-      "smooth"
+      "smooth",
+      "coffee"
     ],
     "moodFit": [
       "cheerful"
@@ -1323,7 +1469,10 @@
       "tiramisu",
       "chocolate",
       "cake"
-    ]
+    ],
+    "abv": 20,
+    "serve": "chilled",
+    "allergens": []
   },
   {
     "id": "highball",
@@ -1369,6 +1518,11 @@
       "sushi",
       "dumpling",
       "fried rice"
+    ],
+    "abv": 10,
+    "serve": "iced",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -1413,6 +1567,12 @@
       "roast chicken",
       "mushroom",
       "steak"
+    ],
+    "abv": 13.5,
+    "serve": "room",
+    "allergens": [
+      "sulfites",
+      "oak"
     ]
   },
   {
@@ -1457,6 +1617,12 @@
       "rib",
       "pizza",
       "burger"
+    ],
+    "abv": 15,
+    "serve": "room",
+    "allergens": [
+      "sulfites",
+      "oak"
     ]
   },
   {
@@ -1501,6 +1667,12 @@
       "steak",
       "sausage",
       "smoked"
+    ],
+    "abv": 14,
+    "serve": "room",
+    "allergens": [
+      "sulfites",
+      "oak"
     ]
   },
   {
@@ -1545,6 +1717,12 @@
       "pizza",
       "bbq",
       "cheese board"
+    ],
+    "abv": 13.5,
+    "serve": "room",
+    "allergens": [
+      "sulfites",
+      "oak"
     ]
   },
   {
@@ -1589,6 +1767,11 @@
       "strawberries",
       "seafood",
       "fried chicken"
+    ],
+    "abv": 12,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -1633,6 +1816,11 @@
       "sausage",
       "salad",
       "fish and chips"
+    ],
+    "abv": 2.5,
+    "serve": "chilled",
+    "allergens": [
+      "gluten"
     ]
   },
   {
@@ -1673,7 +1861,10 @@
       "caviar",
       "smoked salmon",
       "pickle"
-    ]
+    ],
+    "abv": 40,
+    "serve": "chilled",
+    "allergens": []
   },
   {
     "id": "gin",
@@ -1714,6 +1905,11 @@
       "oyster",
       "seafood",
       "charcuterie"
+    ],
+    "abv": 10,
+    "serve": "iced",
+    "allergens": [
+      "juniper"
     ]
   },
   {
@@ -1756,6 +1952,11 @@
       "stew",
       "chocolate",
       "bread pudding"
+    ],
+    "abv": 40,
+    "serve": "room",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -1797,6 +1998,11 @@
       "cheese board",
       "chocolate",
       "steak"
+    ],
+    "abv": 40,
+    "serve": "room",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -1840,7 +2046,10 @@
       "bbq",
       "barbecue",
       "pineapple"
-    ]
+    ],
+    "abv": 12,
+    "serve": "iced",
+    "allergens": []
   },
   {
     "id": "mimosa",
@@ -1887,7 +2096,12 @@
       "croissant",
       "fruit"
     ],
-    "wineBased": true
+    "wineBased": true,
+    "abv": 7,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
+    ]
   },
   {
     "id": "french-75",
@@ -1929,7 +2143,13 @@
       "brunch",
       "appetizer"
     ],
-    "wineBased": true
+    "wineBased": true,
+    "abv": 15,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites",
+      "juniper"
+    ]
   },
   {
     "id": "bloody-mary",
@@ -1970,7 +2190,10 @@
       "egg",
       "bacon",
       "burger"
-    ]
+    ],
+    "abv": 10,
+    "serve": "iced",
+    "allergens": []
   },
   {
     "id": "gin-martini",
@@ -2012,6 +2235,12 @@
       "olive",
       "steak",
       "charcuterie"
+    ],
+    "abv": 30,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites",
+      "juniper"
     ]
   },
   {
@@ -2057,6 +2286,11 @@
       "fried chicken",
       "bbq",
       "barbecue"
+    ],
+    "abv": 15,
+    "serve": "iced",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -2100,6 +2334,12 @@
       "steak",
       "pork",
       "charcuterie"
+    ],
+    "abv": 30,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites",
+      "oak"
     ]
   },
   {
@@ -2142,6 +2382,12 @@
       "pizza",
       "charcuterie",
       "cheese board"
+    ],
+    "abv": 24,
+    "serve": "iced",
+    "allergens": [
+      "sulfites",
+      "juniper"
     ]
   },
   {
@@ -2183,7 +2429,10 @@
       "shrimp",
       "tropical",
       "pineapple"
-    ]
+    ],
+    "abv": 12,
+    "serve": "iced",
+    "allergens": []
   },
   {
     "id": "cosmopolitan",
@@ -2224,7 +2473,10 @@
       "appetizer",
       "seafood",
       "cheese"
-    ]
+    ],
+    "abv": 22,
+    "serve": "chilled",
+    "allergens": []
   },
   {
     "id": "moscow-mule",
@@ -2265,7 +2517,10 @@
       "taco",
       "spicy",
       "burger"
-    ]
+    ],
+    "abv": 10,
+    "serve": "iced",
+    "allergens": []
   },
   {
     "id": "daiquiri",
@@ -2306,7 +2561,10 @@
       "ceviche",
       "shrimp",
       "cuban"
-    ]
+    ],
+    "abv": 20,
+    "serve": "chilled",
+    "allergens": []
   },
   {
     "id": "mai-tai",
@@ -2347,6 +2605,11 @@
       "poke",
       "pork",
       "tropical"
+    ],
+    "abv": 20,
+    "serve": "iced",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -2361,7 +2624,8 @@
       "creamy",
       "smooth",
       "nostalgic",
-      "familiar"
+      "familiar",
+      "coffee"
     ],
     "moodFit": [
       "sad"
@@ -2387,6 +2651,11 @@
       "brownie",
       "chocolate",
       "ice cream"
+    ],
+    "abv": 18,
+    "serve": "iced",
+    "allergens": [
+      "dairy"
     ]
   },
   {
@@ -2428,7 +2697,10 @@
       "seafood",
       "appetizer",
       "cheesecake"
-    ]
+    ],
+    "abv": 22,
+    "serve": "chilled",
+    "allergens": []
   },
   {
     "id": "dirty-martini",
@@ -2470,6 +2742,11 @@
       "olive",
       "fries",
       "charcuterie"
+    ],
+    "abv": 30,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
     ]
   },
   {
@@ -2511,6 +2788,11 @@
       "bbq",
       "barbecue",
       "pecan pie"
+    ],
+    "abv": 25,
+    "serve": "iced",
+    "allergens": [
+      "oak"
     ]
   },
   {
@@ -2556,7 +2838,12 @@
       "grilled",
       "kebab"
     ],
-    "wineBased": true
+    "wineBased": true,
+    "abv": 9,
+    "serve": "iced",
+    "allergens": [
+      "sulfites"
+    ]
   },
   {
     "id": "white-sangria",
@@ -2599,6 +2886,280 @@
       "fruit",
       "brunch"
     ],
-    "wineBased": true
+    "wineBased": true,
+    "abv": 9,
+    "serve": "iced",
+    "allergens": [
+      "sulfites"
+    ]
+  },
+  {
+    "id": "na-beer",
+    "name": "Non-Alcoholic Beer",
+    "type": "na",
+    "emoji": "🍺",
+    "style": "Alcohol-free lager or IPA: crisp, cold, refreshing",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "fizzy",
+      "light",
+      "familiar",
+      "bright"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "fried",
+      "salty",
+      "light"
+    ],
+    "why": "All the crisp, refreshing flavor of a cold beer, without the buzz. Still great with wings, tacos and burgers.",
+    "principle": "Bubbles scrub the palate",
+    "funFact": "In the US, a beer labeled \"non-alcoholic\" can legally contain up to 0.5% alcohol, while \"alcohol-free\" means none at all.",
+    "lookFor": "Any NA lager or NA IPA from the beer aisle (many big breweries now make one).",
+    "classicWith": [
+      "taco",
+      "burger",
+      "wing",
+      "fries"
+    ],
+    "abv": 0.5,
+    "serve": "chilled",
+    "allergens": [
+      "gluten"
+    ]
+  },
+  {
+    "id": "na-sparkling",
+    "name": "Alcohol-Free Sparkling Wine",
+    "type": "na",
+    "emoji": "🥂",
+    "style": "Dealcoholized bubbly: crisp, fruity, celebratory",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "fizzy",
+      "fruity",
+      "light",
+      "bright"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "date"
+    ],
+    "affinities": [
+      "fried",
+      "salty",
+      "light",
+      "sweet"
+    ],
+    "why": "Bubbly, fruity and festive: a toast-worthy pour for anyone skipping alcohol. Lovely with brunch, chips and fried chicken.",
+    "principle": "Bubbles scrub the palate",
+    "funFact": "Most alcohol-free sparkling wine starts as real wine. The alcohol is gently removed, often under a vacuum at low temperature, before the bubbles go in.",
+    "lookFor": "Look for \"dealcoholized\" or \"alcohol-free\" sparkling wine near the regular bubbly.",
+    "classicWith": [
+      "brunch",
+      "chips",
+      "fried chicken"
+    ],
+    "abv": 0.5,
+    "serve": "chilled",
+    "allergens": [
+      "sulfites"
+    ]
+  },
+  {
+    "id": "zero-spritz",
+    "name": "Zero-Proof Spritz",
+    "type": "na",
+    "emoji": "🍊",
+    "style": "Non-alcoholic bitter orange aperitif + soda: bittersweet, bubbly",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "fizzy",
+      "bitter",
+      "citrus",
+      "bright",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group",
+      "date"
+    ],
+    "affinities": [
+      "salty",
+      "fatty",
+      "fried",
+      "light"
+    ],
+    "why": "All the bittersweet orange and bubbles of an Aperol Spritz, without the alcohol. Perfect with salty pre-dinner snacks.",
+    "principle": "Salt loves bubbles & fruit",
+    "funFact": "Italians call the early-evening ritual of a drink and small salty snacks \"aperitivo.\" The bitter flavors are meant to wake up your appetite.",
+    "lookFor": "A non-alcoholic Italian-style aperitif (or a bitter orange soda) + soda water + an orange slice.",
+    "classicWith": [
+      "chips",
+      "charcuterie",
+      "pizza"
+    ],
+    "abv": 0,
+    "serve": "iced",
+    "allergens": []
+  },
+  {
+    "id": "virgin-mojito",
+    "name": "Virgin Mojito",
+    "type": "na",
+    "emoji": "🌱",
+    "style": "Lime, mint, sugar, soda: cool, zesty, fizzy",
+    "sweetness": 3,
+    "priceTier": 1,
+    "tasteTags": [
+      "citrus",
+      "herby",
+      "fizzy",
+      "bright",
+      "light"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social"
+    ],
+    "occasions": [
+      "party",
+      "group"
+    ],
+    "affinities": [
+      "spicy",
+      "herby",
+      "light",
+      "fried"
+    ],
+    "why": "Cool mint and fresh lime with bubbles and zero alcohol. Like air-conditioning for tacos, pho and fried food.",
+    "principle": "Echo the herbs",
+    "funFact": "Mint contains menthol, which triggers the same nerve receptors that sense cold. That's why mint literally feels cooling.",
+    "lookFor": "Fresh mint, limes, sugar and club soda. Muddle, add ice, top with soda.",
+    "classicWith": [
+      "taco",
+      "pho",
+      "falafel"
+    ],
+    "abv": 0,
+    "serve": "iced",
+    "allergens": []
+  },
+  {
+    "id": "espresso-tonic",
+    "name": "Espresso Tonic",
+    "type": "na",
+    "emoji": "☕",
+    "style": "Espresso over tonic water: bittersweet, bubbly, bright",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "bitter",
+      "fizzy",
+      "bright",
+      "coffee"
+    ],
+    "moodFit": [
+      "cheerful"
+    ],
+    "vibe": [
+      "social",
+      "solo"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "sweet",
+      "fatty",
+      "salty"
+    ],
+    "why": "Bold espresso poured over fizzy tonic: bitter, bright and surprisingly refreshing. Great with pastries and brunch.",
+    "principle": "Match intensity",
+    "funFact": "Tonic water gets its bitterness from quinine, which glows blue under a black light.",
+    "lookFor": "A shot of espresso (or strong cold brew) poured slowly over tonic water and ice.",
+    "classicWith": [
+      "pastry",
+      "pastries",
+      "croissant",
+      "brunch"
+    ],
+    "abv": 0,
+    "serve": "iced",
+    "allergens": []
+  },
+  {
+    "id": "cold-brew",
+    "name": "Cold Brew",
+    "type": "na",
+    "emoji": "🧋",
+    "style": "Slow-steeped iced coffee: smooth, chocolatey, low-acid",
+    "sweetness": 2,
+    "priceTier": 1,
+    "tasteTags": [
+      "smooth",
+      "coffee",
+      "familiar",
+      "bold"
+    ],
+    "moodFit": [
+      "sad"
+    ],
+    "vibe": [
+      "solo",
+      "social"
+    ],
+    "occasions": [
+      "date",
+      "group"
+    ],
+    "affinities": [
+      "sweet",
+      "rich",
+      "creamy"
+    ],
+    "why": "Smooth and chocolatey, with a splash of cream if you like. A cozy, alcohol-free partner for brownies, tiramisu and chocolate cake.",
+    "principle": "Like with like",
+    "funFact": "Cold brew steeps in cold water for 12 to 24 hours. That pulls out less acidity, so it tastes smoother and a little naturally sweeter than hot coffee.",
+    "lookFor": "Ready-to-drink cold brew from the coffee aisle; add milk or cream if you like.",
+    "classicWith": [
+      "chocolate",
+      "brownie",
+      "tiramisu",
+      "cake"
+    ],
+    "abv": 0,
+    "serve": "iced",
+    "allergens": []
   }
 ]
