@@ -67,7 +67,10 @@ export default function App() {
   const [saved, setSaved] = useState({}) // { [drinkId]: { rating: 0–5, note } }
   const [myDrinksReturn, setMyDrinksReturn] = useState('results')
 
-  useEffect(() => window.scrollTo(0, 0), [step])
+  // Braces matter: newer Chrome returns a Promise from scrollTo, and an effect must not return anything but a cleanup function.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [step])
 
   const onboarded = profileDone && !PROFILE_STEPS.includes(step) && step !== 'profileDone'
   const openPremium = () => {

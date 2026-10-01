@@ -58,7 +58,12 @@ export default function CartPhoto({ onUpgrade }) {
     return () => clearTimeout(t)
   }, [stage])
 
-  useEffect(() => () => photo && URL.revokeObjectURL(photo), [photo])
+  useEffect(
+    () => () => {
+      if (photo) URL.revokeObjectURL(photo)
+    },
+    [photo],
+  )
 
   if (stage === 'upload') {
     return (

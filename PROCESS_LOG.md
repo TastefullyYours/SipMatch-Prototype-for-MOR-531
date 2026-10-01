@@ -370,3 +370,15 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **Built / changed:** The restart screen now shows the first lines of the error's stack trace (which file and line threw it), the React components involved and the browser's user agent, plus a "Copy error details" button. A stack frame inside a `chrome-extension://…` file would identify an extension; a frame in `/assets/index-*.js` gives an exact position to look up in the app bundle.
 
 **Testing:** A temporary forced crash (`?crashtest`) confirmed the screen shows the message, stack, components and browser. It was removed before committing; build and lint pass.
+
+---
+
+## 2026-10-01: Root cause found and fixed: desktop "l is not a function"
+
+**Prompt (verbatim):** The user pasted the new crash details: "l is not a function / Where: TypeError: l is not a function at Tl (…/assets/index-BQ2yg6tc.js:8:95278) at $u … / Browser: … Chrome/152.0.0.0".
+
+**Root cause:** Rebuilding `main` produced the identical bundle (`index-BQ2yg6tc.js`). Line 8, column 95278 is React's effect-cleanup routine (`commitHookEffectListUnmount`) calling an effect's returned "destroy" function. `App.jsx` had `useEffect(() => window.scrollTo(0, 0), [step])`. The arrow implicitly returns `scrollTo`'s return value. In the tester's Chrome 152, `scrollTo` evidently returns a Promise, which React stores as the cleanup and tries to call on the next screen change. Older Chrome (the sandbox's 141) and phones return `undefined`, so nothing broke there. That explains why it was desktop-only and couldn't be reproduced earlier. The earlier theories (extensions, form submission) were wrong; PRs #6–#8 were harmless but not the fix (#6 and #8 did produce the diagnostics that found it).
+
+**Fix:** The effect now uses a block body (`useEffect(() => { window.scrollTo(0, 0) }, [step])`), so it returns nothing. The one other expression-bodied effect (`CartPhoto` photo cleanup) was rewritten explicitly for clarity; it was already safe.
+
+**Testing:** The crash was reproduced exactly by making `scrollTo` return a Promise in the test browser (restart screen with "l is not a function"). After the fix, the same emulation reaches the intro screen and the full desktop click-through passes. Normal phone/desktop runs and Enter-key checks pass with no errors.
