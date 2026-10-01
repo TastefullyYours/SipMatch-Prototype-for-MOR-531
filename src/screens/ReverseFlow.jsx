@@ -35,24 +35,19 @@ export default function ReverseFlow({ onUpgrade }) {
     <>
       <ScreenTitle eyebrow={<LockBadge>Premium · Preview</LockBadge>} title="Here's what I'm drinking 🔄" sub="Tell us the bottle (or can). We'll tell you what to cook." />
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          if (query.trim()) setSubmitted(query)
-        }}
-        className="flex gap-2"
-      >
+      <div className="flex gap-2">
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && query.trim() && setSubmitted(query)}
           placeholder="e.g. Pinot Noir"
           aria-label="What are you drinking?"
           className="min-w-0 flex-1 rounded-2xl border-2 border-berry/15 bg-white px-4 py-3 outline-none focus:border-berry"
         />
-        <Button className="!w-auto" disabled={!query.trim()}>
+        <Button type="button" className="!w-auto" disabled={!query.trim()} onClick={() => setSubmitted(query)}>
           Go
         </Button>
-      </form>
+      </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {EXAMPLES.map((e) => (
           <Chip

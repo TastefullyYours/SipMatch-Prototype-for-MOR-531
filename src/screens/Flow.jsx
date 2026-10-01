@@ -105,12 +105,7 @@ export function Dish({ dish, setDish, occasion, onNext, onSkip }) {
         }
       />
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          if (dish.trim()) onNext()
-        }}
-      >
+      <div>
         <label htmlFor="dish" className="sr-only">
           Dish name
         </label>
@@ -118,11 +113,12 @@ export function Dish({ dish, setDish, occasion, onNext, onSkip }) {
           id="dish"
           value={dish}
           onChange={(e) => setDish(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && dish.trim() && onNext()}
           placeholder="e.g. spicy chicken tacos"
           autoComplete="off"
           className="w-full rounded-2xl border-2 border-berry/15 bg-white px-4 py-4 text-lg outline-none placeholder:text-muted/60 focus:border-berry"
         />
-      </form>
+      </div>
 
       <SectionLabel hint="tap to fill">Need ideas?</SectionLabel>
       <div className="flex flex-wrap gap-2">
