@@ -13,7 +13,7 @@ function eyebrow(editing, n) {
   return editing ? `Editing profile · ${TOPICS.at(n - 1)}` : TOPICS.at(n - 1)
 }
 
-function NextBar({ editing, last, disabled, onNext, onSave, onSkip, children }) {
+function NextBar({ editing, last, disabled, onNext, onSave, onSkip, onSkipStep, children }) {
   return (
     <BottomBar>
       <div className="flex flex-col gap-2">
@@ -24,6 +24,11 @@ function NextBar({ editing, last, disabled, onNext, onSave, onSkip, children }) 
         {editing && !last && (
           <Button variant="ghost" disabled={disabled} onClick={onSave}>
             Save & see new matches
+          </Button>
+        )}
+        {!editing && onSkipStep && (
+          <Button variant="ghost" onClick={onSkipStep}>
+            Skip this step ⏭️
           </Button>
         )}
         {!editing && onSkip && (
@@ -73,7 +78,14 @@ export function ProfilePalate({ profile, setProfile, editing, onNext, onSave, on
         <span>Dessert-y 🍭</span>
       </div>
 
-      <NextBar editing={editing} disabled={!profile.sweetness.length} onNext={onNext} onSave={onSave} onSkip={onSkip} />
+      <NextBar
+        editing={editing}
+        disabled={!profile.sweetness.length && !profile.likes.length && !profile.dislikes.length}
+        onNext={onNext}
+        onSave={onSave}
+        onSkip={onSkip}
+        onSkipStep={onNext}
+      />
     </>
   )
 }
@@ -104,7 +116,7 @@ export function ProfileDrinks({ profile, setProfile, editing, onNext, onSave, on
         ))}
       </div>
 
-      <NextBar editing={editing} disabled={!categories.length || !strengths.length} onNext={onNext} onSave={onSave} onSkip={onSkip}>
+      <NextBar editing={editing} disabled={!categories.length && !strengths.length} onNext={onNext} onSave={onSave} onSkip={onSkip} onSkipStep={onNext}>
         {(!categories.length || !strengths.length) && (
           <p className="text-center text-sm text-muted">Pick at least one drink type and one strength.</p>
         )}
@@ -137,7 +149,7 @@ export function ProfileAvoid({ profile, setProfile, editing, onNext, onSave, onS
         ⚠️ SipMatch uses typical recipes, not specific brands. If you have a serious allergy, always check the label.
       </p>
 
-      <NextBar editing={editing} onNext={onNext} onSave={onSave} onSkip={onSkip} />
+      <NextBar editing={editing} onNext={onNext} onSave={onSave} onSkip={onSkip} onSkipStep={onNext} />
     </>
   )
 }

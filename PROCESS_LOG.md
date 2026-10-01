@@ -419,3 +419,29 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 - log out, wrong password message, log in restores saved drinks
 - full match to results
 - guest under-21 and 21+ paths, and "Skip the rest of the profile"
+
+---
+
+## 2026-10-01: Recipe-first cards, skip at every step
+
+**Prompt (verbatim):** "For cocktails, the how to make should be at the very top, and the additional info should be expandable card. It's very text heavy atm. / Option heavy and give a skip button at every step aside from required options. -This is done, right?"
+
+**Answer to the question:** Only partly. The whole profile could be skipped, and Dish had a skip. But Palate and Drinks each required an answer before Next, and Mood, Occasion and Budget had no skip at all.
+
+**Built:**
+- **Drink cards:** an open card now shows the recipe first for cocktails and mixed drinks (always visible, no extra tap), or "At the store, look for" for wine, beer and spirits. Everything else (why it works, pairing principle, based on your taste, mood fit, fun fact) is behind a "More about this drink" toggle.
+- **Skip this step** on every profile screen (Palate, Drinks, Avoid; Calibration already had "I'm new to this, skip for now") and every quiz step (Mood, Occasion, Tonight; Dish already had one).
+- Next is enabled as soon as any one answer is given. For example, Social/Solo alone is enough on Mood, and a flavor alone is enough on Palate.
+- **Skipped answers in matching:** a skipped mood gives a neutral "Picked for your taste and tonight's plans" line instead of mood copy. A skipped occasion or social choice simply adds no points. A skipped budget means any budget. The results header only shows chips for answers that were given, plus "Any budget".
+
+**Decisions (flagged for approval):**
+- Required inputs are now only the 21+ birthday, the account fields at sign-up, and the 2–3 Quick pick flavors.
+- The "At the store" line leads non-cocktail cards, so they're also short.
+- Skipping a step keeps anything already picked on it rather than clearing it.
+
+**Testing:** Build and lint pass. A Playwright run (390px) checked:
+- skipping every profile and quiz step reaches results (Off-Dry Riesling, Hard Cider, Aged Rum) with an "Any budget" chip
+- a partial mood answer enables Next
+- the Paloma top card shows its recipe first with the details hidden, and "More about this drink" reveals them
+
+The earlier account/quick-pick click-throughs (390px, and 1440px with the Chrome 152 `scrollTo` emulation) still pass with no errors.

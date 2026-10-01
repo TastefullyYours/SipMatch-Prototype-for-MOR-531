@@ -3,7 +3,7 @@ import { BUDGETS, FEELINGS, OCCASIONS, SOCIAL, STYLE_CUES } from '../data/option
 import { EXAMPLE_DISHES } from '../data/dishes.js'
 import { BottomBar, Button, ChoiceCard, Chip, ScreenTitle, SectionLabel, Segmented } from '../components/ui.jsx'
 
-export function Mood({ mood, setMood, onNext }) {
+export function Mood({ mood, setMood, onNext, onSkip }) {
   const [showWhy, setShowWhy] = useState(false)
   return (
     <>
@@ -41,15 +41,20 @@ export function Mood({ mood, setMood, onNext }) {
       </div>
 
       <BottomBar>
-        <Button disabled={!mood.feeling || !mood.social} onClick={onNext}>
-          Next
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button disabled={!mood.feeling && !mood.social} onClick={onNext}>
+            Next
+          </Button>
+          <Button variant="ghost" onClick={onSkip}>
+            Skip this step ⏭️
+          </Button>
+        </div>
       </BottomBar>
     </>
   )
 }
 
-export function Occasion({ occasion, setOccasion, onNext }) {
+export function Occasion({ occasion, setOccasion, onNext, onSkip }) {
   return (
     <>
       <ScreenTitle eyebrow="Occasion" title="What's the occasion?" sub="Who are you sipping with?" />
@@ -59,15 +64,20 @@ export function Occasion({ occasion, setOccasion, onNext }) {
         ))}
       </div>
       <BottomBar>
-        <Button disabled={!occasion} onClick={onNext}>
-          Next
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button disabled={!occasion} onClick={onNext}>
+            Next
+          </Button>
+          <Button variant="ghost" onClick={onSkip}>
+            Skip this step ⏭️
+          </Button>
+        </div>
       </BottomBar>
     </>
   )
 }
 
-export function Tonight({ tonight, setTonight, onNext }) {
+export function Tonight({ tonight, setTonight, onNext, onSkip }) {
   return (
     <>
       <ScreenTitle eyebrow="Tonight" title="What are you in the mood for?" sub="Budget and style for tonight. Pick “Either” if you don’t mind." />
@@ -83,9 +93,14 @@ export function Tonight({ tonight, setTonight, onNext }) {
       ))}
 
       <BottomBar>
-        <Button disabled={!tonight.budgets.length} onClick={onNext}>
-          Next
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button disabled={!tonight.budgets.length && STYLE_CUES.every((c) => tonight[c.id] === 'any')} onClick={onNext}>
+            Next
+          </Button>
+          <Button variant="ghost" onClick={onSkip}>
+            Skip this step ⏭️
+          </Button>
+        </div>
       </BottomBar>
     </>
   )

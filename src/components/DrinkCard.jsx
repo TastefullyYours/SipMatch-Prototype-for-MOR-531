@@ -25,37 +25,31 @@ function PriceTag({ price, overBudget }) {
   )
 }
 
-// Collapsible "How to make it" for cocktails and mixed drinks.
+// "How to make it" for cocktails and mixed drinks: shown first, since it's what you need at home.
 function Recipe({ recipe }) {
-  const [show, setShow] = useState(false)
   return (
-    <div className="rounded-2xl bg-cream p-3">
-      <button type="button" onClick={() => setShow(!show)} aria-expanded={show} className="flex w-full items-center justify-between text-left">
-        <span className="text-sm font-semibold text-berry">🍹 How to make it</span>
-        <span className={`text-berry transition ${show ? 'rotate-180' : ''}`}>⌄</span>
-      </button>
-      {show && (
-        <div className="mt-2 text-sm leading-relaxed text-ink/90">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted">{recipe.glass}</p>
-          <ul className="mt-2 list-disc pl-5">
-            {recipe.ingredients.map((i) => (
-              <li key={i}>{i}</li>
-            ))}
-          </ul>
-          <ol className="mt-2 list-decimal pl-5">
-            {recipe.steps.map((st) => (
-              <li key={st}>{st}</li>
-            ))}
-          </ol>
-        </div>
-      )}
+    <div className="rounded-2xl bg-cream p-4">
+      <h4 className="text-sm font-semibold text-berry">🍹 How to make it</h4>
+      <p className="mt-0.5 text-xs font-semibold uppercase tracking-wider text-muted">{recipe.glass}</p>
+      <ul className="mt-2 list-disc pl-5 text-sm leading-relaxed text-ink/90">
+        {recipe.ingredients.map((i) => (
+          <li key={i}>{i}</li>
+        ))}
+      </ul>
+      <ol className="mt-2 list-decimal pl-5 text-sm leading-relaxed text-ink/90">
+        {recipe.steps.map((st) => (
+          <li key={st}>{st}</li>
+        ))}
+      </ol>
     </div>
   )
 }
 
 export default function DrinkCard({ pick, primary = false, defaultOpen = false, dishLabel, contrast, saved = {}, setSaved, fitTitle = 'Why it fits your mood' }) {
   const [open, setOpen] = useState(primary || defaultOpen)
+  const [more, setMore] = useState(false)
   const { drink, principle, moodLine, price, overBudget, classic, likeOf } = pick
+  const recipe = RECIPES[drink.id]
 
   return (
     <article
@@ -106,28 +100,49 @@ export default function DrinkCard({ pick, primary = false, defaultOpen = false, 
       )}
 
       {open && (
-        <div className="flex flex-col gap-4 border-t border-sand px-5 pb-5 pt-4">
-          <Detail icon="💬" title="Why it works">
-            {drink.why}
-          </Detail>
-          <Detail icon="🧪" title={`The pairing principle${dishLabel ? ` with ${dishLabel}` : ''}`}>
-            <b>{principle.name}.</b> {principle.text}
-          </Detail>
-          {likeOf && (
-            <Detail icon="❤️" title="Based on your taste">
-              {likeOf.id === drink.id ? 'One of your favorites! You said you love it.' : `Similar to ${likeOf.name}, which you said you love.`}
+        <div className="flex flex-col gap-3 border-t border-sand px-5 pb-5 pt-4">
+          {recipe ? (
+            <Recipe recipe={recipe} />
+          ) : (
+            <Detail icon="🛒" title="At the store, look for">
+              {drink.lookFor}
             </Detail>
           )}
-          <Detail icon="🫶" title={fitTitle}>
-            {moodLine}
-          </Detail>
-          <Detail icon="📜" title="Fun fact">
-            {drink.funFact}
-          </Detail>
-          <Detail icon="🛒" title="At the store, look for">
-            {drink.lookFor}
-          </Detail>
-          {RECIPES[drink.id] && <Recipe recipe={RECIPES[drink.id]} />}
+          <button
+            type="button"
+            onClick={() => setMore(!more)}
+            aria-expanded={more}
+            className="flex items-center justify-between rounded-2xl border-2 border-sand px-4 py-2.5 text-left text-sm font-semibold text-berry hover:border-berry/30"
+          >
+            {more ? 'Less about this drink' : 'More about this drink'}
+            <span className={`transition ${more ? 'rotate-180' : ''}`}>⌄</span>
+          </button>
+          {more && (
+            <div className="flex flex-col gap-4 pt-1">
+              <Detail icon="💬" title="Why it works">
+                {drink.why}
+              </Detail>
+              <Detail icon="🧪" title={`The pairing principle${dishLabel ? ` with ${dishLabel}` : ''}`}>
+                <b>{principle.name}.</b> {principle.text}
+              </Detail>
+              {likeOf && (
+                <Detail icon="❤️" title="Based on your taste">
+                  {likeOf.id === drink.id ? 'One of your favorites! You said you love it.' : `Similar to ${likeOf.name}, which you said you love.`}
+                </Detail>
+              )}
+              <Detail icon="🫶" title={fitTitle}>
+                {moodLine}
+              </Detail>
+              <Detail icon="📜" title="Fun fact">
+                {drink.funFact}
+              </Detail>
+              {recipe && (
+                <Detail icon="🛒" title="At the store, look for">
+                  {drink.lookFor}
+                </Detail>
+              )}
+            </div>
+          )}
         </div>
       )}
     </article>
