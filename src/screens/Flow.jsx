@@ -7,7 +7,7 @@ export function Mood({ mood, setMood, onNext }) {
   const [showWhy, setShowWhy] = useState(false)
   return (
     <>
-      <ScreenTitle eyebrow="Matching quiz · 1 of 4" title="How are you feeling today?" sub="Your mood actually changes how things taste." />
+      <ScreenTitle eyebrow="Mood" title="How are you feeling today?" sub="Your mood actually changes how things taste." />
 
       <SectionLabel>Right now I'm…</SectionLabel>
       <div className="flex flex-col gap-2">
@@ -52,7 +52,7 @@ export function Mood({ mood, setMood, onNext }) {
 export function Occasion({ occasion, setOccasion, onNext }) {
   return (
     <>
-      <ScreenTitle eyebrow="Matching quiz · 2 of 4" title="What's the occasion?" sub="Who are you sipping with?" />
+      <ScreenTitle eyebrow="Occasion" title="What's the occasion?" sub="Who are you sipping with?" />
       <div className="flex flex-col gap-2">
         {OCCASIONS.map((o) => (
           <ChoiceCard key={o.id} {...o} selected={occasion === o.id} onClick={() => setOccasion(o.id)} />
@@ -70,7 +70,7 @@ export function Occasion({ occasion, setOccasion, onNext }) {
 export function Tonight({ tonight, setTonight, onNext }) {
   return (
     <>
-      <ScreenTitle eyebrow="Matching quiz · 3 of 4" title="What are you in the mood for?" sub="Budget and style for tonight. Pick “Either” if you don’t mind." />
+      <ScreenTitle eyebrow="Tonight" title="What are you in the mood for?" sub="Budget and style for tonight. Pick “Either” if you don’t mind." />
 
       <SectionLabel>Tonight's budget</SectionLabel>
       <Segmented options={BUDGETS} value={tonight.budget} onChange={(v) => setTonight({ ...tonight, budget: v })} />
@@ -96,7 +96,7 @@ export function Dish({ dish, setDish, occasion, onNext, onSkip }) {
   return (
     <>
       <ScreenTitle
-        eyebrow="Matching quiz · 4 of 4"
+        eyebrow="The food"
         title="What's on the menu?"
         sub={
           isParty

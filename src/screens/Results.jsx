@@ -3,6 +3,7 @@ import { recommend } from '../logic/recommend.js'
 import { BUDGETS, FEELINGS, OCCASIONS, STYLE_CUES, label } from '../data/options.js'
 import DrinkCard from '../components/DrinkCard.jsx'
 import { Button, LockBadge } from '../components/ui.jsx'
+import { ProfileStrip } from '../components/ProfileSummary.jsx'
 
 const RELAXED_TEXT = {
   abv: 'went a little above your strength limit',
@@ -50,6 +51,7 @@ export default function Results({ profile, mood, occasion, tonight, dish, onChan
             </span>
           ))}
         </div>
+        <ProfileStrip profile={profile} onEdit={onEditProfile} />
         {relaxed.length > 0 && (
           <p className="mt-3 rounded-2xl bg-gold/15 p-3 text-sm text-ink/80">
             🙈 Your filters left very few options, so we {relaxed.map((r) => RELAXED_TEXT[r]).join(' and ')}. Your allergies and aversions were still respected.

@@ -1,6 +1,12 @@
 // Phone-width app shell: header (back / logo / premium), optional progress bar, content, footer.
 
-export function Header({ onBack, onLogo, onPremium, progress }) {
+// Each part of the flow gets its own label and colour so the profile and the quiz feel separate.
+const PHASES = {
+  profile: { icon: '👤', label: 'Your taste profile', text: 'text-[#8a6412]', bar: 'bg-gold', bg: 'bg-gold/15' },
+  quiz: { icon: '🍸', label: "Tonight's match", text: 'text-berry', bar: 'bg-berry', bg: 'bg-berry-light' },
+}
+
+export function Header({ onBack, onLogo, onPremium, phase }) {
   return (
     <header className="sticky top-0 z-20 bg-cream/95 backdrop-blur">
       <div className="flex h-14 items-center gap-2 px-3">
@@ -25,9 +31,21 @@ export function Header({ onBack, onLogo, onPremium, progress }) {
           )}
         </div>
       </div>
-      {progress != null && (
-        <div className="mx-5 mb-2 h-1.5 overflow-hidden rounded-full bg-sand">
-          <div className="h-full rounded-full bg-berry transition-all duration-500" style={{ width: `${progress * 100}%` }} />
+      {phase && (
+        <div className={`mx-5 mb-2 rounded-2xl px-3 py-2 ${PHASES[phase.kind].bg}`}>
+          <div className={`mb-1.5 flex items-center justify-between text-xs font-semibold ${PHASES[phase.kind].text}`}>
+            <span>
+              {PHASES[phase.kind].icon} {phase.editing ? 'Editing your taste profile' : PHASES[phase.kind].label}
+            </span>
+            <span>
+              {phase.step} of {phase.total}
+            </span>
+          </div>
+          <div className="flex gap-1">
+            {Array.from({ length: phase.total }, (_, i) => (
+              <div key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-500 ${i < phase.step ? PHASES[phase.kind].bar : 'bg-white'}`} />
+            ))}
+          </div>
         </div>
       )}
     </header>

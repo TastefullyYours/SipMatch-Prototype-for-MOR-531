@@ -5,7 +5,7 @@ export function Button({ children, variant = 'primary', className = '', ...props
     primary: 'bg-berry text-white hover:bg-berry-dark disabled:bg-berry/30 disabled:cursor-not-allowed shadow-sm',
     secondary: 'bg-white text-berry border-2 border-berry/20 hover:border-berry/50',
     ghost: 'text-berry hover:bg-berry-light',
-    gold: 'bg-gold text-ink hover:brightness-95 shadow-sm',
+    gold: 'bg-gold text-ink hover:brightness-95 disabled:bg-gold/40 disabled:text-ink/50 disabled:cursor-not-allowed shadow-sm',
   }
   return (
     <button

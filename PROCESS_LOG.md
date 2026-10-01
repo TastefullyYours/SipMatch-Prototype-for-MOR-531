@@ -253,3 +253,23 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **What happened:** The assistant wrote a PRD as a shareable Claude doc: overview and positioning, target users, goals and proposed success metrics, a user-flow diagram, functional requirements, recommendation logic and data, safety and tech, every build prompt in order with what it produced, and risks, open questions and roadmap. No repo files changed.
 
 **Follow-up prompt (verbatim), 2026-10-01:** "update it on bercel?". This opened the PR that brings milestone 8 to `main` so Vercel redeploys.
+
+---
+
+## 2026-10-01: Milestone 9: Profile and quiz made clearly separate
+
+**Prompt (verbatim):** "could you separate out the profile step more from the quiz so they're more distinct?"
+
+**Context:** PR #3 had been merged into `main`, so the branch restarted from the updated `main`. Earlier the same day the user reported that a shared link wasn't accessible. The assistant explained that Vercel preview links require a Vercel login by default, and that the production link (or turning off Deployment Protection) is what to share. No code changed for that.
+
+**Built / changed:**
+- **Two-part intro screen** after the birthday check: "1. Your taste profile (once, 4 short screens)" in gold and "2. Tonight's match (every time, 4 quick steps)" in berry, with a "Build my taste profile" button.
+- **Separate phase headers:** each part has its own labelled bar ("👤 Your taste profile · 2 of 4" in gold, "🍸 Tonight's match · 1 of 4" in berry) that restarts at step 1, replacing the single progress bar across both parts.
+- **Gold buttons** throughout the profile; berry stays the quiz and results color.
+- **Step labels** now name the topic (Palate, Drink habits, Things to avoid, Calibration / Mood, Occasion, Tonight, The food) instead of repeating "x of 4".
+- **"Profile saved!" screen** between the two parts: a summary card of everything set, then "Start tonight's match" or "Change something". Editing from results still returns straight to updated results.
+- **Results:** a "Matched to your taste profile" strip (e.g. Balanced · loves beer & cider · wine-level is fine · avoiding juniper) with an Edit link.
+
+**Testing:** `npm run build` and `oxlint` pass. The Playwright click-throughs (full profile + quiz + results + edit, and premium flow with calibration skipped) were updated for the two new screens and pass with no app errors.
+
+**Decisions / issues:** The last profile button now reads "Save my profile" (was "Start matching ✨"), since matching starts on the next screen.

@@ -8,19 +8,20 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 
 **Free tier (fully working)**
 1. **Age gate:** enter your birthday (must be 21+). It's only used for the age check and never saved.
-2. **Taste profile** (4 short screens, asked once, editable any time):
+2. **Two-part intro:** explains that the taste profile is answered once and tonight's match every time. The two parts have separate, colour-coded headers (gold for the profile, berry for the quiz).
+3. **Taste profile** (4 short screens, asked once, editable any time; ends on a "Profile saved" summary):
    - *Palate:* favorite and disliked flavors (sweet, fruity, tart, herbal, bitter, dry, smoky) + a 5-step sweetness scale
    - *What you drink:* category weights for beer & cider, wine, spirits, cocktails and non-alcoholic/coffee (Never / Rarely / Sometimes / Love it) + an ABV ceiling (light / wine-level / strong)
    - *Anything to avoid:* sulfites, gluten, dairy, artificial sweeteners, juniper (gin), oak-aged
    - *Calibration:* rate 3–5 drinks you love and 2 you'd pass on (skippable for true beginners)
-3. **Matching quiz** (every time):
+4. **Tonight's match** (every time):
    - Mood (cheerful / stressed / sad–low energy) + social vs. solo
    - Occasion (party, duo/date, small group)
    - Tonight: budget + style cues (iced vs. neat, carbonated vs. still, light vs. bold)
    - Dish (free text; always skippable)
-4. **Results:** a top match + 2 alternates, each with *why it works*, *the pairing principle*, *based on your taste* (when it's like a drink you love), *why it fits your mood*, *a fun fact*, *what to look for at the store* and a price tier
+5. **Results:** a "Matched to your taste profile" strip with an Edit link, then a top match + 2 alternates, each with *why it works*, *the pairing principle*, *based on your taste* (when it's like a drink you love), *why it fits your mood*, *a fun fact*, *what to look for at the store* and a price tier
    - **"Don't like these?"** opens 3 more options (one wine, one beer or cider, one spirit or cocktail), each labeled with how it differs from the top pick ("a little sweeter", "a little drier", "less bitter", "lighter", "some bubbles"…)
-5. Try a different dish, change budget/style, start over, or edit your profile
+6. Try a different dish, change budget/style, start over, or edit your profile
 
 **Premium (locked previews)**
 - 🛒 **Snap your cart**: photo upload → scripted scan of a sample cart → clarifying questions → drink matches (partly locked)
