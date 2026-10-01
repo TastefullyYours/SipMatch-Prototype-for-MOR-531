@@ -7,15 +7,18 @@ import { ProfileStrip } from '../components/ProfileSummary.jsx'
 
 const RELAXED_TEXT = {
   abv: 'went a little above your strength limit',
-  categories: 'included a category you marked "never"',
+  categories: 'included a drink type you didn’t pick',
   hated: 'included a drink you said you’d pass on',
 }
 
-export default function Results({ profile, mood, occasion, tonight, dish, onChangeDish, onChangeTonight, onStartOver, onEditProfile, onPremium }) {
+export default function Results({ profile, saved, setSaved, mood, occasion, tonight, dish, onChangeDish, onChangeTonight, onStartOver, onEditProfile, onPremium, onMyDrinks }) {
+  // Ratings are snapshotted when the screen opens, so rating a card doesn't reshuffle the list you're looking at.
+  const [savedSnapshot] = useState(saved)
   const { picks, alternatives, dishInfo, relaxed } = useMemo(
-    () => recommend({ profile, mood, occasion, tonight, dish }),
-    [profile, mood, occasion, tonight, dish],
+    () => recommend({ profile: { ...profile, saved: savedSnapshot }, mood, occasion, tonight, dish }),
+    [profile, savedSnapshot, mood, occasion, tonight, dish],
   )
+  const savedCount = Object.keys(saved).length
   const styleChips = STYLE_CUES.filter((c) => tonight[c.id] !== 'any').map((c) => label(c.options, tonight[c.id]).label)
   const [showAlts, setShowAlts] = useState(false)
   const [top, ...alts] = picks
@@ -44,7 +47,7 @@ export default function Results({ profile, mood, occasion, tonight, dish, onChan
           <span className="rounded-full bg-white px-2.5 py-1">
             {label(OCCASIONS, occasion).emoji} {label(OCCASIONS, occasion).label}
           </span>
-          <span className="rounded-full bg-white px-2.5 py-1">💳 {label(BUDGETS, tonight.budget).label}</span>
+          <span className="rounded-full bg-white px-2.5 py-1">💳 {tonight.budgets.map((b) => label(BUDGETS, b).label).join(' / ')}</span>
           {styleChips.map((c) => (
             <span key={c} className="rounded-full bg-white px-2.5 py-1">
               {c}
@@ -71,12 +74,12 @@ export default function Results({ profile, mood, occasion, tonight, dish, onChan
           <p className="mt-1 text-sm text-muted">Try editing your profile to loosen a few settings.</p>
         </div>
       )}
-      {top && <DrinkCard pick={top} primary dishLabel={dishLabel} />}
+      {top && <DrinkCard pick={top} primary dishLabel={dishLabel} saved={saved} setSaved={setSaved} />}
 
       {alts.length > 0 && <h2 className="mb-2 mt-7 font-semibold">Or try one of these</h2>}
       <div className="flex flex-col gap-3">
         {alts.map((p) => (
-          <DrinkCard key={p.drink.id} pick={p} dishLabel={dishLabel} />
+          <DrinkCard key={p.drink.id} pick={p} dishLabel={dishLabel} saved={saved} setSaved={setSaved} />
         ))}
       </div>
 
@@ -97,7 +100,7 @@ export default function Results({ profile, mood, occasion, tonight, dish, onChan
           {showAlts && (
             <div className="flex flex-col gap-3 border-t border-berry/10 p-3 pb-4">
               {alternatives.map((a) => (
-                <DrinkCard key={a.drink.id} pick={a} dishLabel={dishLabel} contrast={a.contrast} />
+                <DrinkCard key={a.drink.id} pick={a} dishLabel={dishLabel} contrast={a.contrast} saved={saved} setSaved={setSaved} />
               ))}
             </div>
           )}
@@ -121,6 +124,9 @@ export default function Results({ profile, mood, occasion, tonight, dish, onChan
         <Button onClick={onChangeDish}>{dishInfo.skipped && occasion !== 'party' ? 'Add a dish' : 'Try a different dish'}</Button>
         <Button variant="secondary" onClick={onChangeTonight}>
           Change budget or style
+        </Button>
+        <Button variant="secondary" onClick={onMyDrinks}>
+          ♥ My saved drinks{savedCount ? ` (${savedCount})` : ''}
         </Button>
         <div className="grid grid-cols-2 gap-2">
           <Button variant="secondary" onClick={onStartOver}>

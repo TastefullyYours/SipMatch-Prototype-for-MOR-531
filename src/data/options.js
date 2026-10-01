@@ -1,4 +1,5 @@
 // Choice lists shown in the profile and the matching quiz.
+// Sweetness, categories, strength and budget are multi-select (arrays of ids).
 
 // ---- Profile ----
 
@@ -28,19 +29,11 @@ export const CATEGORIES = [
   { id: 'na', emoji: '☕', label: 'Non-alcoholic & coffee' },
 ]
 
-export const CATEGORY_LEVELS = [
-  { id: 0, label: 'Never' },
-  { id: 1, label: 'Rarely' },
-  { id: 2, label: 'Sometimes' },
-  { id: 3, label: 'Love it' },
-]
-
-export const DEFAULT_CATEGORIES = { beer: 2, wine: 2, spirits: 2, cocktails: 2, na: 1 }
-
+// Strength bands (pick any). Approximate strength as served.
 export const ABV_LEVELS = [
-  { id: 'low', emoji: '🪶', label: 'Keep it light', sub: 'Session-strength: beer, cider, spritzes (up to ~7%)' },
-  { id: 'medium', emoji: '🍷', label: 'Wine-level is fine', sub: 'Up to ~16%: wine, most mixed drinks' },
-  { id: 'high', emoji: '🥃', label: 'Strong is OK', sub: 'Spirits and high-proof cocktails welcome' },
+  { id: 'low', emoji: '🪶', label: 'Light', sub: 'Session-strength, up to ~7%: beer, cider, spritzes' },
+  { id: 'medium', emoji: '🍷', label: 'Wine-strength', sub: 'About 7–16%: wine and most mixed drinks' },
+  { id: 'high', emoji: '🥃', label: 'Strong', sub: '16%+: spirits and stronger cocktails' },
 ]
 
 export const RESTRICTIONS = [
@@ -73,9 +66,10 @@ export const SOCIAL = [
 ]
 
 export const OCCASIONS = [
-  { id: 'party', emoji: '🎉', label: 'Party', sub: 'A crowd, snacks, good times' },
+  { id: 'solo', emoji: '🛋️', label: 'Just me', sub: 'A quiet night in, solo' },
   { id: 'date', emoji: '💞', label: 'Duo / date', sub: 'Just the two of you' },
   { id: 'group', emoji: '🍽️', label: 'Small group', sub: 'Dinner with a few friends' },
+  { id: 'party', emoji: '🎉', label: 'Party', sub: 'A crowd, snacks, good times' },
 ]
 
 export const BUDGETS = [

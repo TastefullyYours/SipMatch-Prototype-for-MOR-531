@@ -72,8 +72,8 @@ export function Tonight({ tonight, setTonight, onNext }) {
     <>
       <ScreenTitle eyebrow="Tonight" title="What are you in the mood for?" sub="Budget and style for tonight. Pick “Either” if you don’t mind." />
 
-      <SectionLabel>Tonight's budget</SectionLabel>
-      <Segmented options={BUDGETS} value={tonight.budget} onChange={(v) => setTonight({ ...tonight, budget: v })} />
+      <SectionLabel hint="pick any">Tonight's budget</SectionLabel>
+      <Segmented multi options={BUDGETS} value={tonight.budgets} onChange={(v) => setTonight({ ...tonight, budgets: v })} />
 
       {STYLE_CUES.map((cue) => (
         <div key={cue.id} className="mt-6">
@@ -83,7 +83,7 @@ export function Tonight({ tonight, setTonight, onNext }) {
       ))}
 
       <BottomBar>
-        <Button disabled={!tonight.budget} onClick={onNext}>
+        <Button disabled={!tonight.budgets.length} onClick={onNext}>
           Next
         </Button>
       </BottomBar>

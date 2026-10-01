@@ -6,21 +6,30 @@ const PHASES = {
   quiz: { icon: '🍸', label: "Tonight's match", text: 'text-berry', bar: 'bg-berry', bg: 'bg-berry-light' },
 }
 
-export function Header({ onBack, onLogo, onPremium, phase }) {
+export function Header({ onBack, onLogo, onPremium, onMyDrinks, savedCount = 0, phase }) {
   return (
     <header className="sticky top-0 z-20 bg-cream/95 backdrop-blur">
       <div className="flex h-14 items-center gap-2 px-3">
-        <div className="w-20">
+        <div className="flex w-28 items-center gap-1">
           {onBack && (
-            <button onClick={onBack} className="rounded-full px-2 py-1 text-sm font-medium text-muted hover:bg-sand" aria-label="Go back">
+            <button onClick={onBack} className="whitespace-nowrap rounded-full px-2 py-1 text-sm font-medium text-muted hover:bg-sand" aria-label="Go back">
               ← Back
+            </button>
+          )}
+          {onMyDrinks && (
+            <button
+              onClick={onMyDrinks}
+              aria-label={`My drinks (${savedCount} saved)`}
+              className="whitespace-nowrap rounded-full bg-berry-light px-2.5 py-1 text-xs font-semibold text-berry hover:bg-berry/15"
+            >
+              ♥ {savedCount}
             </button>
           )}
         </div>
         <button onClick={onLogo} className="flex-1 text-center font-display text-xl font-bold text-berry" disabled={!onLogo}>
           SipMatch
         </button>
-        <div className="flex w-20 justify-end">
+        <div className="flex w-28 justify-end">
           {onPremium && (
             <button
               onClick={onPremium}

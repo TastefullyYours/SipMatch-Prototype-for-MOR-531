@@ -3,17 +3,15 @@ import { DRINKS } from '../logic/recommend.js'
 
 const names = (list, ids) => ids.map((id) => label(list, id)?.label).filter(Boolean)
 const drinkNames = (ids) => ids.map((id) => DRINKS.find((d) => d.id === id)?.name).filter(Boolean)
-const catNames = (cats, level) => CATEGORIES.filter((c) => cats[c.id] === level).map((c) => c.label)
 
 // Rows describing a profile in plain words; rows with nothing to say are left out.
 function rows(profile) {
   return [
-    ['Sweetness', label(SWEETNESS, profile.sweetness)?.label],
+    ['Sweetness', names(SWEETNESS, [...profile.sweetness].sort()).join(', ')],
     ['Flavors you love', names(FLAVORS, profile.likes).join(', ')],
     ['Flavors you avoid', names(FLAVORS, profile.dislikes).join(', ')],
-    ['Favorite categories', catNames(profile.categories, 3).join(', ')],
-    ['Never', catNames(profile.categories, 0).join(', ')],
-    ['Strength', label(ABV_LEVELS, profile.abvMax)?.label],
+    ['You drink', names(CATEGORIES, profile.categories).join(', ')],
+    ['Strength', names(ABV_LEVELS, profile.strengths).join(', ')],
     ['Avoiding', names(RESTRICTIONS, profile.restrictions).join(', ')],
     ['Drinks you love', drinkNames(profile.loved).join(', ')],
     ['Drinks you pass on', drinkNames(profile.hated).join(', ')],
@@ -42,9 +40,9 @@ export function ProfileCard({ profile }) {
 // One-line version for the results screen.
 export function ProfileStrip({ profile, onEdit }) {
   const bits = [
-    label(SWEETNESS, profile.sweetness)?.label,
-    ...catNames(profile.categories, 3).map((c) => `loves ${c.toLowerCase()}`),
-    label(ABV_LEVELS, profile.abvMax)?.label,
+    names(SWEETNESS, [...profile.sweetness].sort()).join('/'),
+    names(CATEGORIES, profile.categories).join(', ').toLowerCase(),
+    names(ABV_LEVELS, profile.strengths).join('/').toLowerCase(),
     profile.restrictions.length ? `avoiding ${names(RESTRICTIONS, profile.restrictions).join(', ').toLowerCase()}` : null,
   ].filter(Boolean)
   return (

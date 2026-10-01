@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { TYPE_LABELS } from '../logic/recommend.js'
+import { RateAndNote, SaveButton } from './SavedDrink.jsx'
 
 function Detail({ icon, title, children }) {
   return (
@@ -23,7 +24,7 @@ function PriceTag({ price, overBudget }) {
   )
 }
 
-export default function DrinkCard({ pick, primary = false, dishLabel, contrast }) {
+export default function DrinkCard({ pick, primary = false, dishLabel, contrast, saved = {}, setSaved }) {
   const [open, setOpen] = useState(primary)
   const { drink, principle, moodLine, price, overBudget, classic, likeOf } = pick
 
@@ -55,6 +56,25 @@ export default function DrinkCard({ pick, primary = false, dishLabel, contrast }
         </span>
         {!primary && <span className={`mt-1 text-muted transition ${open ? 'rotate-180' : ''}`}>⌄</span>}
       </button>
+
+      {setSaved && (
+        <div className="-mt-2 flex flex-col gap-2 px-5 pb-4">
+          <div className="flex items-center gap-2">
+            <SaveButton
+              drinkId={drink.id}
+              saved={saved}
+              onToggle={(id) => {
+                const next = { ...saved }
+                if (next[id]) delete next[id]
+                else next[id] = { rating: 0, note: '' }
+                setSaved(next)
+              }}
+            />
+            {!saved[drink.id] && <span className="text-xs text-muted">Save it to rate it and add a note</span>}
+          </div>
+          {saved[drink.id] && <RateAndNote entry={saved[drink.id]} onChange={(e) => setSaved({ ...saved, [drink.id]: e })} />}
+        </div>
+      )}
 
       {open && (
         <div className="flex flex-col gap-4 border-t border-sand px-5 pb-5 pt-4">
