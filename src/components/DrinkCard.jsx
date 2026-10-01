@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { TYPE_LABELS } from '../logic/recommend.js'
 import { RateAndNote, SaveButton } from './SavedDrink.jsx'
+import { RECIPES } from '../data/recipes.js'
 
 function Detail({ icon, title, children }) {
   return (
@@ -24,8 +25,36 @@ function PriceTag({ price, overBudget }) {
   )
 }
 
-export default function DrinkCard({ pick, primary = false, dishLabel, contrast, saved = {}, setSaved }) {
-  const [open, setOpen] = useState(primary)
+// Collapsible "How to make it" for cocktails and mixed drinks.
+function Recipe({ recipe }) {
+  const [show, setShow] = useState(false)
+  return (
+    <div className="rounded-2xl bg-cream p-3">
+      <button type="button" onClick={() => setShow(!show)} aria-expanded={show} className="flex w-full items-center justify-between text-left">
+        <span className="text-sm font-semibold text-berry">🍹 How to make it</span>
+        <span className={`text-berry transition ${show ? 'rotate-180' : ''}`}>⌄</span>
+      </button>
+      {show && (
+        <div className="mt-2 text-sm leading-relaxed text-ink/90">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted">{recipe.glass}</p>
+          <ul className="mt-2 list-disc pl-5">
+            {recipe.ingredients.map((i) => (
+              <li key={i}>{i}</li>
+            ))}
+          </ul>
+          <ol className="mt-2 list-decimal pl-5">
+            {recipe.steps.map((st) => (
+              <li key={st}>{st}</li>
+            ))}
+          </ol>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default function DrinkCard({ pick, primary = false, defaultOpen = false, dishLabel, contrast, saved = {}, setSaved, fitTitle = 'Why it fits your mood' }) {
+  const [open, setOpen] = useState(primary || defaultOpen)
   const { drink, principle, moodLine, price, overBudget, classic, likeOf } = pick
 
   return (
@@ -89,7 +118,7 @@ export default function DrinkCard({ pick, primary = false, dishLabel, contrast, 
               {likeOf.id === drink.id ? 'One of your favorites! You said you love it.' : `Similar to ${likeOf.name}, which you said you love.`}
             </Detail>
           )}
-          <Detail icon="🫶" title="Why it fits your mood">
+          <Detail icon="🫶" title={fitTitle}>
             {moodLine}
           </Detail>
           <Detail icon="📜" title="Fun fact">
@@ -98,6 +127,7 @@ export default function DrinkCard({ pick, primary = false, dishLabel, contrast, 
           <Detail icon="🛒" title="At the store, look for">
             {drink.lookFor}
           </Detail>
+          {RECIPES[drink.id] && <Recipe recipe={RECIPES[drink.id]} />}
         </div>
       )}
     </article>

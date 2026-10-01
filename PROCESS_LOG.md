@@ -382,3 +382,40 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **Fix:** The effect now uses a block body (`useEffect(() => { window.scrollTo(0, 0) }, [step])`), so it returns nothing. The one other expression-bodied effect (`CartPhoto` photo cleanup) was rewritten explicitly for clarity; it was already safe.
 
 **Testing:** The crash was reproduced exactly by making `scrollTo` return a Promise in the test browser (restart screen with "l is not a function"). After the fix, the same emulation reaches the intro screen and the full desktop click-through passes. Normal phone/desktop runs and Enter-key checks pass with no errors.
+
+---
+
+## 2026-10-01: Accounts, skip the profile, quick pick, cocktail recipes
+
+**Prompts (verbatim):**
+- "Profile Step- Emails, Bday, and phone number, passwords. Set it up to allow to skip the profile building quizzes 'who you are and what you like' stuff. Ideally it stores users now"
+- "Recipe Layer - How to make cocktail" / "Length of Quiz (maybe a skip option for random generation based on 2-3 flavor choices, length vs sophistication step to randomly generate 3-5 drinks). Like the whole thing gets lengthy at times and ppl sometimes don't care"
+
+**Built:**
+- **Accounts** (`logic/accounts.js`, `screens/Auth.jsx`): a new Welcome screen offers Create an account / Log in / Continue as guest.
+  - Sign-up asks for email, phone (optional), birthday (21+, same typed + calendar field as before, now shared in `components/BirthdayField.jsx`), and a password entered twice.
+  - Users are stored in the browser's localStorage. The profile, saved drinks and whether the profile was finished are saved to the account automatically. A reload keeps you logged in; Log out is on the start screen.
+  - Passwords are salted and SHA-256 hashed before saving.
+- **Skip the profile:** "Skip it, just match me ⚡" on the intro, plus "Skip the rest of the profile" on every profile screen. A skipped profile can be filled in later from Edit profile.
+- **Quick pick** (`screens/Quick.jsx`, `quickPick` in `recommend.js`):
+  - Every match now starts on "How much time do you have?": ⚡ Quick pick (pick 2–3 flavors and 3/4/5 ideas) or 🎯 Full match (the existing quiz).
+  - Quick results are a weighted random draw from the best flavor matches and still respect allergies, strength, drink types and ratings.
+  - 🔀 Shuffle gives a new mix. Change flavors, Full match and Start over are also offered.
+- **Recipes** (`data/recipes.js`): "🍹 How to make it" collapsible on drink cards, with glass, ingredients and numbered steps. It covers all 27 cocktails plus G&T, spiced rum & cola, shandy, virgin mojito, zero-proof spritz and espresso tonic. Sangrias are written as a pitcher for about 6. Specs are standard classic builds.
+
+**Decisions (not specified, flagged for approval):**
+- Accounts are per browser/device. There is no server, so the same account can't be used on a different phone or laptop. A real backend (e.g. Supabase/Firebase) would be needed for that.
+- Password hashing is demo-grade; the sign-up and log-in screens say not to reuse a real password.
+- Phone is optional and not verified; email is format-checked only (no confirmation email).
+- Guest mode is kept (birthday only, nothing saved).
+- The Quick vs Full choice is its own screen at the start of each match; the quick count is a 3/4/5 picker. Flavors are capped at 3.
+- In quick results the first card opens by default so a recipe (when there is one) is visible without extra taps. Quick results have no "top match" banner because they're random.
+- Recipes are shown for cocktails and mixed drinks only; wine, beer and neat spirits have none.
+
+**Testing:** lint and build pass. Playwright click-throughs at 390px (phone) and 1440px (desktop, with the Chrome 152 Promise-returning `scrollTo` emulated) passed with no page errors. Covered:
+- sign-up validation (bad phone, password mismatch), and the stored record holds only the hash
+- skip profile, then quick pick (flavors capped at 3, 5 ideas), shuffle changes the list, recipe expands
+- save and rate a drink, reload keeps the session and saved drink
+- log out, wrong password message, log in restores saved drinks
+- full match to results
+- guest under-21 and 21+ paths, and "Skip the rest of the profile"
