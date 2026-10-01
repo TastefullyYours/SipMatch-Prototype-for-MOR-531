@@ -9,8 +9,11 @@ import CartPhoto from './screens/CartPhoto.jsx'
 import ReverseFlow from './screens/ReverseFlow.jsx'
 import Paywall from './screens/Paywall.jsx'
 import MyDrinks from './screens/MyDrinks.jsx'
+import { LogIn, SignUp, Welcome } from './screens/Auth.jsx'
+import { QuickPick, QuickResults, StartChoice } from './screens/Quick.jsx'
+import { currentUser, logOut, updateUser } from './logic/accounts.js'
 
-// All state lives here in React (no backend, no browser storage).
+// App state lives here in React. Signed-in users' profile and saved drinks are also kept in this browser (logic/accounts.js).
 // Profile = who you are and what you like (asked once, editable).
 const EMPTY_PROFILE = {
   birthday: null,
@@ -26,6 +29,7 @@ const EMPTY_PROFILE = {
 // Matching quiz = tonight's context (asked every time).
 const EMPTY_MOOD = { feeling: null, social: null }
 const EMPTY_TONIGHT = { budgets: [], temp: 'any', fizz: 'any', body: 'any' }
+const EMPTY_QUICK = { flavors: [], count: 3 }
 
 const PROFILE_STEPS = ['palate', 'drinks', 'avoid', 'calibrate']
 const QUIZ_STEPS = ['mood', 'occasion', 'tonight', 'dish']
@@ -34,13 +38,19 @@ const SIDE_STEPS = [...PREMIUM_STEPS, 'mydrinks'] // screens opened from the hea
 
 // Where "Back" goes from each step.
 const BACK = {
-  underage: 'age',
+  age: 'welcome',
+  signup: 'welcome',
+  login: 'welcome',
+  underage: 'welcome',
   intro: 'age',
   palate: 'intro',
   drinks: 'palate',
   avoid: 'drinks',
   calibrate: 'avoid',
   profileDone: 'calibrate',
+  mood: 'start',
+  quick: 'start',
+  quickResults: 'quick',
   occasion: 'mood',
   tonight: 'occasion',
   dish: 'tonight',
@@ -51,12 +61,21 @@ const BACK = {
 
 // Desktop width per screen: full width for results-style screens, a readable column for questions.
 const desktopWidth = (step) =>
-  ['results', 'premium', 'mydrinks', 'intro'].includes(step) ? '' : ['age', 'underage'].includes(step) ? 'lg:max-w-md' : 'lg:max-w-3xl'
+  ['results', 'premium', 'mydrinks', 'intro', 'quickResults'].includes(step)
+    ? ''
+    : ['welcome', 'age', 'underage', 'login', 'signup'].includes(step)
+      ? 'lg:max-w-md'
+      : 'lg:max-w-3xl'
+
+// A returning signed-in user picks up where they left off.
+const restored = currentUser()
 
 export default function App() {
-  const [step, setStep] = useState('age')
-  const [profile, setProfile] = useState(EMPTY_PROFILE)
-  const [profileDone, setProfileDone] = useState(false)
+  const [account, setAccount] = useState(restored?.email || null) // signed-in email, or null for guests
+  const [step, setStep] = useState(restored ? (restored.profileDone ? 'start' : 'intro') : 'welcome')
+  const [profile, setProfile] = useState(restored?.profile || { ...EMPTY_PROFILE, birthday: restored?.birthday || null })
+  const [profileDone, setProfileDone] = useState(!!restored?.profileDone)
+  const [quick, setQuick] = useState(EMPTY_QUICK)
   const [mood, setMood] = useState(EMPTY_MOOD)
   const [occasion, setOccasion] = useState(null)
   const [tonight, setTonight] = useState(EMPTY_TONIGHT)
@@ -64,13 +83,39 @@ export default function App() {
   const [editing, setEditing] = useState(false) // editing profile from results
   const [premiumReturn, setPremiumReturn] = useState('mood') // where to go when leaving the premium area
   const [paywallReturn, setPaywallReturn] = useState('premium')
-  const [saved, setSaved] = useState({}) // { [drinkId]: { rating: 0–5, note } }
+  const [saved, setSaved] = useState(restored?.saved || {}) // { [drinkId]: { rating: 0–5, note } }
   const [myDrinksReturn, setMyDrinksReturn] = useState('results')
 
   // Braces matter: newer Chrome returns a Promise from scrollTo, and an effect must not return anything but a cleanup function.
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [step])
+
+  // Keep the signed-in user's data saved in this browser.
+  useEffect(() => {
+    if (account) updateUser(account, { profile, saved, profileDone })
+  }, [account, profile, saved, profileDone])
+
+  const signIn = (user) => {
+    setAccount(user.email)
+    setProfile(user.profile || { ...EMPTY_PROFILE, birthday: user.birthday })
+    setSaved(user.saved || {})
+    setProfileDone(!!user.profileDone)
+    setStep(user.profileDone ? 'start' : 'intro')
+  }
+  const signOut = () => {
+    logOut()
+    setAccount(null)
+    setProfile(EMPTY_PROFILE)
+    setSaved({})
+    setProfileDone(false)
+    setMood(EMPTY_MOOD)
+    setOccasion(null)
+    setTonight(EMPTY_TONIGHT)
+    setDish('')
+    setQuick(EMPTY_QUICK)
+    setStep('welcome')
+  }
 
   const onboarded = profileDone && !PROFILE_STEPS.includes(step) && step !== 'profileDone'
   const openPremium = () => {
@@ -93,7 +138,15 @@ export default function App() {
     setOccasion(null)
     setTonight(EMPTY_TONIGHT)
     setDish('')
-    setStep('mood')
+    setQuick(EMPTY_QUICK)
+    setStep('start')
+  }
+
+  // Skip the taste profile: matching still works, it just leans on tonight's answers.
+  const skipProfile = () => {
+    setProfileDone(true)
+    setEditing(false)
+    setStep('start')
   }
 
   // First time → the "Profile saved" screen; when editing → straight back to updated results.
@@ -105,6 +158,7 @@ export default function App() {
   const nextProfile = (current) => () => setStep(PROFILE_STEPS[PROFILE_STEPS.indexOf(current) + 1])
 
   let back = BACK[step] ? () => setStep(BACK[step]) : null
+  if (step === 'intro' && account) back = null // signed-in users don't need the guest birthday screen
   if (editing && step === 'palate')
     back = () => {
       setEditing(false)
@@ -121,25 +175,53 @@ export default function App() {
       ? { kind: 'quiz', step: QUIZ_STEPS.indexOf(step) + 1, total: QUIZ_STEPS.length }
       : null
 
-  const profileProps = { profile, setProfile, editing, onSave: finishProfile }
+  const profileProps = { profile, setProfile, editing, onSave: finishProfile, onSkip: skipProfile }
 
   let screen
   switch (step) {
+    case 'welcome':
+      screen = <Welcome onSignUp={() => setStep('signup')} onLogIn={() => setStep('login')} onGuest={() => setStep('age')} />
+      break
+    case 'signup':
+      screen = <SignUp onCreated={signIn} onUnderage={() => setStep('underage')} onLogIn={() => setStep('login')} />
+      break
+    case 'login':
+      screen = <LogIn onLoggedIn={signIn} onSignUp={() => setStep('signup')} />
+      break
+    case 'start':
+      screen = <StartChoice onQuick={() => setStep('quick')} onFull={() => setStep('mood')} account={account} onLogOut={signOut} />
+      break
+    case 'quick':
+      screen = <QuickPick quick={quick} setQuick={setQuick} onNext={() => setStep('quickResults')} />
+      break
+    case 'quickResults':
+      screen = (
+        <QuickResults
+          profile={profile}
+          saved={saved}
+          setSaved={setSaved}
+          quick={quick}
+          onChange={() => setStep('quick')}
+          onFull={() => setStep('mood')}
+          onStartOver={startOver}
+        />
+      )
+      break
     case 'age':
       screen = (
         <AgeGate
           birthday={profile.birthday}
           setBirthday={(birthday) => setProfile({ ...profile, birthday })}
-          onAdult={() => setStep(profileDone ? 'mood' : 'intro')}
+          onAdult={() => setStep(profileDone ? 'start' : 'intro')}
           onUnderage={() => setStep('underage')}
         />
       )
       break
     case 'underage':
-      screen = <Underage onBack={() => setStep('age')} />
+      screen = <Underage onBack={() => setStep('welcome')} />
       break
     case 'intro':
-      screen = <ProfileIntro onNext={() => setStep('palate')} />
+      screen = <ProfileIntro onNext={() => setStep('palate')} onSkip={skipProfile} />
       break
     case 'palate':
       screen = <ProfilePalate {...profileProps} onNext={nextProfile('palate')} />
@@ -154,7 +236,7 @@ export default function App() {
       screen = <ProfileCalibrate {...profileProps} onNext={finishProfile} />
       break
     case 'profileDone':
-      screen = <ProfileDone profile={profile} onNext={() => setStep('mood')} onEdit={() => setStep('palate')} />
+      screen = <ProfileDone profile={profile} onNext={() => setStep('start')} onEdit={() => setStep('palate')} />
       break
     case 'mood':
       screen = <Mood mood={mood} setMood={setMood} onNext={() => setStep('occasion')} />
@@ -223,7 +305,7 @@ export default function App() {
   return (
     <Shell
       header={
-        step !== 'age' && (
+        step !== 'welcome' && (
           <Header
             onBack={back}
             onLogo={onboarded ? startOver : null}

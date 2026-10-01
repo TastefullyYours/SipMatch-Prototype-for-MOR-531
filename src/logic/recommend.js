@@ -357,4 +357,49 @@ export function recommend({ profile, mood, occasion, tonight, dish }) {
   return { dishInfo, picks: picks.map(present), alternatives, relaxed }
 }
 
+const FLAVOR_WORDS = { sweet: 'sweet', fruity: 'fruity', acidic: 'tart', herbal: 'herbal', bitter: 'bitter', dry: 'dry', smoky: 'smoky' }
+
+// ⚡ Quick pick: 2–3 flavors → `count` drinks, picked at random from the best flavor matches.
+// Respects allergies, strength bands, drink types and passed drinks from the profile (if one exists).
+export function quickPick({ profile, flavors, count = 3, seed = 1 }) {
+  const restrictions = profile.restrictions || []
+  const pool = DRINKS.filter(
+    (d) =>
+      !d.allergens.some((a) => restrictions.includes(a)) &&
+      (!profile.strengths?.length || profile.strengths.some((b) => inBand(d.abv, b))) &&
+      (!profile.categories?.length || profile.categories.includes(CATEGORY_OF[d.type])) &&
+      !(profile.hated || []).includes(d.id),
+  )
+  const scored = pool
+    .map((d) => {
+      const hits = flavors.filter((f) => FLAVOR_TESTS[f]?.(d))
+      const disliked = (profile.dislikes || []).filter((f) => FLAVOR_TESTS[f]?.(d)).length
+      return { drink: d, hits, score: hits.length * 3 - disliked * 4 + (profile.saved?.[d.id]?.rating >= 4 ? 2 : 0) }
+    })
+    .filter((x) => x.hits.length > 0)
+    .sort((a, b) => b.score - a.score)
+
+  // Small seeded shuffle so "Shuffle" gives a new mix but the same seed is stable.
+  let r = seed * 9301 + 49297
+  const rand = () => ((r = (r * 9301 + 49297) % 233280) / 233280)
+  const shortlist = scored.slice(0, Math.max(count * 3, 9))
+  const picks = []
+  while (picks.length < count && shortlist.length) {
+    // Higher-scoring drinks are more likely, but anything on the shortlist can come up.
+    const weights = shortlist.map((x) => Math.max(1, x.score))
+    let roll = rand() * weights.reduce((a, b) => a + b, 0)
+    const i = weights.findIndex((w) => (roll -= w) <= 0)
+    picks.push(shortlist.splice(i < 0 ? 0 : i, 1)[0])
+  }
+  return picks.map((p) => ({
+    drink: p.drink,
+    principle: Object.values(PRINCIPLES).find((x) => x.name === p.drink.principle) || PRINCIPLES.savory,
+    moodLine: `Matches what you asked for: ${p.hits.map((h) => FLAVOR_WORDS[h]).join(' + ')}.`,
+    price: PRICE_TIERS[p.drink.priceTier],
+    overBudget: false,
+    classic: false,
+    likeOf: null,
+  }))
+}
+
 export { DRINKS }

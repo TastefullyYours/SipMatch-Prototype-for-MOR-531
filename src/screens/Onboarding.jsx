@@ -13,7 +13,7 @@ function eyebrow(editing, n) {
   return editing ? `Editing profile · ${TOPICS.at(n - 1)}` : TOPICS.at(n - 1)
 }
 
-function NextBar({ editing, last, disabled, onNext, onSave, children }) {
+function NextBar({ editing, last, disabled, onNext, onSave, onSkip, children }) {
   return (
     <BottomBar>
       <div className="flex flex-col gap-2">
@@ -26,12 +26,17 @@ function NextBar({ editing, last, disabled, onNext, onSave, children }) {
             Save & see new matches
           </Button>
         )}
+        {!editing && onSkip && (
+          <button type="button" onClick={onSkip} className="py-1 text-sm font-medium text-muted underline-offset-2 hover:underline">
+            Skip the rest of the profile
+          </button>
+        )}
       </div>
     </BottomBar>
   )
 }
 
-export function ProfilePalate({ profile, setProfile, editing, onNext, onSave }) {
+export function ProfilePalate({ profile, setProfile, editing, onNext, onSave, onSkip }) {
   const { likes, dislikes } = profile
   return (
     <>
@@ -68,12 +73,12 @@ export function ProfilePalate({ profile, setProfile, editing, onNext, onSave }) 
         <span>Dessert-y 🍭</span>
       </div>
 
-      <NextBar editing={editing} disabled={!profile.sweetness.length} onNext={onNext} onSave={onSave} />
+      <NextBar editing={editing} disabled={!profile.sweetness.length} onNext={onNext} onSave={onSave} onSkip={onSkip} />
     </>
   )
 }
 
-export function ProfileDrinks({ profile, setProfile, editing, onNext, onSave }) {
+export function ProfileDrinks({ profile, setProfile, editing, onNext, onSave, onSkip }) {
   const { categories, strengths } = profile
   return (
     <>
@@ -99,7 +104,7 @@ export function ProfileDrinks({ profile, setProfile, editing, onNext, onSave }) 
         ))}
       </div>
 
-      <NextBar editing={editing} disabled={!categories.length || !strengths.length} onNext={onNext} onSave={onSave}>
+      <NextBar editing={editing} disabled={!categories.length || !strengths.length} onNext={onNext} onSave={onSave} onSkip={onSkip}>
         {(!categories.length || !strengths.length) && (
           <p className="text-center text-sm text-muted">Pick at least one drink type and one strength.</p>
         )}
@@ -108,7 +113,7 @@ export function ProfileDrinks({ profile, setProfile, editing, onNext, onSave }) 
   )
 }
 
-export function ProfileAvoid({ profile, setProfile, editing, onNext, onSave }) {
+export function ProfileAvoid({ profile, setProfile, editing, onNext, onSave, onSkip }) {
   return (
     <>
       <ScreenTitle
@@ -132,7 +137,7 @@ export function ProfileAvoid({ profile, setProfile, editing, onNext, onSave }) {
         ⚠️ SipMatch uses typical recipes, not specific brands. If you have a serious allergy, always check the label.
       </p>
 
-      <NextBar editing={editing} onNext={onNext} onSave={onSave} />
+      <NextBar editing={editing} onNext={onNext} onSave={onSave} onSkip={onSkip} />
     </>
   )
 }
@@ -218,7 +223,7 @@ export function ProfileCalibrate({ profile, setProfile, editing, onNext }) {
 }
 
 // Shown once after the age gate: explains the two parts of SipMatch.
-export function ProfileIntro({ onNext }) {
+export function ProfileIntro({ onNext, onSkip }) {
   return (
     <>
       <ScreenTitle eyebrow="Welcome to SipMatch" title="Two quick parts, then your match" sub="We split it up so you only answer the “who you are” questions once." />
@@ -243,9 +248,15 @@ export function ProfileIntro({ onNext }) {
       </div>
 
       <BottomBar>
-        <Button variant="gold" onClick={onNext}>
-          Build my taste profile
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button variant="gold" onClick={onNext}>
+            Build my taste profile
+          </Button>
+          <Button variant="ghost" onClick={onSkip}>
+            Skip it, just match me ⚡
+          </Button>
+        </div>
+        <p className="mt-2 text-center text-xs text-muted">You can fill in your profile any time later.</p>
       </BottomBar>
     </>
   )
