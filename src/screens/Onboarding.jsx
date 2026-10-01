@@ -1,4 +1,4 @@
-import { ABV_LEVELS, CALIBRATION_DRINKS, CATEGORIES, CATEGORY_LEVELS, FLAVORS, RESTRICTIONS, SWEETNESS } from '../data/options.js'
+import { ABV_LEVELS, CALIBRATION_DRINKS, CATEGORIES, FLAVORS, RESTRICTIONS, SWEETNESS } from '../data/options.js'
 import { DRINKS } from '../logic/recommend.js'
 import { BottomBar, Button, ChoiceCard, Chip, ScreenTitle, SectionLabel, Segmented } from '../components/ui.jsx'
 import { ProfileCard } from '../components/ProfileSummary.jsx'
@@ -61,50 +61,48 @@ export function ProfilePalate({ profile, setProfile, editing, onNext, onSave }) 
         ))}
       </div>
 
-      <SectionLabel>How sweet do you like it?</SectionLabel>
-      <Segmented options={SWEETNESS} value={profile.sweetness} onChange={(v) => setProfile({ ...profile, sweetness: v })} size="sm" />
+      <SectionLabel hint="pick any">How sweet do you like it?</SectionLabel>
+      <Segmented multi options={SWEETNESS} value={profile.sweetness} onChange={(v) => setProfile({ ...profile, sweetness: v })} size="sm" />
       <div className="mt-1.5 flex justify-between px-1 text-[11px] text-muted">
         <span>🌵 Not sugary</span>
         <span>Dessert-y 🍭</span>
       </div>
 
-      <NextBar editing={editing} disabled={!profile.sweetness} onNext={onNext} onSave={onSave} />
+      <NextBar editing={editing} disabled={!profile.sweetness.length} onNext={onNext} onSave={onSave} />
     </>
   )
 }
 
 export function ProfileDrinks({ profile, setProfile, editing, onNext, onSave }) {
-  const cats = profile.categories
-  const anyOn = Object.values(cats).some((v) => v > 0)
+  const { categories, strengths } = profile
   return (
     <>
-      <ScreenTitle eyebrow={eyebrow(editing, 2)} title="What do you usually drink?" sub="Tell us how you split your drinks, and how strong you like them." />
+      <ScreenTitle eyebrow={eyebrow(editing, 2)} title="What do you usually drink?" sub="Pick everything that applies. We'll stick to these." />
 
-      <div className="flex flex-col gap-4">
+      <SectionLabel hint="pick any">What you drink</SectionLabel>
+      <div className="grid gap-2 lg:grid-cols-2">
         {CATEGORIES.map((c) => (
-          <div key={c.id}>
-            <p className="mb-1.5 text-sm font-semibold">
-              {c.emoji} {c.label}
-            </p>
-            <Segmented
-              options={CATEGORY_LEVELS}
-              value={cats[c.id]}
-              onChange={(v) => setProfile({ ...profile, categories: { ...cats, [c.id]: v } })}
-              size="sm"
-            />
-          </div>
+          <ChoiceCard
+            key={c.id}
+            emoji={c.emoji}
+            label={c.label}
+            selected={categories.includes(c.id)}
+            onClick={() => setProfile({ ...profile, categories: toggle(categories, c.id) })}
+          />
         ))}
       </div>
 
-      <SectionLabel>How strong?</SectionLabel>
-      <div className="flex flex-col gap-2">
+      <SectionLabel hint="pick any">How strong?</SectionLabel>
+      <div className="grid gap-2 lg:grid-cols-3">
         {ABV_LEVELS.map((a) => (
-          <ChoiceCard key={a.id} {...a} selected={profile.abvMax === a.id} onClick={() => setProfile({ ...profile, abvMax: a.id })} />
+          <ChoiceCard key={a.id} {...a} selected={strengths.includes(a.id)} onClick={() => setProfile({ ...profile, strengths: toggle(strengths, a.id) })} />
         ))}
       </div>
 
-      <NextBar editing={editing} disabled={!anyOn || !profile.abvMax} onNext={onNext} onSave={onSave}>
-        {!anyOn && <p className="text-center text-sm text-berry">Pick at least one category you drink.</p>}
+      <NextBar editing={editing} disabled={!categories.length || !strengths.length} onNext={onNext} onSave={onSave}>
+        {(!categories.length || !strengths.length) && (
+          <p className="text-center text-sm text-muted">Pick at least one drink type and one strength.</p>
+        )}
       </NextBar>
     </>
   )
@@ -119,7 +117,7 @@ export function ProfileAvoid({ profile, setProfile, editing, onNext, onSave }) {
         sub="Allergies, sensitivities or things you just can't stand. We'll never suggest drinks that usually contain them."
       />
 
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2 lg:grid-cols-2">
         {RESTRICTIONS.map((r) => (
           <ChoiceCard
             key={r.id}
@@ -146,52 +144,64 @@ export function ProfileCalibrate({ profile, setProfile, editing, onNext }) {
   const hatedOk = hated.length === 2
   const skipped = loved.length === 0 && hated.length === 0
 
+  // Each drink has two explicit buttons; tapping the active one again clears it.
+  const set = (id, state) =>
+    setProfile({
+      ...profile,
+      loved: state === 'love' ? [...without(loved, id), id] : without(loved, id),
+      hated: state === 'pass' ? [...without(hated, id), id] : without(hated, id),
+    })
+
   return (
     <>
       <ScreenTitle
         eyebrow={eyebrow(editing, 4)}
         title="Rate a few drinks you know"
-        sub="This helps us learn your taste. Pick 3–5 you love and 2 you'd pass on."
+        sub="Mark 3–5 you love and 2 you'd pass on. Skip any you haven't tried."
       />
 
-      <div className="mb-3 flex gap-2 text-sm">
+      <div className="sticky top-[7.5rem] lg:top-[8.5rem] lg:-mx-10 lg:px-10 z-10 -mx-5 mb-3 flex gap-2 bg-cream/95 px-5 py-2 text-sm backdrop-blur">
         <span className={`flex-1 rounded-2xl p-2.5 text-center font-semibold ${lovedOk ? 'bg-berry text-white' : 'bg-white'}`}>
-          ❤️ Love: {loved.length}/3–5
+          👍 Love: {loved.length} of 3–5
         </span>
         <span className={`flex-1 rounded-2xl p-2.5 text-center font-semibold ${hatedOk ? 'bg-ink text-white' : 'bg-white'}`}>
-          👎 Pass: {hated.length}/2
+          👎 Pass: {hated.length} of 2
         </span>
       </div>
-      <p className="mb-3 text-sm text-muted">Tap once for ❤️ love, twice for 👎 pass, three times to clear.</p>
-      <div className="flex flex-wrap gap-2">
+
+      <div className="overflow-hidden rounded-3xl bg-white shadow-sm lg:grid lg:grid-cols-2">
         {drinks.map((d) => {
-          const state = loved.includes(d.id) ? 'love' : hated.includes(d.id) ? 'hate' : null
+          const isLove = loved.includes(d.id)
+          const isPass = hated.includes(d.id)
+          const loveFull = !isLove && loved.length >= 5
+          const passFull = !isPass && hated.length >= 2
           return (
-            <button
-              key={d.id}
-              type="button"
-              onClick={() => {
-                // Cycle: none → love → pass → none (skipping a state that's already full).
-                const canLove = loved.length < 5
-                const canHate = hated.length < 2
-                const next = state === null ? (canLove ? 'love' : canHate ? 'hate' : null) : state === 'love' ? (canHate ? 'hate' : null) : null
-                setProfile({
-                  ...profile,
-                  loved: next === 'love' ? [...without(loved, d.id), d.id] : without(loved, d.id),
-                  hated: next === 'hate' ? [...without(hated, d.id), d.id] : without(hated, d.id),
-                })
-              }}
-              className={`rounded-full border-2 px-3.5 py-1.5 text-sm font-medium transition active:scale-95 ${
-                state === 'love'
-                  ? 'border-berry bg-berry text-white'
-                  : state === 'hate'
-                    ? 'border-ink bg-ink text-white'
-                    : 'border-berry/15 bg-white text-ink hover:border-berry/40'
-              }`}
-            >
-              {state === 'love' ? '❤️ ' : state === 'hate' ? '👎 ' : `${d.emoji} `}
-              {d.name}
-            </button>
+            <div key={d.id} className="flex items-center gap-3 border-b border-sand px-4 py-2.5 last:border-0">
+              <span className="text-2xl">{d.emoji}</span>
+              <span className="flex-1 text-sm font-medium">{d.name}</span>
+              <button
+                type="button"
+                aria-pressed={isLove}
+                disabled={loveFull}
+                onClick={() => set(d.id, isLove ? null : 'love')}
+                className={`rounded-full border-2 px-3 py-1 text-xs font-semibold transition disabled:opacity-30 ${
+                  isLove ? 'border-berry bg-berry text-white' : 'border-berry/20 text-berry hover:border-berry/50'
+                }`}
+              >
+                👍 Love
+              </button>
+              <button
+                type="button"
+                aria-pressed={isPass}
+                disabled={passFull}
+                onClick={() => set(d.id, isPass ? null : 'pass')}
+                className={`rounded-full border-2 px-3 py-1 text-xs font-semibold transition disabled:opacity-30 ${
+                  isPass ? 'border-ink bg-ink text-white' : 'border-ink/15 text-ink/70 hover:border-ink/40'
+                }`}
+              >
+                👎 Pass
+              </button>
+            </div>
           )
         })}
       </div>
@@ -213,7 +223,7 @@ export function ProfileIntro({ onNext }) {
     <>
       <ScreenTitle eyebrow="Welcome to SipMatch" title="Two quick parts, then your match" sub="We split it up so you only answer the “who you are” questions once." />
 
-      <div className="flex flex-col gap-3">
+      <div className="grid gap-3 lg:grid-cols-2">
         <div className="rounded-3xl bg-white p-5 shadow-sm ring-2 ring-gold/50">
           <div className="flex items-center gap-2">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gold text-sm font-bold text-ink">1</span>

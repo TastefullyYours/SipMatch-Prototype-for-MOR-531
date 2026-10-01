@@ -87,25 +87,27 @@ export function LockBadge({ children = 'Premium' }) {
 
 // Sticky bottom action area so the main CTA is always reachable on a phone.
 export function BottomBar({ children }) {
-  return <div className="sticky bottom-0 -mx-5 mt-8 bg-gradient-to-t from-cream via-cream to-cream/0 px-5 pb-4 pt-6">{children}</div>
+  return <div className="sticky bottom-0 -mx-5 mt-8 bg-gradient-to-t from-cream via-cream to-cream/0 px-5 pb-4 pt-6 lg:-mx-10 lg:px-10">{children}</div>
 }
 
-// Row of equal-width options, one selectable (e.g. sweetness scale, style cues).
-export function Segmented({ options, value, onChange, size = 'md' }) {
+// Row of equal-width options. Single-select by default; `multi` makes `value` an array and toggles ids.
+export function Segmented({ options, value, onChange, size = 'md', multi = false }) {
+  const isOn = (id) => (multi ? value.includes(id) : value === id)
+  const pick = (id) => (multi ? onChange(value.includes(id) ? value.filter((v) => v !== id) : [...value, id]) : onChange(id))
   return (
     <div className="flex gap-1 rounded-2xl bg-white p-1 shadow-sm">
       {options.map((o) => (
         <button
           key={o.id}
           type="button"
-          onClick={() => onChange(o.id)}
-          aria-pressed={value === o.id}
+          onClick={() => pick(o.id)}
+          aria-pressed={isOn(o.id)}
           className={`flex-1 rounded-xl px-1 font-medium leading-tight transition ${size === 'sm' ? 'py-1.5 text-xs' : 'py-2.5 text-sm'} ${
-            value === o.id ? 'bg-berry text-white shadow-sm' : 'text-ink/80 hover:bg-berry-light'
+            isOn(o.id) ? 'bg-berry text-white shadow-sm' : 'text-ink/80 hover:bg-berry-light'
           }`}
         >
           {o.label}
-          {o.sub && <span className={`block text-[11px] ${value === o.id ? 'text-white/80' : 'text-muted'}`}>{o.sub}</span>}
+          {o.sub && <span className={`block text-[11px] ${isOn(o.id) ? 'text-white/80' : 'text-muted'}`}>{o.sub}</span>}
         </button>
       ))}
     </div>

@@ -28,7 +28,7 @@ export default function Premium({ onCart, onReverse, onPaywall }) {
     <>
       <ScreenTitle eyebrow="✨ SipMatch Premium" title="Match smarter, wherever you are" sub="Try a preview of what Premium members get." />
 
-      <div className="flex flex-col gap-3">
+      <div className="grid gap-3 lg:grid-cols-2">
         <FeatureCard
           emoji="🛒"
           title="Snap your cart"

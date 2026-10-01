@@ -8,7 +8,7 @@ import Premium from './screens/Premium.jsx'
 import CartPhoto from './screens/CartPhoto.jsx'
 import ReverseFlow from './screens/ReverseFlow.jsx'
 import Paywall from './screens/Paywall.jsx'
-import { DEFAULT_CATEGORIES } from './data/options.js'
+import MyDrinks from './screens/MyDrinks.jsx'
 
 // All state lives here in React (no backend, no browser storage).
 // Profile = who you are and what you like (asked once, editable).
@@ -16,20 +16,21 @@ const EMPTY_PROFILE = {
   birthday: null,
   likes: [],
   dislikes: [],
-  sweetness: null,
-  categories: DEFAULT_CATEGORIES,
-  abvMax: null,
+  sweetness: [], // multi-select levels 1–5
+  categories: [], // multi-select: beer, wine, spirits, cocktails, na
+  strengths: [], // multi-select: low, medium, high
   restrictions: [],
   loved: [],
   hated: [],
 }
 // Matching quiz = tonight's context (asked every time).
 const EMPTY_MOOD = { feeling: null, social: null }
-const EMPTY_TONIGHT = { budget: null, temp: 'any', fizz: 'any', body: 'any' }
+const EMPTY_TONIGHT = { budgets: [], temp: 'any', fizz: 'any', body: 'any' }
 
 const PROFILE_STEPS = ['palate', 'drinks', 'avoid', 'calibrate']
 const QUIZ_STEPS = ['mood', 'occasion', 'tonight', 'dish']
 const PREMIUM_STEPS = ['premium', 'cart', 'reverse', 'paywall']
+const SIDE_STEPS = [...PREMIUM_STEPS, 'mydrinks'] // screens opened from the header that return where you were
 
 // Where "Back" goes from each step.
 const BACK = {
@@ -48,6 +49,10 @@ const BACK = {
   reverse: 'premium',
 }
 
+// Desktop width per screen: full width for results-style screens, a readable column for questions.
+const desktopWidth = (step) =>
+  ['results', 'premium', 'mydrinks', 'intro'].includes(step) ? '' : ['age', 'underage'].includes(step) ? 'lg:max-w-md' : 'lg:max-w-3xl'
+
 export default function App() {
   const [step, setStep] = useState('age')
   const [profile, setProfile] = useState(EMPTY_PROFILE)
@@ -59,6 +64,8 @@ export default function App() {
   const [editing, setEditing] = useState(false) // editing profile from results
   const [premiumReturn, setPremiumReturn] = useState('mood') // where to go when leaving the premium area
   const [paywallReturn, setPaywallReturn] = useState('premium')
+  const [saved, setSaved] = useState({}) // { [drinkId]: { rating: 0–5, note } }
+  const [myDrinksReturn, setMyDrinksReturn] = useState('results')
 
   useEffect(() => window.scrollTo(0, 0), [step])
 
@@ -66,6 +73,10 @@ export default function App() {
   const openPremium = () => {
     if (!PREMIUM_STEPS.includes(step)) setPremiumReturn(step)
     setStep('premium')
+  }
+  const openMyDrinks = () => {
+    if (!SIDE_STEPS.includes(step)) setMyDrinksReturn(step)
+    setStep('mydrinks')
   }
   const openPaywall = () => {
     if (!PREMIUM_STEPS.includes(step)) setPremiumReturn(step)
@@ -98,6 +109,7 @@ export default function App() {
     }
   if (step === 'premium') back = () => setStep(premiumReturn)
   if (step === 'paywall') back = () => setStep(paywallReturn)
+  if (step === 'mydrinks') back = () => setStep(myDrinksReturn)
 
   // The profile and the quiz each get their own labelled progress bar.
   const phase = PROFILE_STEPS.includes(step)
@@ -168,6 +180,9 @@ export default function App() {
       screen = (
         <Results
           profile={profile}
+          saved={saved}
+          setSaved={setSaved}
+          onMyDrinks={openMyDrinks}
           mood={mood}
           occasion={occasion}
           tonight={tonight}
@@ -192,6 +207,9 @@ export default function App() {
     case 'reverse':
       screen = <ReverseFlow onUpgrade={openPaywall} />
       break
+    case 'mydrinks':
+      screen = <MyDrinks saved={saved} setSaved={setSaved} onBack={() => setStep(myDrinksReturn)} />
+      break
     case 'paywall':
       screen = <Paywall onClose={() => setStep(paywallReturn)} />
       break
@@ -207,12 +225,14 @@ export default function App() {
             onBack={back}
             onLogo={onboarded ? startOver : null}
             onPremium={onboarded && !PREMIUM_STEPS.includes(step) ? openPremium : null}
+            onMyDrinks={onboarded && step !== 'mydrinks' ? openMyDrinks : null}
+            savedCount={Object.keys(saved).length}
             phase={phase}
           />
         )
       }
     >
-      <div key={step} className="flex flex-1 flex-col animate-[fadeIn_.25s_ease-out]">
+      <div key={step} className={`mx-auto flex w-full flex-1 flex-col animate-[fadeIn_.25s_ease-out] ${desktopWidth(step)}`}>
         {screen}
       </div>
     </Shell>

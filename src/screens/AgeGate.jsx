@@ -4,10 +4,29 @@ import { Button } from '../components/ui.jsx'
 
 const todayISO = () => new Date().toISOString().slice(0, 10)
 
+// "MM/DD/YYYY" ⇄ "YYYY-MM-DD". Returns null unless it's a real calendar date.
+function toISO(text) {
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(text)
+  if (!m) return null
+  const [, mm, dd, yyyy] = m
+  const d = new Date(Date.UTC(+yyyy, +mm - 1, +dd))
+  if (d.getUTCFullYear() !== +yyyy || d.getUTCMonth() !== +mm - 1 || d.getUTCDate() !== +dd) return null
+  return `${yyyy}-${mm}-${dd}`
+}
+const fromISO = (iso) => (iso ? `${iso.slice(5, 7)}/${iso.slice(8, 10)}/${iso.slice(0, 4)}` : '')
+
+// Keep only digits and add the slashes as the user types: 0520 → 05/20.
+function formatTyped(raw) {
+  const digits = raw.replace(/\D/g, '').slice(0, 8)
+  return [digits.slice(0, 2), digits.slice(2, 4), digits.slice(4, 8)].filter(Boolean).join('/')
+}
+
 export function AgeGate({ birthday, setBirthday, onAdult, onUnderage }) {
-  const [value, setValue] = useState(birthday || '')
-  const valid = /^\d{4}-\d{2}-\d{2}$/.test(value) && value <= todayISO() && value >= '1900-01-01'
-  const age = valid ? ageFrom(value) : null
+  const [text, setText] = useState(fromISO(birthday))
+  const iso = toISO(text)
+  const valid = !!iso && iso <= todayISO() && iso >= '1900-01-01'
+  const age = valid ? ageFrom(iso) : null
+  const typedAll = text.length === 10
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center py-8 text-center">
@@ -27,7 +46,7 @@ export function AgeGate({ birthday, setBirthday, onAdult, onUnderage }) {
         onSubmit={(e) => {
           e.preventDefault()
           if (!valid) return
-          setBirthday(value)
+          setBirthday(iso)
           if (age >= 21) onAdult()
           else onUnderage()
         }}
@@ -35,20 +54,40 @@ export function AgeGate({ birthday, setBirthday, onAdult, onUnderage }) {
         <label htmlFor="birthday" className="block text-center text-lg font-semibold">
           When's your birthday? 🎂
         </label>
-        <p className="mb-4 mt-1 text-center text-sm text-muted">SipMatch is for adults 21 and over.</p>
-        <input
-          id="birthday"
-          type="date"
-          value={value}
-          max={todayISO()}
-          min="1900-01-01"
-          onChange={(e) => setValue(e.target.value)}
-          className="w-full rounded-2xl border-2 border-berry/15 bg-cream px-4 py-3.5 text-center text-lg outline-none focus:border-berry"
-        />
+        <p className="mb-4 mt-1 text-center text-sm text-muted">Type it in, or pick it from the calendar.</p>
+
+        <div className="flex gap-2">
+          <input
+            id="birthday"
+            type="text"
+            inputMode="numeric"
+            autoComplete="bday"
+            placeholder="MM/DD/YYYY"
+            value={text}
+            onChange={(e) => setText(formatTyped(e.target.value))}
+            className="min-w-0 flex-1 rounded-2xl border-2 border-berry/15 bg-cream px-4 py-3.5 text-center text-lg tracking-wider outline-none focus:border-berry"
+          />
+          {/* The real date input sits invisibly over the button, so tapping it opens the phone's own calendar. */}
+          <label className="relative flex w-14 shrink-0 cursor-pointer items-center justify-center rounded-2xl border-2 border-berry/15 bg-cream text-2xl hover:border-berry/40">
+            <span aria-hidden>📅</span>
+            <span className="sr-only">Pick from calendar</span>
+            <input
+              type="date"
+              value={iso || ''}
+              max={todayISO()}
+              min="1900-01-01"
+              onChange={(e) => setText(fromISO(e.target.value))}
+              onClick={(e) => e.currentTarget.showPicker?.()}
+              className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+            />
+          </label>
+        </div>
+        {typedAll && !valid && <p className="mt-2 text-center text-sm text-berry">Hmm, that doesn't look like a real date.</p>}
+
         <Button className="mt-4" disabled={!valid}>
           Continue
         </Button>
-        <p className="mt-3 text-center text-xs text-muted">We only use this to check your age. It isn't saved anywhere.</p>
+        <p className="mt-3 text-center text-xs text-muted">SipMatch is for adults 21+. We only use this to check your age. It isn't saved anywhere.</p>
       </form>
     </div>
   )

@@ -46,8 +46,9 @@ const FLAVOR_TESTS = {
   smoky: (d) => d.tasteTags.includes('smoky'),
 }
 
-// ABV ceiling from the profile (approximate strength as served).
-const ABV_MAX = { low: 7, medium: 16, high: Infinity }
+// Strength bands from the profile (approximate strength as served). A drink passes if it is in ANY picked band.
+const ABV_BANDS = { low: (abv) => abv <= 7, medium: (abv) => abv > 7 && abv <= 16, high: (abv) => abv > 16 }
+const inBand = (abv, band) => ABV_BANDS[band](abv)
 
 // Mood research (see PROCESS_LOG / README "Mood & taste"):
 // - Cheerful: sweetness/aroma feel stronger; people seek fizzy, bright, citrus, fruity drinks.
@@ -58,9 +59,20 @@ const MOOD_TAG_BOOSTS = {
   sad: ['nostalgic', 'warm', 'familiar'],
 }
 
-// Sweetness preference is 1 (bone dry) to 5 (sweet); stressed shifts it one step sweeter.
-export function effectiveSweetness(pref, feeling) {
-  return feeling === 'stressed' ? Math.min(pref + 1, 5) : pref
+// Sweetness preferences are levels 1 (bone dry) to 5 (sweet), multi-select; stressed shifts each one step sweeter.
+export function effectiveSweetness(prefs, feeling) {
+  const list = prefs.length ? prefs : [3]
+  return feeling === 'stressed' ? list.map((p) => Math.min(p + 1, 5)) : list
+}
+
+// Drinks the user loves / dislikes: calibration picks plus saved drinks rated 4–5 or 1–2 stars.
+function lovedIds(profile) {
+  const rated = Object.entries(profile.saved || {}).filter(([, v]) => v.rating >= 4).map(([id]) => id)
+  return [...new Set([...(profile.loved || []), ...rated])]
+}
+function dislikedIds(profile) {
+  const rated = Object.entries(profile.saved || {}).filter(([, v]) => v.rating > 0 && v.rating <= 2).map(([id]) => id)
+  return [...new Set([...(profile.hated || []), ...rated])]
 }
 
 // 0–1 similarity between two drinks: same type, shared taste tags, similar sweetness.
@@ -91,21 +103,20 @@ function scoreDrink(drink, { profile, mood, occasion, tonight, dishTags, matched
   if (dishTags.includes('light') && tags.includes('bold') && !dishTags.some((t) => ['rich', 'meaty', 'smoky'].includes(t))) score -= 1
 
   // 2. Sweetness preference (stressed shifts it one step sweeter).
-  const target = effectiveSweetness(profile.sweetness, mood.feeling)
-  score -= Math.abs(drink.sweetness - target) * 1.2
+  const targets = effectiveSweetness(profile.sweetness, mood.feeling)
+  score -= Math.min(...targets.map((t) => Math.abs(drink.sweetness - t))) * 1.2
   if (mood.feeling === 'stressed' && drink.sweetness === 1) score -= 1.5 // gently steer away from bone-dry
 
   // 3. Favorite / disliked flavors.
   score += (profile.likes || []).filter((f) => FLAVOR_TESTS[f]?.(drink)).length * 1.5
   score -= (profile.dislikes || []).filter((f) => FLAVOR_TESTS[f]?.(drink)).length * 4
 
-  // 4. Category weights (0 = never is filtered out earlier; 1 rarely → 3 love it).
-  const weight = profile.categories?.[CATEGORY_OF[drink.type]] ?? 2
-  score += (weight - 2) * 2.5
+  // 4. Category fit: picked categories are filtered in recommend(); a small nudge keeps them on top if relaxed.
+  if ((profile.categories || []).includes(CATEGORY_OF[drink.type])) score += 1
 
   // 5. Calibration: drinks like the ones you love score higher, like the ones you hate lower.
-  const loved = (profile.loved || []).map(byId).filter(Boolean)
-  const hated = (profile.hated || []).map(byId).filter(Boolean)
+  const loved = lovedIds(profile).map(byId).filter(Boolean)
+  const hated = dislikedIds(profile).map(byId).filter(Boolean)
   let likeOf = null
   if (loved.length) {
     const best = loved
@@ -122,6 +133,10 @@ function scoreDrink(drink, { profile, mood, occasion, tonight, dishTags, matched
     }
   }
   if (hated.length) score -= Math.max(...hated.map((h) => similarity(drink, h))) * 3
+  // Your own star rating of this exact drink: 5★ +3, 4★ +2, 2★ −2, 1★ −3.
+  const stars = profile.saved?.[drink.id]?.rating || 0
+  if (stars >= 4) score += stars - 2
+  else if (stars > 0 && stars <= 2) score -= 4 - stars
 
   // 6. Mood fit.
   if (mood.feeling !== 'stressed') {
@@ -135,7 +150,8 @@ function scoreDrink(drink, { profile, mood, occasion, tonight, dishTags, matched
   if (drink.vibe.includes(mood.social)) score += 1
 
   // 7. Occasion fit.
-  if (drink.occasions.includes(occasion)) score += 1.5
+  // "Just me" fits drinks made for sipping solo.
+  if (occasion === 'solo' ? drink.vibe.includes('solo') : drink.occasions.includes(occasion)) score += 1.5
 
   // 8. Tonight's style cues (soft preferences).
   const cold = drink.serve === 'iced' || drink.serve === 'chilled'
@@ -148,10 +164,12 @@ function scoreDrink(drink, { profile, mood, occasion, tonight, dishTags, matched
   if (tonight.body === 'light') score += tags.includes('light') ? 1.5 : bold ? -1.5 : 0
   if (tonight.body === 'bold') score += bold ? 1.5 : tags.includes('light') ? -1 : 0
 
-  // 9. Tonight's budget: penalize (don't hide) drinks above budget.
-  const over = drink.priceTier - tonight.budget
+  // 9. Tonight's budget (multi-select): penalize (don't hide) drinks above the highest tier picked.
+  const budgets = tonight.budgets.length ? tonight.budgets : [1, 2, 3]
+  const over = drink.priceTier - Math.max(...budgets)
   if (over > 0) score -= over * 3
-  else if (over === 0) score += 0.5
+  else if (budgets.includes(drink.priceTier)) score += 0.5
+  else if (drink.priceTier > Math.min(...budgets)) score -= 1.5 // a gap tier, e.g. $$ when you chose $ and $$$
 
   return { score, matchedTags, classic, likeOf, overBudget: over > 0 }
 }
@@ -269,11 +287,12 @@ function pickAlternatives(scored, mainIds, ref) {
 }
 
 /**
- * @param profile  { sweetness: 1–5, likes: [], dislikes: [], categories: {beer,wine,spirits,cocktails,na: 0–3},
- *                   abvMax: 'low'|'medium'|'high', restrictions: [], loved: [ids], hated: [ids] }
+ * @param profile  { sweetness: [1–5], likes: [], dislikes: [], categories: ['beer'|'wine'|'spirits'|'cocktails'|'na'],
+ *                   strengths: ['low'|'medium'|'high'], restrictions: [], loved: [ids], hated: [ids],
+ *                   saved: { [drinkId]: { rating: 0–5, note } } }
  * @param mood     { feeling: 'cheerful'|'stressed'|'sad', social: 'social'|'solo' }
- * @param occasion 'party'|'date'|'group'
- * @param tonight  { budget: 1|2|3, temp: 'iced'|'neat'|'any', fizz: 'bubbly'|'still'|'any', body: 'light'|'bold'|'any' }
+ * @param occasion 'solo'|'date'|'group'|'party'
+ * @param tonight  { budgets: [1|2|3], temp: 'iced'|'neat'|'any', fizz: 'bubbly'|'still'|'any', body: 'light'|'bold'|'any' }
  * @param dish     string ('' when skipped)
  * @returns { picks: [...up to 3], alternatives: [...up to 3], dishInfo, relaxed: string[] }
  */
@@ -289,8 +308,8 @@ export function recommend({ profile, mood, occasion, tonight, dish }) {
   const restrictions = profile.restrictions || []
   let pool = DRINKS.filter((d) => !d.allergens.some((a) => restrictions.includes(a)))
   const filters = [
-    ['abv', (d) => d.abv <= ABV_MAX[profile.abvMax || 'high']],
-    ['categories', (d) => (profile.categories?.[CATEGORY_OF[d.type]] ?? 2) > 0],
+    ['abv', (d) => !profile.strengths?.length || profile.strengths.some((b) => inBand(d.abv, b))],
+    ['categories', (d) => !profile.categories?.length || profile.categories.includes(CATEGORY_OF[d.type])],
     ['hated', (d) => !(profile.hated || []).includes(d.id)],
   ]
   const relaxed = []

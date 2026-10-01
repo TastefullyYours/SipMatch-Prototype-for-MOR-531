@@ -273,3 +273,57 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **Testing:** `npm run build` and `oxlint` pass. The Playwright click-throughs (full profile + quiz + results + edit, and premium flow with calibration skipped) were updated for the two new screens and pass with no app errors.
 
 **Decisions / issues:** The last profile button now reads "Save my profile" (was "Start matching ✨"), since matching starts on the next screen.
+
+---
+
+## 2026-10-01: Milestone 10: Feedback round: birthday input, solo occasion, multi-select, saved drinks
+
+**Prompt (verbatim):**
+> okay so notes:
+> Birthday is a limiting thing, because the box doesn't show up correctly on mobile. Maybe instead of text let users also type in MM/DD/YYYY format as well as the scroll calendar
+>
+> I would like you to update the options to let people drink alone insteadd of just duos or parties
+>
+> When selecting drinking habits, strength, people should be able to choose multiple. So ideally, some of these features you should be able select more than one thing
+>
+> And How sweet should also be multiple choice
+>
+> I would like a way to save drinks to my profile, and rate the drink out of 5 and leave a note on a drink.
+>
+> Single tap double tap is confusing for selecting what you like or don't like
+
+**Context:** PR #4 had been merged into `main`, so the branch restarted from the updated `main`.
+
+**Built / changed:**
+- **Birthday:** a text field that accepts MM/DD/YYYY. It opens the number keypad on phones, adds slashes automatically and flags impossible dates (e.g. 02/30). Beside it, a 📅 button opens the phone's native calendar; the real date input sits invisibly over the button so tapping it works on mobile. The two stay in sync.
+- **"Just me" occasion** added (first in the list). It favors drinks tagged for sipping solo.
+- **Multi-select:**
+  - Sweetness: pick any of 5 levels; scoring uses the closest picked level, and stressed still shifts one step sweeter.
+  - Drink types: pick all that apply. Replaces the Never/Rarely/Sometimes/Love-it grid; unpicked types are filtered out and relaxed with a notice only if fewer than 3 drinks remain.
+  - Strength: pick any band (light ≤7%, wine-strength 7–16%, strong 16%+). A drink passes if it's in any picked band.
+  - Tonight's budget: pick any of $/$$/$$$. Drinks above the highest pick are penalized, and so are "gap" tiers ($$ when $ and $$$ are picked).
+- **Calibration:** each drink now has explicit 👍 Love and 👎 Pass buttons (tap again to clear), replacing the single/double-tap cycle. A sticky counter shows progress.
+- **Saved drinks:** a ♡ Save button on every result card. Saved cards show a 1–5 star rating and a note field. A new **My drinks** screen (♥ count in the header, plus a button on results) lists every saved drink with its rating, note and a Remove button. Ratings feed matching: 4–5★ count as loved (similar drinks rank higher, the drink itself +2/+3), 1–2★ count as disliked. Results snapshot ratings when opened, so rating a card doesn't reshuffle the list in front of you.
+
+**Testing:** Node scenarios (solo, multi sweetness, light + strong bands, wine only, $ + $$$ budget, 5★/1★ ratings). A Playwright run covered typed birthday with auto-slashes, an invalid-date message, calendar sync, multi-select sweetness/categories/strength, Love/Pass buttons including un-loving, Just me, multi budget, save + 4★ + note on a result (list unchanged after rating), and the My drinks screen. No app errors.
+
+**Decisions / issues:**
+- Saved drinks last for the session only, matching the original "no browser storage" rule. The My drinks screen says so.
+- In early tests a 5★ drink didn't appear and "$ + $$$" still returned $$ drinks; both were fixed in scoring before committing.
+- The ♥ My drinks button sits next to Back in the header so it fits beside ✨ Premium on a phone.
+
+---
+
+## 2026-10-01: Milestone 11: Desktop layout
+
+**Prompt (verbatim):** "In the meantime, is there a way to also make this usable on pc?"
+
+**Built / changed:** The app already loaded on a PC but showed a phone-sized card. On screens 1024px and wider it now uses a desktop layout. Phones are unchanged.
+- The app card widens to about 1024px, with roomier header and padding.
+- Question screens sit in a centered ~768px column. Option lists use 2–3 columns (moods, occasions, drink types, strength, restrictions, the intro cards), and the calibration list uses two columns.
+- Results use two columns: the top match on the left; alternates, "Don't like these?", the premium teaser and the action buttons on the right.
+- My drinks and the Premium hub use two-column grids.
+
+**Testing:** The full Playwright click-through ran at 1440×900 (desktop) and 390×844 (phone), with no app errors in either. Desktop screenshots were reviewed for the drink-habits, calibration and results screens.
+
+**Decisions / issues:** The breakpoint is Tailwind's `lg` (1024px), so tablets in portrait keep the phone layout.

@@ -10,7 +10,7 @@ export function Mood({ mood, setMood, onNext }) {
       <ScreenTitle eyebrow="Mood" title="How are you feeling today?" sub="Your mood actually changes how things taste." />
 
       <SectionLabel>Right now I'm…</SectionLabel>
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2 lg:grid-cols-3">
         {FEELINGS.map((f) => (
           <ChoiceCard key={f.id} {...f} selected={mood.feeling === f.id} onClick={() => setMood({ ...mood, feeling: f.id })} />
         ))}
@@ -53,7 +53,7 @@ export function Occasion({ occasion, setOccasion, onNext }) {
   return (
     <>
       <ScreenTitle eyebrow="Occasion" title="What's the occasion?" sub="Who are you sipping with?" />
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2 lg:grid-cols-2">
         {OCCASIONS.map((o) => (
           <ChoiceCard key={o.id} {...o} selected={occasion === o.id} onClick={() => setOccasion(o.id)} />
         ))}
@@ -72,8 +72,8 @@ export function Tonight({ tonight, setTonight, onNext }) {
     <>
       <ScreenTitle eyebrow="Tonight" title="What are you in the mood for?" sub="Budget and style for tonight. Pick “Either” if you don’t mind." />
 
-      <SectionLabel>Tonight's budget</SectionLabel>
-      <Segmented options={BUDGETS} value={tonight.budget} onChange={(v) => setTonight({ ...tonight, budget: v })} />
+      <SectionLabel hint="pick any">Tonight's budget</SectionLabel>
+      <Segmented multi options={BUDGETS} value={tonight.budgets} onChange={(v) => setTonight({ ...tonight, budgets: v })} />
 
       {STYLE_CUES.map((cue) => (
         <div key={cue.id} className="mt-6">
@@ -83,7 +83,7 @@ export function Tonight({ tonight, setTonight, onNext }) {
       ))}
 
       <BottomBar>
-        <Button disabled={!tonight.budget} onClick={onNext}>
+        <Button disabled={!tonight.budgets.length} onClick={onNext}>
           Next
         </Button>
       </BottomBar>
