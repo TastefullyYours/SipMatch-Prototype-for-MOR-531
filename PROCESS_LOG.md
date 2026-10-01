@@ -358,3 +358,15 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **Fix:** Removed every `<form>` element (birthday, dish, "What I'm drinking"). Each is now a plain container with an explicit button `onClick` and an Enter-key handler on the input, so React's form-submit machinery never runs. Behavior is unchanged: Continue / Enter on the birthday, Enter on the dish, Enter or Go on the drink lookup.
 
 **Testing:** The build and lint pass. Birthday variants (click, Enter, slashes, calendar, under-21) at 1920×1000, heavy mouse-hover movement on desktop, the full phone and desktop click-throughs, and Enter-key checks on the dish and drink-lookup inputs all pass with no errors.
+
+---
+
+## 2026-10-01: Diagnostics: show where a crash comes from
+
+**Prompt:** A screenshot after PR #7 was merged showed the same restart screen with "l is not a function".
+
+**What this means:** Removing the forms (PR #7) didn't fix it, so the form-submit theory was wrong. The bug still can't be reproduced in a clean desktop Chromium. That points to something in the tester's browser environment, such as an extension that patches page APIs React calls, but this is unconfirmed.
+
+**Built / changed:** The restart screen now shows the first lines of the error's stack trace (which file and line threw it), the React components involved and the browser's user agent, plus a "Copy error details" button. A stack frame inside a `chrome-extension://…` file would identify an extension; a frame in `/assets/index-*.js` gives an exact position to look up in the app bundle.
+
+**Testing:** A temporary forced crash (`?crashtest`) confirmed the screen shows the message, stack, components and browser. It was removed before committing; build and lint pass.
