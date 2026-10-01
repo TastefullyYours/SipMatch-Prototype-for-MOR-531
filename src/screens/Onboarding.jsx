@@ -1,14 +1,16 @@
 import { ABV_LEVELS, CALIBRATION_DRINKS, CATEGORIES, CATEGORY_LEVELS, FLAVORS, RESTRICTIONS, SWEETNESS } from '../data/options.js'
 import { DRINKS } from '../logic/recommend.js'
 import { BottomBar, Button, ChoiceCard, Chip, ScreenTitle, SectionLabel, Segmented } from '../components/ui.jsx'
+import { ProfileCard } from '../components/ProfileSummary.jsx'
 
 // Taste profile: 4 short screens (palate → what you drink → restrictions → calibration).
 
 const toggle = (list, id) => (list.includes(id) ? list.filter((x) => x !== id) : [...list, id])
 const without = (list, id) => list.filter((x) => x !== id)
 
+const TOPICS = ['Palate', 'Drink habits', 'Things to avoid', 'Calibration']
 function eyebrow(editing, n) {
-  return editing ? `Edit profile · ${n} of 4` : `Your profile · ${n} of 4`
+  return editing ? `Editing profile · ${TOPICS.at(n - 1)}` : TOPICS.at(n - 1)
 }
 
 function NextBar({ editing, last, disabled, onNext, onSave, children }) {
@@ -16,8 +18,8 @@ function NextBar({ editing, last, disabled, onNext, onSave, children }) {
     <BottomBar>
       <div className="flex flex-col gap-2">
         {children}
-        <Button disabled={disabled} onClick={onNext}>
-          {last ? (editing ? 'Save & see new matches' : 'Start matching ✨') : 'Next'}
+        <Button variant="gold" disabled={disabled} onClick={onNext}>
+          {last ? (editing ? 'Save & see new matches' : 'Save my profile') : 'Next'}
         </Button>
         {editing && !last && (
           <Button variant="ghost" disabled={disabled} onClick={onSave}>
@@ -201,6 +203,64 @@ export function ProfileCalibrate({ profile, setProfile, editing, onNext }) {
           </Button>
         )}
       </NextBar>
+    </>
+  )
+}
+
+// Shown once after the age gate: explains the two parts of SipMatch.
+export function ProfileIntro({ onNext }) {
+  return (
+    <>
+      <ScreenTitle eyebrow="Welcome to SipMatch" title="Two quick parts, then your match" sub="We split it up so you only answer the “who you are” questions once." />
+
+      <div className="flex flex-col gap-3">
+        <div className="rounded-3xl bg-white p-5 shadow-sm ring-2 ring-gold/50">
+          <div className="flex items-center gap-2">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gold text-sm font-bold text-ink">1</span>
+            <span className="font-display text-xl font-bold">Your taste profile</span>
+          </div>
+          <p className="mt-2 text-sm text-ink/80">What you like, what you drink and anything to avoid.</p>
+          <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-[#8a6412]">👤 Once · 4 short screens</p>
+        </div>
+        <div className="rounded-3xl bg-white p-5 shadow-sm ring-2 ring-berry/30">
+          <div className="flex items-center gap-2">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-berry text-sm font-bold text-white">2</span>
+            <span className="font-display text-xl font-bold">Tonight's match</span>
+          </div>
+          <p className="mt-2 text-sm text-ink/80">Your mood, the occasion, tonight's budget and what's for dinner.</p>
+          <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-berry">🍸 Every time · 4 quick steps</p>
+        </div>
+      </div>
+
+      <BottomBar>
+        <Button variant="gold" onClick={onNext}>
+          Build my taste profile
+        </Button>
+      </BottomBar>
+    </>
+  )
+}
+
+// Shown once the profile is finished, before the first match.
+export function ProfileDone({ profile, onNext, onEdit }) {
+  return (
+    <>
+      <div className="mb-5 text-center">
+        <div className="text-5xl">🎉</div>
+        <h1 className="mt-2 font-display text-3xl leading-tight">Profile saved!</h1>
+        <p className="mt-2 text-muted">You won't need to answer these again. Edit them any time from your results.</p>
+      </div>
+
+      <ProfileCard profile={profile} />
+
+      <BottomBar>
+        <div className="flex flex-col gap-2">
+          <Button onClick={onNext}>Start tonight's match 🍸</Button>
+          <Button variant="ghost" onClick={onEdit}>
+            Change something
+          </Button>
+        </div>
+      </BottomBar>
     </>
   )
 }

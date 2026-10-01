@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Header, Shell } from './components/Layout.jsx'
 import { AgeGate, Underage } from './screens/AgeGate.jsx'
-import { ProfileAvoid, ProfileCalibrate, ProfileDrinks, ProfilePalate } from './screens/Onboarding.jsx'
+import { ProfileAvoid, ProfileCalibrate, ProfileDone, ProfileDrinks, ProfileIntro, ProfilePalate } from './screens/Onboarding.jsx'
 import { Dish, Mood, Occasion, Tonight } from './screens/Flow.jsx'
 import Results from './screens/Results.jsx'
 import Premium from './screens/Premium.jsx'
@@ -34,10 +34,12 @@ const PREMIUM_STEPS = ['premium', 'cart', 'reverse', 'paywall']
 // Where "Back" goes from each step.
 const BACK = {
   underage: 'age',
-  palate: 'age',
+  intro: 'age',
+  palate: 'intro',
   drinks: 'palate',
   avoid: 'drinks',
   calibrate: 'avoid',
+  profileDone: 'calibrate',
   occasion: 'mood',
   tonight: 'occasion',
   dish: 'tonight',
@@ -60,7 +62,7 @@ export default function App() {
 
   useEffect(() => window.scrollTo(0, 0), [step])
 
-  const onboarded = profileDone && !PROFILE_STEPS.includes(step)
+  const onboarded = profileDone && !PROFILE_STEPS.includes(step) && step !== 'profileDone'
   const openPremium = () => {
     if (!PREMIUM_STEPS.includes(step)) setPremiumReturn(step)
     setStep('premium')
@@ -80,9 +82,10 @@ export default function App() {
     setStep('mood')
   }
 
+  // First time → the "Profile saved" screen; when editing → straight back to updated results.
   const finishProfile = () => {
     setProfileDone(true)
-    setStep(editing ? 'results' : 'mood')
+    setStep(editing ? 'results' : 'profileDone')
     setEditing(false)
   }
   const nextProfile = (current) => () => setStep(PROFILE_STEPS[PROFILE_STEPS.indexOf(current) + 1])
@@ -93,14 +96,15 @@ export default function App() {
       setEditing(false)
       setStep('results')
     }
-  if (step === 'mood' && !profileDone) back = () => setStep('calibrate')
   if (step === 'premium') back = () => setStep(premiumReturn)
   if (step === 'paywall') back = () => setStep(paywallReturn)
 
-  // One progress bar across profile (first time only) + quiz.
-  const flowSteps = profileDone && !editing ? QUIZ_STEPS : [...PROFILE_STEPS, ...QUIZ_STEPS]
-  const progressIndex = editing ? -1 : flowSteps.indexOf(step)
-  const progress = progressIndex >= 0 ? (progressIndex + 1) / (flowSteps.length + 1) : null
+  // The profile and the quiz each get their own labelled progress bar.
+  const phase = PROFILE_STEPS.includes(step)
+    ? { kind: 'profile', step: PROFILE_STEPS.indexOf(step) + 1, total: PROFILE_STEPS.length, editing }
+    : QUIZ_STEPS.includes(step)
+      ? { kind: 'quiz', step: QUIZ_STEPS.indexOf(step) + 1, total: QUIZ_STEPS.length }
+      : null
 
   const profileProps = { profile, setProfile, editing, onSave: finishProfile }
 
@@ -111,13 +115,16 @@ export default function App() {
         <AgeGate
           birthday={profile.birthday}
           setBirthday={(birthday) => setProfile({ ...profile, birthday })}
-          onAdult={() => setStep('palate')}
+          onAdult={() => setStep(profileDone ? 'mood' : 'intro')}
           onUnderage={() => setStep('underage')}
         />
       )
       break
     case 'underage':
       screen = <Underage onBack={() => setStep('age')} />
+      break
+    case 'intro':
+      screen = <ProfileIntro onNext={() => setStep('palate')} />
       break
     case 'palate':
       screen = <ProfilePalate {...profileProps} onNext={nextProfile('palate')} />
@@ -130,6 +137,9 @@ export default function App() {
       break
     case 'calibrate':
       screen = <ProfileCalibrate {...profileProps} onNext={finishProfile} />
+      break
+    case 'profileDone':
+      screen = <ProfileDone profile={profile} onNext={() => setStep('mood')} onEdit={() => setStep('palate')} />
       break
     case 'mood':
       screen = <Mood mood={mood} setMood={setMood} onNext={() => setStep('occasion')} />
@@ -197,7 +207,7 @@ export default function App() {
             onBack={back}
             onLogo={onboarded ? startOver : null}
             onPremium={onboarded && !PREMIUM_STEPS.includes(step) ? openPremium : null}
-            progress={progress}
+            phase={phase}
           />
         )
       }
