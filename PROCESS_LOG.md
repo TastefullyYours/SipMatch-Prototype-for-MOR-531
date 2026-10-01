@@ -327,3 +327,19 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **Testing:** The full Playwright click-through ran at 1440×900 (desktop) and 390×844 (phone), with no app errors in either. Desktop screenshots were reviewed for the drink-habits, calibration and results screens.
 
 **Decisions / issues:** The breakpoint is Tailwind's `lg` (1024px), so tablets in portrait keep the phone layout.
+
+---
+
+## 2026-10-01: Fix: blank screen safety net
+
+**Prompt (summary):** The user shared a screenshot of the live site on desktop Chrome showing a blank page after typing a birthday: "After typing in birthday on desktop, it goes blank". Earlier the same day the user also asked how to share the session and how to split the work across a 4-person group. Those questions were answered in chat with no code change.
+
+**Investigation:** The bug couldn't be reproduced on the live code in desktop Chromium. Typing then Continue, typing then Enter, typed slashes, the calendar button and an under-21 date all worked with no errors. A simulated Google-Translate-style DOM rewrite didn't crash it either. A blank page with no app shell means React hit an error and unmounted. The most likely causes are browser extensions or page translation modifying the page, which can't be confirmed from the sandbox.
+
+**Built / changed:**
+- `ErrorBoundary` around the whole app: any crash now shows an "Oops, something spilled" card with a Restart button and the error text (for screenshots), instead of a blank page.
+- `translate="no"` on `<html>` and `<meta name="google" content="notranslate">`, so Chrome won't auto-translate the page, a known cause of this kind of React crash.
+
+**Testing:** The build passes. Birthday variants at 1920×1000 and the full phone click-through pass with no errors.
+
+**Open:** If it happens again, the on-screen error text (or the red error in DevTools → Console) will pinpoint the cause.
