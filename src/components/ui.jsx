@@ -89,3 +89,25 @@ export function LockBadge({ children = 'Premium' }) {
 export function BottomBar({ children }) {
   return <div className="sticky bottom-0 -mx-5 mt-8 bg-gradient-to-t from-cream via-cream to-cream/0 px-5 pb-4 pt-6">{children}</div>
 }
+
+// Row of equal-width options, one selectable (e.g. sweetness scale, style cues).
+export function Segmented({ options, value, onChange, size = 'md' }) {
+  return (
+    <div className="flex gap-1 rounded-2xl bg-white p-1 shadow-sm">
+      {options.map((o) => (
+        <button
+          key={o.id}
+          type="button"
+          onClick={() => onChange(o.id)}
+          aria-pressed={value === o.id}
+          className={`flex-1 rounded-xl px-1 font-medium leading-tight transition ${size === 'sm' ? 'py-1.5 text-xs' : 'py-2.5 text-sm'} ${
+            value === o.id ? 'bg-berry text-white shadow-sm' : 'text-ink/80 hover:bg-berry-light'
+          }`}
+        >
+          {o.label}
+          {o.sub && <span className={`block text-[11px] ${value === o.id ? 'text-white/80' : 'text-muted'}`}>{o.sub}</span>}
+        </button>
+      ))}
+    </div>
+  )
+}

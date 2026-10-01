@@ -7,14 +7,20 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 ## What's in the prototype
 
 **Free tier (fully working)**
-1. Age gate (21+)
-2. Two-screen profile: age group, budget, sweet vs. dry, flavors you like, things you don't
-3. Mood (cheerful / stressed / sad–low energy) + social vs. solo
-4. Occasion (party, duo/date, small group)
-5. Dish (free text; always skippable)
-6. Results: a top match + 2 alternates, each with *why it works*, *the pairing principle*, *why it fits your mood*, *a fun fact*, *what to look for at the store* and a price tier
+1. **Age gate:** enter your birthday (must be 21+). It's only used for the age check and never saved.
+2. **Taste profile** (4 short screens, asked once, editable any time):
+   - *Palate:* favorite and disliked flavors (sweet, fruity, tart, herbal, bitter, dry, smoky) + a 5-step sweetness scale
+   - *What you drink:* category weights for beer & cider, wine, spirits, cocktails and non-alcoholic/coffee (Never / Rarely / Sometimes / Love it) + an ABV ceiling (light / wine-level / strong)
+   - *Anything to avoid:* sulfites, gluten, dairy, artificial sweeteners, juniper (gin), oak-aged
+   - *Calibration:* rate 3–5 drinks you love and 2 you'd pass on (skippable for true beginners)
+3. **Matching quiz** (every time):
+   - Mood (cheerful / stressed / sad–low energy) + social vs. solo
+   - Occasion (party, duo/date, small group)
+   - Tonight: budget + style cues (iced vs. neat, carbonated vs. still, light vs. bold)
+   - Dish (free text; always skippable)
+4. **Results:** a top match + 2 alternates, each with *why it works*, *the pairing principle*, *based on your taste* (when it's like a drink you love), *why it fits your mood*, *a fun fact*, *what to look for at the store* and a price tier
    - **"Don't like these?"** opens 3 more options (one wine, one beer or cider, one spirit or cocktail), each labeled with how it differs from the top pick ("a little sweeter", "a little drier", "less bitter", "lighter", "some bubbles"…)
-7. Try a different dish, start over, or edit your profile
+5. Try a different dish, change budget/style, start over, or edit your profile
 
 **Premium (locked previews)**
 - 🛒 **Snap your cart**: photo upload → scripted scan of a sample cart → clarifying questions → drink matches (partly locked)
@@ -26,9 +32,12 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 
 Everything runs in the browser from a local dataset. There are no APIs, no keys, no backend and no browser storage.
 
-- `src/data/drinks.json`: 61 curated drinks (17 wines, 6 beers + 1 cider, 10 spirits, 27 cocktails) tagged by sweetness (1–5), price tier, taste tags, mood fit, social/solo vibe, occasion fit, food-flavor affinities and "classic pairing" dishes.
+- `src/data/drinks.json`: 67 curated drinks (17 wines, 6 beers + 1 cider, 10 spirits, 27 cocktails, 6 non-alcoholic/coffee) tagged by sweetness (1–5), approximate ABV as served, serving temperature, likely allergens (sulfites, gluten, dairy, juniper, oak), price tier, taste tags, mood fit, social/solo vibe, occasion fit, food-flavor affinities and "classic pairing" dishes.
 - `src/data/dishes.js`: about 140 dish keywords mapped to flavor tags (e.g. `taco → spicy, savory, acidic`, `salmon → fatty, rich`). Unknown dishes fall back to a neutral "savory" profile; a skipped dish uses a "party snacks" profile for parties, and otherwise lets mood, occasion and taste decide.
-- `src/logic/recommend.js`: scores every drink. Dish-flavor fit and classic pairings count most, with penalties for known clashes (e.g. high alcohol with spicy food). Sweetness preference, mood, social/solo, occasion, liked flavors and budget also count. Disliked drinks are excluded. It returns the top 3 (spanning at least 2 drink types), plus 3 "Don't like these?" alternatives, one per category, chosen so they go in different directions (ideally one sweeter and one drier than the top pick).
+- `src/logic/recommend.js`:
+  1. **Filters:** removes drinks with a listed allergen/aversion (never relaxed), drinks above the ABV ceiling, categories marked "Never" and drinks you'd pass on. The last three are relaxed, with a notice, only if fewer than 3 drinks would remain.
+  2. **Scores** every remaining drink. Dish-flavor fit and classic pairings count most, with penalties for known clashes (e.g. high alcohol with spicy food). Also counted: sweetness preference, favorite/disliked flavors, category weights, similarity to drinks you love or hate, mood, social/solo, occasion, tonight's style cues and budget.
+  3. **Returns** the top 3 (spanning at least 2 drink types), plus 3 "Don't like these?" alternatives, one per category, chosen so they go in different directions (ideally one sweeter and one drier than the top pick).
 
 ### Mood & taste
 | Mood | What research suggests | What SipMatch does |

@@ -1,30 +1,58 @@
 import { useEffect, useState } from 'react'
 import { Header, Shell } from './components/Layout.jsx'
 import { AgeGate, Underage } from './screens/AgeGate.jsx'
-import { OnboardingBasics, OnboardingTaste } from './screens/Onboarding.jsx'
-import { Dish, Mood, Occasion } from './screens/Flow.jsx'
+import { ProfileAvoid, ProfileCalibrate, ProfileDrinks, ProfilePalate } from './screens/Onboarding.jsx'
+import { Dish, Mood, Occasion, Tonight } from './screens/Flow.jsx'
 import Results from './screens/Results.jsx'
 import Premium from './screens/Premium.jsx'
 import CartPhoto from './screens/CartPhoto.jsx'
 import ReverseFlow from './screens/ReverseFlow.jsx'
 import Paywall from './screens/Paywall.jsx'
+import { DEFAULT_CATEGORIES } from './data/options.js'
 
 // All state lives here in React (no backend, no browser storage).
-const EMPTY_PROFILE = { ageGroup: null, budget: null, sweetness: null, tastes: [], dislikes: [] }
+// Profile = who you are and what you like (asked once, editable).
+const EMPTY_PROFILE = {
+  birthday: null,
+  likes: [],
+  dislikes: [],
+  sweetness: null,
+  categories: DEFAULT_CATEGORIES,
+  abvMax: null,
+  restrictions: [],
+  loved: [],
+  hated: [],
+}
+// Matching quiz = tonight's context (asked every time).
 const EMPTY_MOOD = { feeling: null, social: null }
+const EMPTY_TONIGHT = { budget: null, temp: 'any', fizz: 'any', body: 'any' }
 
-// Steps that show the progress bar, in order.
-const PROGRESS_STEPS = ['basics', 'taste', 'mood', 'occasion', 'dish']
+const PROFILE_STEPS = ['palate', 'drinks', 'avoid', 'calibrate']
+const QUIZ_STEPS = ['mood', 'occasion', 'tonight', 'dish']
+const PREMIUM_STEPS = ['premium', 'cart', 'reverse', 'paywall']
 
 // Where "Back" goes from each step.
-const BACK = { underage: 'age', taste: 'basics', occasion: 'mood', dish: 'occasion', cart: 'premium', reverse: 'premium' }
-const PREMIUM_STEPS = ['premium', 'cart', 'reverse', 'paywall']
+const BACK = {
+  underage: 'age',
+  palate: 'age',
+  drinks: 'palate',
+  avoid: 'drinks',
+  calibrate: 'avoid',
+  occasion: 'mood',
+  tonight: 'occasion',
+  dish: 'tonight',
+  results: 'dish',
+  cart: 'premium',
+  reverse: 'premium',
+}
 
 export default function App() {
   const [step, setStep] = useState('age')
   const [profile, setProfile] = useState(EMPTY_PROFILE)
+  const [profileDone, setProfileDone] = useState(false)
   const [mood, setMood] = useState(EMPTY_MOOD)
   const [occasion, setOccasion] = useState(null)
+  const [tonight, setTonight] = useState(EMPTY_TONIGHT)
   const [dish, setDish] = useState('')
   const [editing, setEditing] = useState(false) // editing profile from results
   const [premiumReturn, setPremiumReturn] = useState('mood') // where to go when leaving the premium area
@@ -32,7 +60,7 @@ export default function App() {
 
   useEffect(() => window.scrollTo(0, 0), [step])
 
-  const onboarded = profile.sweetness && !['age', 'underage', 'basics', 'taste'].includes(step)
+  const onboarded = profileDone && !PROFILE_STEPS.includes(step)
   const openPremium = () => {
     if (!PREMIUM_STEPS.includes(step)) setPremiumReturn(step)
     setStep('premium')
@@ -43,63 +71,74 @@ export default function App() {
     setStep('paywall')
   }
 
+  // Start a new match: keeps the profile, clears tonight's answers.
   const startOver = () => {
     setMood(EMPTY_MOOD)
     setOccasion(null)
+    setTonight(EMPTY_TONIGHT)
     setDish('')
     setStep('mood')
   }
 
-  let back = BACK[step] ? () => setStep(BACK[step]) : null
-  if (step === 'basics' && editing) back = () => {
+  const finishProfile = () => {
+    setProfileDone(true)
+    setStep(editing ? 'results' : 'mood')
     setEditing(false)
-    setStep('results')
   }
-  if (step === 'taste' && editing) back = () => setStep('basics')
-  if (step === 'results') back = () => setStep('dish')
+  const nextProfile = (current) => () => setStep(PROFILE_STEPS[PROFILE_STEPS.indexOf(current) + 1])
+
+  let back = BACK[step] ? () => setStep(BACK[step]) : null
+  if (editing && step === 'palate')
+    back = () => {
+      setEditing(false)
+      setStep('results')
+    }
+  if (step === 'mood' && !profileDone) back = () => setStep('calibrate')
   if (step === 'premium') back = () => setStep(premiumReturn)
   if (step === 'paywall') back = () => setStep(paywallReturn)
 
-  const progressIndex = PROGRESS_STEPS.indexOf(step)
-  const progress = progressIndex >= 0 && !editing ? (progressIndex + 1) / (PROGRESS_STEPS.length + 1) : null
+  // One progress bar across profile (first time only) + quiz.
+  const flowSteps = profileDone && !editing ? QUIZ_STEPS : [...PROFILE_STEPS, ...QUIZ_STEPS]
+  const progressIndex = editing ? -1 : flowSteps.indexOf(step)
+  const progress = progressIndex >= 0 ? (progressIndex + 1) / (flowSteps.length + 1) : null
+
+  const profileProps = { profile, setProfile, editing, onSave: finishProfile }
 
   let screen
   switch (step) {
     case 'age':
-      screen = <AgeGate onYes={() => setStep('basics')} onNo={() => setStep('underage')} />
+      screen = (
+        <AgeGate
+          birthday={profile.birthday}
+          setBirthday={(birthday) => setProfile({ ...profile, birthday })}
+          onAdult={() => setStep('palate')}
+          onUnderage={() => setStep('underage')}
+        />
+      )
       break
     case 'underage':
       screen = <Underage onBack={() => setStep('age')} />
       break
-    case 'basics':
-      screen = <OnboardingBasics profile={profile} setProfile={setProfile} editing={editing} onNext={() => setStep('taste')} />
+    case 'palate':
+      screen = <ProfilePalate {...profileProps} onNext={nextProfile('palate')} />
       break
-    case 'taste':
-      screen = (
-        <OnboardingTaste
-          profile={profile}
-          setProfile={setProfile}
-          editing={editing}
-          onNext={() => {
-            setStep(editing ? 'results' : 'mood')
-            setEditing(false)
-          }}
-        />
-      )
+    case 'drinks':
+      screen = <ProfileDrinks {...profileProps} onNext={nextProfile('drinks')} />
+      break
+    case 'avoid':
+      screen = <ProfileAvoid {...profileProps} onNext={nextProfile('avoid')} />
+      break
+    case 'calibrate':
+      screen = <ProfileCalibrate {...profileProps} onNext={finishProfile} />
       break
     case 'mood':
       screen = <Mood mood={mood} setMood={setMood} onNext={() => setStep('occasion')} />
       break
     case 'occasion':
-      screen = (
-        <Occasion
-          occasion={occasion}
-          setOccasion={setOccasion}
-          onNext={() => {
-            setStep('dish')
-          }}
-        />
-      )
+      screen = <Occasion occasion={occasion} setOccasion={setOccasion} onNext={() => setStep('tonight')} />
+      break
+    case 'tonight':
+      screen = <Tonight tonight={tonight} setTonight={setTonight} onNext={() => setStep('dish')} />
       break
     case 'dish':
       screen = (
@@ -121,12 +160,14 @@ export default function App() {
           profile={profile}
           mood={mood}
           occasion={occasion}
+          tonight={tonight}
           dish={dish}
           onChangeDish={() => setStep('dish')}
+          onChangeTonight={() => setStep('tonight')}
           onStartOver={startOver}
           onEditProfile={() => {
             setEditing(true)
-            setStep('basics')
+            setStep('palate')
           }}
           onPremium={openPremium}
         />

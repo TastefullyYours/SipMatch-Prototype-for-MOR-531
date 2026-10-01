@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { FEELINGS, OCCASIONS, SOCIAL } from '../data/options.js'
+import { BUDGETS, FEELINGS, OCCASIONS, SOCIAL, STYLE_CUES } from '../data/options.js'
 import { EXAMPLE_DISHES } from '../data/dishes.js'
-import { BottomBar, Button, ChoiceCard, Chip, ScreenTitle, SectionLabel } from '../components/ui.jsx'
+import { BottomBar, Button, ChoiceCard, Chip, ScreenTitle, SectionLabel, Segmented } from '../components/ui.jsx'
 
 export function Mood({ mood, setMood, onNext }) {
   const [showWhy, setShowWhy] = useState(false)
   return (
     <>
-      <ScreenTitle eyebrow="Step 2 · Mood" title="How are you feeling today?" sub="Your mood actually changes how things taste." />
+      <ScreenTitle eyebrow="Matching quiz · 1 of 4" title="How are you feeling today?" sub="Your mood actually changes how things taste." />
 
       <SectionLabel>Right now I'm…</SectionLabel>
       <div className="flex flex-col gap-2">
@@ -52,7 +52,7 @@ export function Mood({ mood, setMood, onNext }) {
 export function Occasion({ occasion, setOccasion, onNext }) {
   return (
     <>
-      <ScreenTitle eyebrow="Step 3 · Occasion" title="What's the occasion?" sub="Who are you sipping with?" />
+      <ScreenTitle eyebrow="Matching quiz · 2 of 4" title="What's the occasion?" sub="Who are you sipping with?" />
       <div className="flex flex-col gap-2">
         {OCCASIONS.map((o) => (
           <ChoiceCard key={o.id} {...o} selected={occasion === o.id} onClick={() => setOccasion(o.id)} />
@@ -67,12 +67,36 @@ export function Occasion({ occasion, setOccasion, onNext }) {
   )
 }
 
+export function Tonight({ tonight, setTonight, onNext }) {
+  return (
+    <>
+      <ScreenTitle eyebrow="Matching quiz · 3 of 4" title="What are you in the mood for?" sub="Budget and style for tonight. Pick “Either” if you don’t mind." />
+
+      <SectionLabel>Tonight's budget</SectionLabel>
+      <Segmented options={BUDGETS} value={tonight.budget} onChange={(v) => setTonight({ ...tonight, budget: v })} />
+
+      {STYLE_CUES.map((cue) => (
+        <div key={cue.id} className="mt-6">
+          <SectionLabel>{cue.label}</SectionLabel>
+          <Segmented options={cue.options} value={tonight[cue.id]} onChange={(v) => setTonight({ ...tonight, [cue.id]: v })} size="sm" />
+        </div>
+      ))}
+
+      <BottomBar>
+        <Button disabled={!tonight.budget} onClick={onNext}>
+          Next
+        </Button>
+      </BottomBar>
+    </>
+  )
+}
+
 export function Dish({ dish, setDish, occasion, onNext, onSkip }) {
   const isParty = occasion === 'party'
   return (
     <>
       <ScreenTitle
-        eyebrow="Step 4 · The food"
+        eyebrow="Matching quiz · 4 of 4"
         title="What's on the menu?"
         sub={
           isParty
