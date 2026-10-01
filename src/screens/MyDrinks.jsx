@@ -23,7 +23,7 @@ export default function MyDrinks({ saved, setSaved, onBack }) {
           <p className="mt-1 text-sm text-muted">Tap “♡ Save” on any match to keep it here.</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="grid gap-3 lg:grid-cols-2">
           {entries.map(({ drink, entry }) => (
             <article key={drink.id} className="rounded-3xl bg-white p-4 shadow-sm">
               <div className="mb-3 flex items-start gap-3">

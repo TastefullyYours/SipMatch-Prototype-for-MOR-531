@@ -67,74 +67,81 @@ export default function Results({ profile, saved, setSaved, mood, occasion, toni
         )}
       </div>
 
-      {!top && (
-        <div className="rounded-3xl bg-white p-6 text-center shadow-sm">
-          <div className="text-4xl">🤷</div>
-          <p className="mt-2 font-semibold">No drinks fit all your restrictions yet.</p>
-          <p className="mt-1 text-sm text-muted">Try editing your profile to loosen a few settings.</p>
-        </div>
-      )}
-      {top && <DrinkCard pick={top} primary dishLabel={dishLabel} saved={saved} setSaved={setSaved} />}
-
-      {alts.length > 0 && <h2 className="mb-2 mt-7 font-semibold">Or try one of these</h2>}
-      <div className="flex flex-col gap-3">
-        {alts.map((p) => (
-          <DrinkCard key={p.drink.id} pick={p} dishLabel={dishLabel} saved={saved} setSaved={setSaved} />
-        ))}
-      </div>
-
-      {alternatives.length > 0 && (
-        <div className="mt-7 overflow-hidden rounded-3xl border-2 border-berry/15 bg-white/60">
-          <button
-            onClick={() => setShowAlts(!showAlts)}
-            aria-expanded={showAlts}
-            className="flex w-full items-center gap-3 p-4 text-left transition hover:bg-white"
-          >
-            <span className="text-3xl">🤔</span>
-            <span className="flex-1">
-              <span className="block font-semibold">Don't like these?</span>
-              <span className="block text-sm text-muted">Try a wine, a beer and a spirit or cocktail that go a different direction.</span>
-            </span>
-            <span className={`text-berry transition ${showAlts ? 'rotate-180' : ''}`}>⌄</span>
-          </button>
-          {showAlts && (
-            <div className="flex flex-col gap-3 border-t border-berry/10 p-3 pb-4">
-              {alternatives.map((a) => (
-                <DrinkCard key={a.drink.id} pick={a} dishLabel={dishLabel} contrast={a.contrast} saved={saved} setSaved={setSaved} />
-              ))}
+      {/* Phone: one column. Desktop: top match on the left, everything else on the right. */}
+      <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-8">
+        <div>
+          {!top && (
+            <div className="rounded-3xl bg-white p-6 text-center shadow-sm">
+              <div className="text-4xl">🤷</div>
+              <p className="mt-2 font-semibold">No drinks fit all your restrictions yet.</p>
+              <p className="mt-1 text-sm text-muted">Try editing your profile to loosen a few settings.</p>
             </div>
           )}
+          {top && <DrinkCard pick={top} primary dishLabel={dishLabel} saved={saved} setSaved={setSaved} />}
         </div>
-      )}
+        <div>
 
-      <button
-        onClick={onPremium}
-        className="mt-7 flex items-center gap-3 rounded-3xl border-2 border-dashed border-gold/60 bg-gold/10 p-4 text-left transition hover:bg-gold/20"
-      >
-        <span className="text-3xl">🛒</span>
-        <span className="flex-1">
-          <LockBadge />
-          <span className="mt-1 block font-semibold">Already at the store?</span>
-          <span className="block text-sm text-muted">Snap your cart and we'll match drinks to everything in it.</span>
-        </span>
-        <span className="text-berry">→</span>
-      </button>
+          {alts.length > 0 && <h2 className="mb-2 mt-7 font-semibold lg:mt-0">Or try one of these</h2>}
+          <div className="flex flex-col gap-3">
+            {alts.map((p) => (
+              <DrinkCard key={p.drink.id} pick={p} dishLabel={dishLabel} saved={saved} setSaved={setSaved} />
+            ))}
+          </div>
 
-      <div className="mt-6 flex flex-col gap-2">
-        <Button onClick={onChangeDish}>{dishInfo.skipped && occasion !== 'party' ? 'Add a dish' : 'Try a different dish'}</Button>
-        <Button variant="secondary" onClick={onChangeTonight}>
-          Change budget or style
-        </Button>
-        <Button variant="secondary" onClick={onMyDrinks}>
-          ♥ My saved drinks{savedCount ? ` (${savedCount})` : ''}
-        </Button>
-        <div className="grid grid-cols-2 gap-2">
-          <Button variant="secondary" onClick={onStartOver}>
-            Start over
-          </Button>
-          <Button variant="secondary" onClick={onEditProfile}>
-            Edit profile
-          </Button>
+          {alternatives.length > 0 && (
+            <div className="mt-7 overflow-hidden rounded-3xl border-2 border-berry/15 bg-white/60">
+              <button
+                onClick={() => setShowAlts(!showAlts)}
+                aria-expanded={showAlts}
+                className="flex w-full items-center gap-3 p-4 text-left transition hover:bg-white"
+              >
+                <span className="text-3xl">🤔</span>
+                <span className="flex-1">
+                  <span className="block font-semibold">Don't like these?</span>
+                  <span className="block text-sm text-muted">Try a wine, a beer and a spirit or cocktail that go a different direction.</span>
+                </span>
+                <span className={`text-berry transition ${showAlts ? 'rotate-180' : ''}`}>⌄</span>
+              </button>
+              {showAlts && (
+                <div className="flex flex-col gap-3 border-t border-berry/10 p-3 pb-4">
+                  {alternatives.map((a) => (
+                    <DrinkCard key={a.drink.id} pick={a} dishLabel={dishLabel} contrast={a.contrast} saved={saved} setSaved={setSaved} />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          <button
+            onClick={onPremium}
+            className="mt-7 flex items-center gap-3 rounded-3xl border-2 border-dashed border-gold/60 bg-gold/10 p-4 text-left transition hover:bg-gold/20"
+          >
+            <span className="text-3xl">🛒</span>
+            <span className="flex-1">
+              <LockBadge />
+              <span className="mt-1 block font-semibold">Already at the store?</span>
+              <span className="block text-sm text-muted">Snap your cart and we'll match drinks to everything in it.</span>
+            </span>
+            <span className="text-berry">→</span>
+          </button>
+
+          <div className="mt-6 flex flex-col gap-2">
+            <Button onClick={onChangeDish}>{dishInfo.skipped && occasion !== 'party' ? 'Add a dish' : 'Try a different dish'}</Button>
+            <Button variant="secondary" onClick={onChangeTonight}>
+              Change budget or style
+            </Button>
+            <Button variant="secondary" onClick={onMyDrinks}>
+              ♥ My saved drinks{savedCount ? ` (${savedCount})` : ''}
+            </Button>
+            <div className="grid grid-cols-2 gap-2">
+              <Button variant="secondary" onClick={onStartOver}>
+                Start over
+              </Button>
+              <Button variant="secondary" onClick={onEditProfile}>
+                Edit profile
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </>

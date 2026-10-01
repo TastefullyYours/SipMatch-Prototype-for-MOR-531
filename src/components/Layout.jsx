@@ -9,7 +9,7 @@ const PHASES = {
 export function Header({ onBack, onLogo, onPremium, onMyDrinks, savedCount = 0, phase }) {
   return (
     <header className="sticky top-0 z-20 bg-cream/95 backdrop-blur">
-      <div className="flex h-14 items-center gap-2 px-3">
+      <div className="flex h-14 items-center gap-2 px-3 lg:h-16 lg:px-8">
         <div className="flex w-28 items-center gap-1">
           {onBack && (
             <button onClick={onBack} className="whitespace-nowrap rounded-full px-2 py-1 text-sm font-medium text-muted hover:bg-sand" aria-label="Go back">
@@ -41,7 +41,7 @@ export function Header({ onBack, onLogo, onPremium, onMyDrinks, savedCount = 0, 
         </div>
       </div>
       {phase && (
-        <div className={`mx-5 mb-2 rounded-2xl px-3 py-2 ${PHASES[phase.kind].bg}`}>
+        <div className={`mx-5 mb-2 rounded-2xl px-3 py-2 lg:mx-10 ${PHASES[phase.kind].bg}`}>
           <div className={`mb-1.5 flex items-center justify-between text-xs font-semibold ${PHASES[phase.kind].text}`}>
             <span>
               {PHASES[phase.kind].icon} {phase.editing ? 'Editing your taste profile' : PHASES[phase.kind].label}
@@ -74,9 +74,9 @@ export function Footer() {
 export function Shell({ header, children }) {
   return (
     <div className="flex min-h-screen justify-center sm:py-6">
-      <div className="flex min-h-screen w-full max-w-md flex-col bg-cream sm:min-h-[calc(100vh-3rem)] sm:overflow-clip sm:rounded-[2rem] sm:shadow-2xl sm:shadow-berry/10">
+      <div className="flex min-h-screen w-full max-w-md flex-col bg-cream lg:max-w-5xl sm:min-h-[calc(100vh-3rem)] sm:overflow-clip sm:rounded-[2rem] sm:shadow-2xl sm:shadow-berry/10">
         {header}
-        <main className="flex flex-1 flex-col px-5 pb-2 pt-4">{children}</main>
+        <main className="flex flex-1 flex-col px-5 pb-2 pt-4 lg:px-10 lg:pt-6">{children}</main>
         <Footer />
       </div>
     </div>

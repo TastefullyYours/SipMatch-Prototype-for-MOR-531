@@ -311,3 +311,19 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 - Saved drinks last for the session only, matching the original "no browser storage" rule. The My drinks screen says so.
 - In early tests a 5★ drink didn't appear and "$ + $$$" still returned $$ drinks; both were fixed in scoring before committing.
 - The ♥ My drinks button sits next to Back in the header so it fits beside ✨ Premium on a phone.
+
+---
+
+## 2026-10-01: Milestone 11: Desktop layout
+
+**Prompt (verbatim):** "In the meantime, is there a way to also make this usable on pc?"
+
+**Built / changed:** The app already loaded on a PC but showed a phone-sized card. On screens 1024px and wider it now uses a desktop layout. Phones are unchanged.
+- The app card widens to about 1024px, with roomier header and padding.
+- Question screens sit in a centered ~768px column. Option lists use 2–3 columns (moods, occasions, drink types, strength, restrictions, the intro cards), and the calibration list uses two columns.
+- Results use two columns: the top match on the left; alternates, "Don't like these?", the premium teaser and the action buttons on the right.
+- My drinks and the Premium hub use two-column grids.
+
+**Testing:** The full Playwright click-through ran at 1440×900 (desktop) and 390×844 (phone), with no app errors in either. Desktop screenshots were reviewed for the drink-habits, calibration and results screens.
+
+**Decisions / issues:** The breakpoint is Tailwind's `lg` (1024px), so tablets in portrait keep the phone layout.

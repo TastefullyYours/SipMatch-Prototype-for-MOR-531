@@ -53,6 +53,9 @@ Sources supplied by the team: [Sensient](https://www.sensientflavorsandextracts.
 ### Facts to double-check
 Drinks whose fun fact should be verified before presenting carry a `"factCheck": "VERIFY: …"` field in `drinks.json`: Mexican lager, IPA, hard cider, mojito, Aperol spritz, hot toddy, red sangria, espresso martini, shandy, Bloody Mary, Manhattan, Negroni, Mai Tai and Lemon Drop.
 
+## Phone and desktop
+The app is designed for phones first. On screens 1024px and wider it switches to a desktop layout: a wider card, question options in 2–3 columns, and results in two columns (top match on the left, alternatives and actions on the right). The same link works on both.
+
 ## Run locally
 Requires Node 18+.
 ```bash

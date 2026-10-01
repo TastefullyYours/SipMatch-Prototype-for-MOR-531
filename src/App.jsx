@@ -49,6 +49,10 @@ const BACK = {
   reverse: 'premium',
 }
 
+// Desktop width per screen: full width for results-style screens, a readable column for questions.
+const desktopWidth = (step) =>
+  ['results', 'premium', 'mydrinks', 'intro'].includes(step) ? '' : ['age', 'underage'].includes(step) ? 'lg:max-w-md' : 'lg:max-w-3xl'
+
 export default function App() {
   const [step, setStep] = useState('age')
   const [profile, setProfile] = useState(EMPTY_PROFILE)
@@ -228,7 +232,7 @@ export default function App() {
         )
       }
     >
-      <div key={step} className="flex flex-1 flex-col animate-[fadeIn_.25s_ease-out]">
+      <div key={step} className={`mx-auto flex w-full flex-1 flex-col animate-[fadeIn_.25s_ease-out] ${desktopWidth(step)}`}>
         {screen}
       </div>
     </Shell>

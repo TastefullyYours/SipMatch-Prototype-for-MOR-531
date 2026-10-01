@@ -87,7 +87,7 @@ export function LockBadge({ children = 'Premium' }) {
 
 // Sticky bottom action area so the main CTA is always reachable on a phone.
 export function BottomBar({ children }) {
-  return <div className="sticky bottom-0 -mx-5 mt-8 bg-gradient-to-t from-cream via-cream to-cream/0 px-5 pb-4 pt-6">{children}</div>
+  return <div className="sticky bottom-0 -mx-5 mt-8 bg-gradient-to-t from-cream via-cream to-cream/0 px-5 pb-4 pt-6 lg:-mx-10 lg:px-10">{children}</div>
 }
 
 // Row of equal-width options. Single-select by default; `multi` makes `value` an array and toggles ids.

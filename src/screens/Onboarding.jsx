@@ -80,7 +80,7 @@ export function ProfileDrinks({ profile, setProfile, editing, onNext, onSave }) 
       <ScreenTitle eyebrow={eyebrow(editing, 2)} title="What do you usually drink?" sub="Pick everything that applies. We'll stick to these." />
 
       <SectionLabel hint="pick any">What you drink</SectionLabel>
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2 lg:grid-cols-2">
         {CATEGORIES.map((c) => (
           <ChoiceCard
             key={c.id}
@@ -93,7 +93,7 @@ export function ProfileDrinks({ profile, setProfile, editing, onNext, onSave }) 
       </div>
 
       <SectionLabel hint="pick any">How strong?</SectionLabel>
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2 lg:grid-cols-3">
         {ABV_LEVELS.map((a) => (
           <ChoiceCard key={a.id} {...a} selected={strengths.includes(a.id)} onClick={() => setProfile({ ...profile, strengths: toggle(strengths, a.id) })} />
         ))}
@@ -117,7 +117,7 @@ export function ProfileAvoid({ profile, setProfile, editing, onNext, onSave }) {
         sub="Allergies, sensitivities or things you just can't stand. We'll never suggest drinks that usually contain them."
       />
 
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2 lg:grid-cols-2">
         {RESTRICTIONS.map((r) => (
           <ChoiceCard
             key={r.id}
@@ -160,7 +160,7 @@ export function ProfileCalibrate({ profile, setProfile, editing, onNext }) {
         sub="Mark 3–5 you love and 2 you'd pass on. Skip any you haven't tried."
       />
 
-      <div className="sticky top-[7.5rem] z-10 -mx-5 mb-3 flex gap-2 bg-cream/95 px-5 py-2 text-sm backdrop-blur">
+      <div className="sticky top-[7.5rem] lg:top-[8.5rem] lg:-mx-10 lg:px-10 z-10 -mx-5 mb-3 flex gap-2 bg-cream/95 px-5 py-2 text-sm backdrop-blur">
         <span className={`flex-1 rounded-2xl p-2.5 text-center font-semibold ${lovedOk ? 'bg-berry text-white' : 'bg-white'}`}>
           👍 Love: {loved.length} of 3–5
         </span>
@@ -169,7 +169,7 @@ export function ProfileCalibrate({ profile, setProfile, editing, onNext }) {
         </span>
       </div>
 
-      <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
+      <div className="overflow-hidden rounded-3xl bg-white shadow-sm lg:grid lg:grid-cols-2">
         {drinks.map((d) => {
           const isLove = loved.includes(d.id)
           const isPass = hated.includes(d.id)
@@ -223,7 +223,7 @@ export function ProfileIntro({ onNext }) {
     <>
       <ScreenTitle eyebrow="Welcome to SipMatch" title="Two quick parts, then your match" sub="We split it up so you only answer the “who you are” questions once." />
 
-      <div className="flex flex-col gap-3">
+      <div className="grid gap-3 lg:grid-cols-2">
         <div className="rounded-3xl bg-white p-5 shadow-sm ring-2 ring-gold/50">
           <div className="flex items-center gap-2">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gold text-sm font-bold text-ink">1</span>
