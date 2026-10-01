@@ -243,3 +243,13 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 - **Gluten:** only beers are tagged. Distilled spirits (even grain-based) are generally considered gluten-free by celiac organizations, so they aren't tagged. Worth a mention if asked.
 - ABV values are typical served strengths (a margarita is roughly 20%, a G&T about 10%), used only for the ceiling filter.
 - The "Don't like these?" slots are still wine / beer or cider / spirit or cocktail; NA drinks appear there only as a fallback or in the main picks.
+
+---
+
+## 2026-09-29: PRD written (no code change)
+
+**Prompt (verbatim):** "Can you generate a PRD for me? tell me what prompts were used etc"
+
+**What happened:** The assistant wrote a PRD as a shareable Claude doc: overview and positioning, target users, goals and proposed success metrics, a user-flow diagram, functional requirements, recommendation logic and data, safety and tech, every build prompt in order with what it produced, and risks, open questions and roadmap. No repo files changed.
+
+**Follow-up prompt (verbatim), 2026-10-01:** "update it on bercel?". This opened the PR that brings milestone 8 to `main` so Vercel redeploys.
