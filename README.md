@@ -11,7 +11,7 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
    - *Create an account:* email, phone (optional), birthday (MM/DD/YYYY or calendar; must be 21+) and a password (8+ characters, typed twice). Your taste profile and saved drinks are stored on your account and come back when you log in, even after closing the page.
    - *Accounts are a prototype:* they live in this browser's localStorage on this device only (no server). Passwords are salted and SHA-256 hashed before saving, never stored as typed, but this is not production security, so don't reuse a real password.
    - *Guest:* birthday-only 21+ check; nothing is saved.
-2. **Two-part intro:** explains that the taste profile is answered once and tonight's match every time. The two parts have separate, colour-coded headers (gold for the profile, berry for the quiz). **"Skip it, just match me ⚡"** skips the profile entirely, and every profile screen has a "Skip the rest of the profile" link.
+2. **Two-part intro:** explains that the taste profile is answered once and tonight's match every time. The two parts have separate, colour-coded headers (gold for the profile, berry for the quiz). **"Skip it, just match me ⚡"** skips the profile entirely. Every profile screen has **Skip this step** and a "Skip the rest of the profile" link, and no single answer is required. The only required inputs in the app are the 21+ birthday (and account details when signing up) and the 2–3 flavors in Quick pick.
 3. **Taste profile** (4 short screens, asked once, editable any time; ends on a "Profile saved" summary):
    - *Palate:* favorite and disliked flavors (sweet, fruity, tart, herbal, bitter, dry, smoky) + sweetness levels (pick any of 5)
    - *What you drink:* pick any of beer & cider, wine, spirits, cocktails, non-alcoholic & coffee, and any strength bands (light ~7%, wine-strength ~7–16%, strong 16%+)
@@ -20,13 +20,13 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 4. **Quick pick or full match:** each match starts by choosing a route.
    - **⚡ Quick pick:** choose 2–3 flavors and how many ideas (3, 4 or 5). You get a random mix drawn from your best flavor matches (still respecting allergies, strength, drink types and any taste profile). 🔀 Shuffle gives a new mix.
    - **🎯 Full match:** the full quiz below.
-5. **Tonight's match** (full match):
+5. **Tonight's match** (full match; every step has **Skip this step**):
    - Mood (cheerful / stressed / sad–low energy) + social vs. solo
    - Occasion (just me, duo/date, small group, party)
    - Tonight: budget (pick any of $ / $$ / $$$) + style cues (iced vs. neat, carbonated vs. still, light vs. bold)
    - Dish (free text; always skippable)
 6. **Results:** a "Matched to your taste profile" strip with an Edit link, then a top match + 2 alternates, each with *why it works*, *the pairing principle*, *based on your taste* (when it's like a drink you love), *why it fits your mood*, *a fun fact*, *what to look for at the store* and a price tier
-   - **🍹 How to make it:** cocktails and mixed drinks (all 27 cocktails plus G&T, spiced rum & cola, shandy, virgin mojito, zero-proof spritz and espresso tonic) have a collapsible recipe with glass, ingredients and numbered steps
+   - **Short cards:** an open card leads with **🍹 How to make it** for cocktails and mixed drinks (all 27 cocktails plus G&T, spiced rum & cola, shandy, virgin mojito, zero-proof spritz and espresso tonic: glass, ingredients, numbered steps) or **what to look for at the store** for everything else. The rest (why it works, pairing principle, mood fit, fun fact) sits behind **More about this drink**.
    - **"Don't like these?"** opens 3 more options (one wine, one beer or cider, one spirit or cocktail), each labeled with how it differs from the top pick ("a little sweeter", "a little drier", "less bitter", "lighter", "some bubbles"…)
 7. **Save drinks** with ♡ Save on any card, rate them 1–5 stars and add a note; all saved drinks live in **My drinks** (♥ in the header). 4–5★ drinks shape future matches, 1–2★ steer away. Saved drinks are kept on your account; guests keep them for the session only.
 8. Try a different dish, change budget/style, start over, or edit your profile

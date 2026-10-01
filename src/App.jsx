@@ -239,13 +239,13 @@ export default function App() {
       screen = <ProfileDone profile={profile} onNext={() => setStep('start')} onEdit={() => setStep('palate')} />
       break
     case 'mood':
-      screen = <Mood mood={mood} setMood={setMood} onNext={() => setStep('occasion')} />
+      screen = <Mood mood={mood} setMood={setMood} onNext={() => setStep('occasion')} onSkip={() => setStep('occasion')} />
       break
     case 'occasion':
-      screen = <Occasion occasion={occasion} setOccasion={setOccasion} onNext={() => setStep('tonight')} />
+      screen = <Occasion occasion={occasion} setOccasion={setOccasion} onNext={() => setStep('tonight')} onSkip={() => setStep('tonight')} />
       break
     case 'tonight':
-      screen = <Tonight tonight={tonight} setTonight={setTonight} onNext={() => setStep('dish')} />
+      screen = <Tonight tonight={tonight} setTonight={setTonight} onNext={() => setStep('dish')} onSkip={() => setStep('dish')} />
       break
     case 'dish':
       screen = (

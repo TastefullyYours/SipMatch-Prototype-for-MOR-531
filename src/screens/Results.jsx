@@ -40,14 +40,20 @@ export default function Results({ profile, saved, setSaved, mood, occasion, toni
           )}
         </h1>
         <div className="mt-3 flex flex-wrap gap-1.5 text-xs">
+          {mood.feeling && (
+            <span className="rounded-full bg-white px-2.5 py-1">
+              {label(FEELINGS, mood.feeling).emoji} {label(FEELINGS, mood.feeling).label}
+            </span>
+          )}
+          {mood.social && <span className="rounded-full bg-white px-2.5 py-1">{mood.social === 'social' ? '🙌 Social' : '🛋️ Solo'}</span>}
+          {occasion && (
+            <span className="rounded-full bg-white px-2.5 py-1">
+              {label(OCCASIONS, occasion).emoji} {label(OCCASIONS, occasion).label}
+            </span>
+          )}
           <span className="rounded-full bg-white px-2.5 py-1">
-            {label(FEELINGS, mood.feeling).emoji} {label(FEELINGS, mood.feeling).label}
+            💳 {tonight.budgets.length ? tonight.budgets.map((b) => label(BUDGETS, b).label).join(' / ') : 'Any budget'}
           </span>
-          <span className="rounded-full bg-white px-2.5 py-1">{mood.social === 'social' ? '🙌 Social' : '🛋️ Solo'}</span>
-          <span className="rounded-full bg-white px-2.5 py-1">
-            {label(OCCASIONS, occasion).emoji} {label(OCCASIONS, occasion).label}
-          </span>
-          <span className="rounded-full bg-white px-2.5 py-1">💳 {tonight.budgets.map((b) => label(BUDGETS, b).label).join(' / ')}</span>
           {styleChips.map((c) => (
             <span key={c} className="rounded-full bg-white px-2.5 py-1">
               {c}

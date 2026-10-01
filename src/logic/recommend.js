@@ -181,6 +181,7 @@ function moodLine(drink, feeling) {
       ? 'Good moods make sweet and fruity notes pop, so a bright, lively pick fits right in.'
       : 'Good moods make flavors pop, so this one should taste extra good today.'
   }
+  if (!feeling) return 'Picked for your taste and tonight’s plans. Tell us your mood next time for a closer match.'
   if (feeling === 'stressed') {
     return "When you're stressed, bitter and sour notes can taste harsher, so we leaned a little sweeter and softer."
   }
