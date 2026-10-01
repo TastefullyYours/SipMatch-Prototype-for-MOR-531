@@ -343,3 +343,18 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 **Testing:** The build passes. Birthday variants at 1920×1000 and the full phone click-through pass with no errors.
 
 **Open:** If it happens again, the on-screen error text (or the red error in DevTools → Console) will pinpoint the cause.
+
+---
+
+## 2026-10-01: Fix: desktop blank screen after entering birthday ("l is not a function")
+
+**Prompts (verbatim):**
+- "uhhh I don't think its a crash necessarily, it just goes blank on desktop but works perfectly fine on mobile"
+- "the PR link keeps saying the site can't be reached". Answered in chat with how to reach the PR from GitHub directly; no code change.
+- A screenshot of the new restart screen showing "Error details: l is not a function", with "uhhh nope.... idk what to tell you."
+
+**Root cause (from the error text):** The minified name `l` was traced in the production bundle to React's internal form-submit transition code (`startHostTransition`). When a React-managed `<form>` is submitted while a transition is pending, React calls an internal callback (`ReactSharedInternals.S`). On the tester's desktop Chrome that callback wasn't a function, most likely because of a browser extension hooking into React; phones have no extensions. The error was thrown during the form submit, captured by React as a failed form action, and re-thrown during render, which blanked the page (and, since #6, shows the restart screen). The bug couldn't be reproduced in a clean Chromium, consistent with an environment-specific cause.
+
+**Fix:** Removed every `<form>` element (birthday, dish, "What I'm drinking"). Each is now a plain container with an explicit button `onClick` and an Enter-key handler on the input, so React's form-submit machinery never runs. Behavior is unchanged: Continue / Enter on the birthday, Enter on the dish, Enter or Go on the drink lookup.
+
+**Testing:** The build and lint pass. Birthday variants (click, Enter, slashes, calendar, under-21) at 1920×1000, heavy mouse-hover movement on desktop, the full phone and desktop click-throughs, and Enter-key checks on the dish and drink-lookup inputs all pass with no errors.

@@ -28,6 +28,13 @@ export function AgeGate({ birthday, setBirthday, onAdult, onUnderage }) {
   const age = valid ? ageFrom(iso) : null
   const typedAll = text.length === 10
 
+  const submit = () => {
+    if (!valid) return
+    setBirthday(iso)
+    if (age >= 21) onAdult()
+    else onUnderage()
+  }
+
   return (
     <div className="flex flex-1 flex-col items-center justify-center py-8 text-center">
       <div className="mb-6 flex gap-1 text-5xl">
@@ -41,16 +48,8 @@ export function AgeGate({ birthday, setBirthday, onAdult, onUnderage }) {
         Tell us your mood, your plans and what's for dinner. We'll tell you what to grab at the store. No wine degree required.
       </p>
 
-      <form
-        className="mt-10 w-full rounded-3xl bg-white p-6 text-left shadow-sm"
-        onSubmit={(e) => {
-          e.preventDefault()
-          if (!valid) return
-          setBirthday(iso)
-          if (age >= 21) onAdult()
-          else onUnderage()
-        }}
-      >
+      {/* Plain div, not <form>: some desktop browser extensions break React's form-submit handling (blank page / "l is not a function"). */}
+      <div className="mt-10 w-full rounded-3xl bg-white p-6 text-left shadow-sm">
         <label htmlFor="birthday" className="block text-center text-lg font-semibold">
           When's your birthday? 🎂
         </label>
@@ -65,6 +64,7 @@ export function AgeGate({ birthday, setBirthday, onAdult, onUnderage }) {
             placeholder="MM/DD/YYYY"
             value={text}
             onChange={(e) => setText(formatTyped(e.target.value))}
+            onKeyDown={(e) => e.key === 'Enter' && submit()}
             className="min-w-0 flex-1 rounded-2xl border-2 border-berry/15 bg-cream px-4 py-3.5 text-center text-lg tracking-wider outline-none focus:border-berry"
           />
           {/* The real date input sits invisibly over the button, so tapping it opens the phone's own calendar. */}
@@ -84,11 +84,11 @@ export function AgeGate({ birthday, setBirthday, onAdult, onUnderage }) {
         </div>
         {typedAll && !valid && <p className="mt-2 text-center text-sm text-berry">Hmm, that doesn't look like a real date.</p>}
 
-        <Button className="mt-4" disabled={!valid}>
+        <Button type="button" className="mt-4" disabled={!valid} onClick={submit}>
           Continue
         </Button>
         <p className="mt-3 text-center text-xs text-muted">SipMatch is for adults 21+. We only use this to check your age. It isn't saved anywhere.</p>
-      </form>
+      </div>
     </div>
   )
 }
