@@ -445,3 +445,32 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 - the Paloma top card shows its recipe first with the details hidden, and "More about this drink" reveals them
 
 The earlier account/quick-pick click-throughs (390px, and 1440px with the Chrome 152 `scrollTo` emulation) still pass with no errors.
+
+---
+
+## 2026-10-11: Community layer with group chat
+
+**Prompt (verbatim):** "please help me create a Community layer with integration for chat groups * Ability to make groups"
+
+**Built:**
+- **Community home** (👥 in the header, or Premium → Groups & chat): "Your groups", "Discover groups", an invite-code box and a **Create a group** button. Guests can browse; joining, chatting and creating need an account. Replaces the old "Coming soon" teaser cards.
+- **Create a group:** name, icon, optional drink category, short description, and **Open** (anyone can find and join) or **Invite-only** (6-character code, hidden from Discover).
+- **Group chat:** message bubbles with names and times, join/leave/"X created the group" notices, member list with an invite code and Copy button, and Leave group. The creator can also Delete group (with a confirm step).
+- **Drink integration:** the 🍷 button in the chat shares any drink (search, or your saved drinks) as a card. Anyone in the group can ♡ Save it, which adds it to their own My drinks.
+- **Starter groups:** Gin Lovers, Natural Wine, Hoppy Hour and Home Mixologists, each with simulated "demo" members who seed the chat and reply after you post, so a solo demo still feels alive. They are labelled "demo" in the UI.
+- Paywall row now reads "Taste communities: groups & chat" (Premium), and the header slots were widened slightly to fit the 👥 button.
+
+**Decisions (flagged for approval):**
+- **No backend, so chats stay on one browser.** Groups and messages are stored in localStorage (`src/logic/community.js`), shared between accounts on the same device and live-synced between open tabs, but not between different people's phones. A real launch needs a server (for example Supabase or Firebase) for real-time chat across devices. The in-app prototype note says so.
+- Community is open to every signed-in user in the prototype but labelled "Premium · Preview" like the other premium previews.
+- Display names come from the email prefix (never the full email) and can be edited.
+- Messages are capped at 500 characters; a basic "be kind and drink responsibly" note is shown. No moderation tools yet.
+
+**Testing:** Build and lint pass. A Playwright run (390px phone, plus a 1280px layout check) covered:
+- the 👥 header button and the Premium card both open Community, and Back returns to the right place
+- joining a starter group, sending a message, and a labelled demo reply arriving
+- sharing a drink into chat and saving it from the card (header ♥ count updates)
+- a message appearing live in a second open tab
+- creating an invite-only group (6-character code), seeing it under Your groups, and deleting it
+- a wrong invite code showing an error, leaving a group, and state surviving a reload
+- no horizontal overflow on the Community home at 390px and 1280px

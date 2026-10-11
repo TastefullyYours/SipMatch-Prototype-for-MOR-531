@@ -8,7 +8,7 @@ const FEATURES = [
   { label: 'Snap your cart: match the whole meal', free: false, premium: true },
   { label: "Here's what I'm drinking: food & recipes", free: false, premium: true },
   { label: 'Save favorites & shopping lists', free: false, premium: true },
-  { label: 'Taste communities', free: false, premium: 'soon' },
+  { label: 'Taste communities: groups & chat', free: false, premium: true },
 ]
 
 const Cell = ({ v }) => (

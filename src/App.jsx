@@ -11,6 +11,7 @@ import Paywall from './screens/Paywall.jsx'
 import MyDrinks from './screens/MyDrinks.jsx'
 import { LogIn, SignUp, Welcome } from './screens/Auth.jsx'
 import { QuickPick, QuickResults, StartChoice } from './screens/Quick.jsx'
+import { CommunityHome, CreateGroup, GroupChat } from './screens/Community.jsx'
 import { currentUser, logOut, updateUser } from './logic/accounts.js'
 
 // App state lives here in React. Signed-in users' profile and saved drinks are also kept in this browser (logic/accounts.js).
@@ -35,6 +36,7 @@ const PROFILE_STEPS = ['palate', 'drinks', 'avoid', 'calibrate']
 const QUIZ_STEPS = ['mood', 'occasion', 'tonight', 'dish']
 const PREMIUM_STEPS = ['premium', 'cart', 'reverse', 'paywall']
 const SIDE_STEPS = [...PREMIUM_STEPS, 'mydrinks'] // screens opened from the header that return where you were
+const COMMUNITY_STEPS = ['community', 'groupNew', 'group'] // community home, create group, a group's chat
 
 // Where "Back" goes from each step.
 const BACK = {
@@ -57,6 +59,8 @@ const BACK = {
   results: 'dish',
   cart: 'premium',
   reverse: 'premium',
+  groupNew: 'community',
+  group: 'community',
 }
 
 // Desktop width per screen: full width for results-style screens, a readable column for questions.
@@ -85,6 +89,8 @@ export default function App() {
   const [paywallReturn, setPaywallReturn] = useState('premium')
   const [saved, setSaved] = useState(restored?.saved || {}) // { [drinkId]: { rating: 0–5, note } }
   const [myDrinksReturn, setMyDrinksReturn] = useState('results')
+  const [communityReturn, setCommunityReturn] = useState('start') // where Back goes from the community home
+  const [groupId, setGroupId] = useState(null) // the group whose chat is open
 
   // Braces matter: newer Chrome returns a Promise from scrollTo, and an effect must not return anything but a cleanup function.
   useEffect(() => {
@@ -125,6 +131,14 @@ export default function App() {
   const openMyDrinks = () => {
     if (!SIDE_STEPS.includes(step)) setMyDrinksReturn(step)
     setStep('mydrinks')
+  }
+  const openCommunity = () => {
+    if (!COMMUNITY_STEPS.includes(step)) setCommunityReturn(step)
+    setStep('community')
+  }
+  const openGroup = (id) => {
+    setGroupId(id)
+    setStep('group')
   }
   const openPaywall = () => {
     if (!PREMIUM_STEPS.includes(step)) setPremiumReturn(step)
@@ -167,6 +181,7 @@ export default function App() {
   if (step === 'premium') back = () => setStep(premiumReturn)
   if (step === 'paywall') back = () => setStep(paywallReturn)
   if (step === 'mydrinks') back = () => setStep(myDrinksReturn)
+  if (step === 'community') back = () => setStep(communityReturn)
 
   // The profile and the quiz each get their own labelled progress bar.
   const phase = PROFILE_STEPS.includes(step)
@@ -284,7 +299,7 @@ export default function App() {
       )
       break
     case 'premium':
-      screen = <Premium onCart={() => setStep('cart')} onReverse={() => setStep('reverse')} onPaywall={openPaywall} />
+      screen = <Premium onCart={() => setStep('cart')} onReverse={() => setStep('reverse')} onCommunity={openCommunity} onPaywall={openPaywall} />
       break
     case 'cart':
       screen = <CartPhoto onUpgrade={openPaywall} />
@@ -297,6 +312,15 @@ export default function App() {
       break
     case 'paywall':
       screen = <Paywall onClose={() => setStep(paywallReturn)} />
+      break
+    case 'community':
+      screen = <CommunityHome account={account} onOpen={openGroup} onCreate={() => setStep('groupNew')} onSignUp={() => setStep('signup')} />
+      break
+    case 'groupNew':
+      screen = <CreateGroup account={account} onCreated={openGroup} />
+      break
+    case 'group':
+      screen = <GroupChat account={account} groupId={groupId} saved={saved} setSaved={setSaved} onLeft={() => setStep('community')} />
       break
     default:
       screen = null
@@ -311,6 +335,7 @@ export default function App() {
             onLogo={onboarded ? startOver : null}
             onPremium={onboarded && !PREMIUM_STEPS.includes(step) ? openPremium : null}
             onMyDrinks={onboarded && step !== 'mydrinks' ? openMyDrinks : null}
+            onCommunity={onboarded && !COMMUNITY_STEPS.includes(step) ? openCommunity : null}
             savedCount={Object.keys(saved).length}
             phase={phase}
           />

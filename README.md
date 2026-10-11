@@ -35,14 +35,16 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 - 🛒 **Snap your cart**: photo upload → scripted scan of a sample cart → clarifying questions → drink matches (partly locked)
 - 🔄 **Here's what I'm drinking**: name a drink → food ideas + recipe (partly locked)
 - 💳 **Paywall**: Free vs. Premium comparison with placeholder pricing
-- 👥 **Taste communities**: "coming soon" teaser cards
+- 👥 **Community groups & chat** (preview): browse starter groups (Gin Lovers, Natural Wine, Hoppy Hour, Home Mixologists), create your own (name, icon, drink category, description, open or invite-only with a 6-character code), join and leave, and chat. Share any drink into the chat as a card; teammates can ♡ Save it to their own My drinks. Open it from the 👥 button in the header or from the Premium screen. Browsing is open to guests; joining, chatting and creating need an account.
 
 ## How recommendations work
 
-Everything runs in the browser from a local dataset. There are no APIs, no keys and no backend. The only browser storage is the prototype accounts (localStorage).
+Everything runs in the browser from a local dataset. There are no APIs, no keys and no backend. The only browser storage is the prototype accounts and the community groups/chats (localStorage).
 
 - `src/data/drinks.json`: 67 curated drinks (17 wines, 6 beers + 1 cider, 10 spirits, 27 cocktails, 6 non-alcoholic/coffee) tagged by sweetness (1–5), approximate ABV as served, serving temperature, likely allergens (sulfites, gluten, dairy, juniper, oak), price tier, taste tags, mood fit, social/solo vibe, occasion fit, food-flavor affinities and "classic pairing" dishes.
 - `src/data/dishes.js`: about 140 dish keywords mapped to flavor tags (e.g. `taco → spicy, savory, acidic`, `salmon → fatty, rich`). Unknown dishes fall back to a neutral "savory" profile; a skipped dish uses a "party snacks" profile for parties, and otherwise lets mood, occasion and taste decide.
+- `src/logic/community.js`: the community store (groups, members, messages, invite codes) kept in localStorage under `sipmatch.community.v1`, with a small subscribe/snapshot store so screens update live, including across open tabs. Four starter groups include simulated "demo" members who seed the chat and reply to you. Because there is no backend, groups and chats are shared between accounts on one browser, not between different people's devices.
+- `src/screens/Community.jsx`: the community home, create-group form and group chat screens.
 - `src/logic/recommend.js`:
   1. **Filters:** removes drinks with a listed allergen/aversion (never relaxed), drinks above the ABV ceiling, categories marked "Never" and drinks you'd pass on. The last three are relaxed, with a notice, only if fewer than 3 drinks would remain.
   2. **Scores** every remaining drink. Dish-flavor fit and classic pairings count most, with penalties for known clashes (e.g. high alcohol with spicy food). Also counted: sweetness preference, favorite/disliked flavors, category weights, similarity to drinks you love or hate, mood, social/solo, occasion, tonight's style cues and budget.
