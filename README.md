@@ -30,16 +30,21 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
    - **"Don't like these?"** opens 3 more options (one wine, one beer or cider, one spirit or cocktail), each labeled with how it differs from the top pick ("a little sweeter", "a little drier", "less bitter", "lighter", "some bubbles"…)
 7. **Save drinks** with ♡ Save on any card, rate them 1–5 stars and add a note; all saved drinks live in **My drinks** (♥ in the header). 4–5★ drinks shape future matches, 1–2★ steer away. Saved drinks are kept on your account; guests keep them for the session only.
 8. Try a different dish, change budget/style, start over, or edit your profile
+9. **👥 Groups** (header button, also linked from Premium; free):
+   - *Create a group:* name, icon, optional description, and **🌐 Open** (anyone can join) or **🔒 Invite-only** (needs the group's 6-character invite code). Every group has a code, shown under "members" in the chat.
+   - *Join:* tap **Join** on any open group, or enter an invite code on the Groups screen. You can leave a group from its member list.
+   - *Chat:* text messages, plus **🍸 share a drink** from your saved drinks or the full list (searchable). Any drink card in results or Quick pick also has **👥 Share**, with an optional message, to send it to one of your groups. Shared drinks show as cards in the chat that open to the recipe (or what to buy) and can be ♡ saved.
+   - *Seeded groups:* Gin Lovers, Natural Wine, Hoppy Hour (open) and MOR 531 Supper Club (invite-only, code `SUPPER`). Their members are scripted demo accounts, marked "demo", that reply when you post.
+   - *Prototype limits:* groups live in this browser's localStorage, so they're shared by every account on the same device and browser (log in as two accounts to demo). There's no real-time sync between devices. Guests can read open groups but need an account to join, chat or share.
 
 **Premium (locked previews)**
 - 🛒 **Snap your cart**: photo upload → scripted scan of a sample cart → clarifying questions → drink matches (partly locked)
 - 🔄 **Here's what I'm drinking**: name a drink → food ideas + recipe (partly locked)
 - 💳 **Paywall**: Free vs. Premium comparison with placeholder pricing
-- 👥 **Taste communities**: "coming soon" teaser cards
 
 ## How recommendations work
 
-Everything runs in the browser from a local dataset. There are no APIs, no keys and no backend. The only browser storage is the prototype accounts (localStorage).
+Everything runs in the browser from a local dataset. There are no APIs, no keys and no backend. The only browser storage is the prototype accounts and groups (localStorage).
 
 - `src/data/drinks.json`: 67 curated drinks (17 wines, 6 beers + 1 cider, 10 spirits, 27 cocktails, 6 non-alcoholic/coffee) tagged by sweetness (1–5), approximate ABV as served, serving temperature, likely allergens (sulfites, gluten, dairy, juniper, oak), price tier, taste tags, mood fit, social/solo vibe, occasion fit, food-flavor affinities and "classic pairing" dishes.
 - `src/data/dishes.js`: about 140 dish keywords mapped to flavor tags (e.g. `taco → spicy, savory, acidic`, `salmon → fatty, rich`). Unknown dishes fall back to a neutral "savory" profile; a skipped dish uses a "party snacks" profile for parties, and otherwise lets mood, occasion and taste decide.
@@ -96,10 +101,11 @@ Then in GitHub go to **Settings → Pages → Build and deployment**, set **Sour
 src/
   App.jsx               state + step navigation
   components/           Layout (header/footer/shell), ui (buttons, chips, cards), DrinkCard, UpgradePrompt
-  screens/              Auth (welcome/sign-up/log-in), AgeGate (guest), Onboarding, Quick (start choice + quick pick), Flow (mood/occasion/dish), Results, Premium, CartPhoto, ReverseFlow, Paywall
+  screens/              Auth (welcome/sign-up/log-in), AgeGate (guest), Onboarding, Quick (start choice + quick pick), Flow (mood/occasion/dish), Results, Groups (list/create/chat/share), Premium, CartPhoto, ReverseFlow, Paywall
   data/                 drinks.json, dishes.js, options.js, recipes.js
   logic/recommend.js    scoring engine + pairing principles + quickPick
   logic/accounts.js     localStorage demo accounts (hashed passwords)
+  logic/groups.js       localStorage groups, messages, invite codes, scripted demo replies
   logic/birthday.js     MM/DD/YYYY parsing + age
 PROCESS_LOG.md          dated build log (prompts, changes, decisions)
 ```

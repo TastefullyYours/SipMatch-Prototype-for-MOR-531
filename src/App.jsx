@@ -11,6 +11,8 @@ import Paywall from './screens/Paywall.jsx'
 import MyDrinks from './screens/MyDrinks.jsx'
 import { LogIn, SignUp, Welcome } from './screens/Auth.jsx'
 import { QuickPick, QuickResults, StartChoice } from './screens/Quick.jsx'
+import { CreateGroup, GroupChat, GroupsHome, ShareToGroup } from './screens/Groups.jsx'
+import { ShareContext } from './components/share.js'
 import { currentUser, logOut, updateUser } from './logic/accounts.js'
 
 // App state lives here in React. Signed-in users' profile and saved drinks are also kept in this browser (logic/accounts.js).
@@ -34,6 +36,7 @@ const EMPTY_QUICK = { flavors: [], count: 3 }
 const PROFILE_STEPS = ['palate', 'drinks', 'avoid', 'calibrate']
 const QUIZ_STEPS = ['mood', 'occasion', 'tonight', 'dish']
 const PREMIUM_STEPS = ['premium', 'cart', 'reverse', 'paywall']
+const GROUP_STEPS = ['groups', 'groupNew', 'groupChat']
 const SIDE_STEPS = [...PREMIUM_STEPS, 'mydrinks'] // screens opened from the header that return where you were
 
 // Where "Back" goes from each step.
@@ -57,6 +60,8 @@ const BACK = {
   results: 'dish',
   cart: 'premium',
   reverse: 'premium',
+  groupNew: 'groups',
+  groupChat: 'groups',
 }
 
 // Desktop width per screen: full width for results-style screens, a readable column for questions.
@@ -85,6 +90,9 @@ export default function App() {
   const [paywallReturn, setPaywallReturn] = useState('premium')
   const [saved, setSaved] = useState(restored?.saved || {}) // { [drinkId]: { rating: 0–5, note } }
   const [myDrinksReturn, setMyDrinksReturn] = useState('results')
+  const [groupId, setGroupId] = useState(null) // open group chat
+  const [groupsReturn, setGroupsReturn] = useState('start')
+  const [shareDrinkId, setShareDrinkId] = useState(null) // drink being shared to a group
 
   // Braces matter: newer Chrome returns a Promise from scrollTo, and an effect must not return anything but a cleanup function.
   useEffect(() => {
@@ -114,6 +122,7 @@ export default function App() {
     setTonight(EMPTY_TONIGHT)
     setDish('')
     setQuick(EMPTY_QUICK)
+    setShareDrinkId(null)
     setStep('welcome')
   }
 
@@ -125,6 +134,17 @@ export default function App() {
   const openMyDrinks = () => {
     if (!SIDE_STEPS.includes(step)) setMyDrinksReturn(step)
     setStep('mydrinks')
+  }
+  const openGroups = () => {
+    if (!GROUP_STEPS.includes(step)) setGroupsReturn(step)
+    setShareDrinkId(null)
+    setStep('groups')
+  }
+  const openGroup = (id) => {
+    if (!GROUP_STEPS.includes(step)) setGroupsReturn(step)
+    setShareDrinkId(null)
+    setGroupId(id)
+    setStep('groupChat')
   }
   const openPaywall = () => {
     if (!PREMIUM_STEPS.includes(step)) setPremiumReturn(step)
@@ -167,6 +187,7 @@ export default function App() {
   if (step === 'premium') back = () => setStep(premiumReturn)
   if (step === 'paywall') back = () => setStep(paywallReturn)
   if (step === 'mydrinks') back = () => setStep(myDrinksReturn)
+  if (step === 'groups') back = () => setStep(groupsReturn)
 
   // The profile and the quiz each get their own labelled progress bar.
   const phase = PROFILE_STEPS.includes(step)
@@ -284,7 +305,7 @@ export default function App() {
       )
       break
     case 'premium':
-      screen = <Premium onCart={() => setStep('cart')} onReverse={() => setStep('reverse')} onPaywall={openPaywall} />
+      screen = <Premium onCart={() => setStep('cart')} onReverse={() => setStep('reverse')} onPaywall={openPaywall} onGroups={openGroups} />
       break
     case 'cart':
       screen = <CartPhoto onUpgrade={openPaywall} />
@@ -294,6 +315,17 @@ export default function App() {
       break
     case 'mydrinks':
       screen = <MyDrinks saved={saved} setSaved={setSaved} onBack={() => setStep(myDrinksReturn)} />
+      break
+    case 'groups':
+      screen = <GroupsHome account={account} onOpen={openGroup} onCreate={() => setStep('groupNew')} onSignUp={() => setStep('signup')} />
+      break
+    case 'groupNew':
+      screen = <CreateGroup account={account} onCreated={openGroup} />
+      break
+    case 'groupChat':
+      screen = (
+        <GroupChat account={account} groupId={groupId} saved={saved} setSaved={setSaved} onLeft={() => setStep('groups')} onSignUp={() => setStep('signup')} />
+      )
       break
     case 'paywall':
       screen = <Paywall onClose={() => setStep(paywallReturn)} />
@@ -311,15 +343,21 @@ export default function App() {
             onLogo={onboarded ? startOver : null}
             onPremium={onboarded && !PREMIUM_STEPS.includes(step) ? openPremium : null}
             onMyDrinks={onboarded && step !== 'mydrinks' ? openMyDrinks : null}
+            onGroups={onboarded && step !== 'groups' ? openGroups : null}
             savedCount={Object.keys(saved).length}
             phase={phase}
           />
         )
       }
     >
-      <div key={step} className={`mx-auto flex w-full flex-1 flex-col animate-[fadeIn_.25s_ease-out] ${desktopWidth(step)}`}>
-        {screen}
-      </div>
+      <ShareContext.Provider value={onboarded ? setShareDrinkId : null}>
+        <div key={step} className={`mx-auto flex w-full flex-1 flex-col animate-[fadeIn_.25s_ease-out] ${desktopWidth(step)}`}>
+          {screen}
+        </div>
+      </ShareContext.Provider>
+      {shareDrinkId && (
+        <ShareToGroup account={account} drinkId={shareDrinkId} onClose={() => setShareDrinkId(null)} onShared={openGroup} onGroups={openGroups} />
+      )}
     </Shell>
   )
 }

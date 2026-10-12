@@ -445,3 +445,26 @@ Each entry records the prompt given to the AI coding assistant (Claude Code), wh
 - the Paloma top card shows its recipe first with the details hidden, and "More about this drink" reveals them
 
 The earlier account/quick-pick click-throughs (390px, and 1440px with the Chrome 152 `scrollTo` emulation) still pass with no errors.
+
+---
+
+## 2026-10-12: Groups with chat and drink sharing
+
+**Prompt (verbatim):** "you can create groups (open or invite-only), join, chat, and share drinks into the chat"
+
+**Built:**
+- **Groups screen** (👥 in the header, and a "Groups · Free · New" card on Premium that replaces the "Taste communities, coming soon" teaser): your groups, open groups to discover, **＋ Create a group**, and a join-by-invite-code box.
+- **Create a group:** name, icon, optional description, Open or Invite-only. Every group gets a 6-character invite code (no look-alike characters).
+- **Joining:** open groups have a Join button; invite-only groups show "Code needed" to non-members and their messages stay hidden until the code is entered.
+- **Chat:** text messages, system lines ("alex joined"), a member list with the invite code, and Leave group. The 🍸 button shares a drink from your saved drinks or the full searchable list.
+- **Share from any drink card:** results and Quick pick cards have 👥 Share, which opens a sheet to add a message and pick a group, then opens that chat.
+- **Drinks in chat** appear as compact cards that open to the recipe (cocktails) or "At the store" (everything else), with ♡ Save.
+- **Seeded groups:** Gin Lovers, Natural Wine, Hoppy Hour (open) and MOR 531 Supper Club (invite-only, code `SUPPER`), with scripted demo members who reply about 1.4 s after you post (with a "typing…" line).
+
+**Decisions (flagged for approval):**
+- No backend, so groups live in this browser's localStorage. All accounts on the same device and browser share them, which is how to demo two people. Other open tabs update via the `storage` event, but there is no sync between devices.
+- Guests can read open groups but must create an account to join, chat or share.
+- Groups are free, not Premium.
+- Demo members are labeled "demo" so nobody mistakes them for real users.
+
+**Testing:** lint and build pass. A Playwright run (390px, then 1440px) with no page errors covered: sign up as account A, join Gin Lovers, send a message and get a demo reply, share a Negroni from the picker, create an invite-only group, share a Quick pick drink into it with a message; then sign up as account B, confirm the group shows "Code needed", a wrong code shows an error, and the right code opens the chat with A's shared drink.

@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { TYPE_LABELS } from '../logic/recommend.js'
 import { RateAndNote, SaveButton } from './SavedDrink.jsx'
 import { RECIPES } from '../data/recipes.js'
+import { ShareContext } from './share.js'
 
 function Detail({ icon, title, children }) {
   return (
@@ -26,7 +27,7 @@ function PriceTag({ price, overBudget }) {
 }
 
 // "How to make it" for cocktails and mixed drinks: shown first, since it's what you need at home.
-function Recipe({ recipe }) {
+export function Recipe({ recipe }) {
   return (
     <div className="rounded-2xl bg-cream p-4">
       <h4 className="text-sm font-semibold text-berry">🍹 How to make it</h4>
@@ -50,6 +51,7 @@ export default function DrinkCard({ pick, primary = false, defaultOpen = false, 
   const [more, setMore] = useState(false)
   const { drink, principle, moodLine, price, overBudget, classic, likeOf } = pick
   const recipe = RECIPES[drink.id]
+  const share = useContext(ShareContext)
 
   return (
     <article
@@ -80,22 +82,33 @@ export default function DrinkCard({ pick, primary = false, defaultOpen = false, 
         {!primary && <span className={`mt-1 text-muted transition ${open ? 'rotate-180' : ''}`}>⌄</span>}
       </button>
 
-      {setSaved && (
+      {(setSaved || share) && (
         <div className="-mt-2 flex flex-col gap-2 px-5 pb-4">
           <div className="flex items-center gap-2">
-            <SaveButton
-              drinkId={drink.id}
-              saved={saved}
-              onToggle={(id) => {
-                const next = { ...saved }
-                if (next[id]) delete next[id]
-                else next[id] = { rating: 0, note: '' }
-                setSaved(next)
-              }}
-            />
-            {!saved[drink.id] && <span className="text-xs text-muted">Save it to rate it and add a note</span>}
+            {setSaved && (
+              <SaveButton
+                drinkId={drink.id}
+                saved={saved}
+                onToggle={(id) => {
+                  const next = { ...saved }
+                  if (next[id]) delete next[id]
+                  else next[id] = { rating: 0, note: '' }
+                  setSaved(next)
+                }}
+              />
+            )}
+            {share && (
+              <button
+                type="button"
+                onClick={() => share(drink.id)}
+                className="shrink-0 rounded-full border-2 border-berry/20 bg-white px-3 py-1 text-xs font-semibold text-berry hover:border-berry/50"
+              >
+                👥 Share
+              </button>
+            )}
+            {setSaved && !saved[drink.id] && <span className="text-xs text-muted">Save it to rate it and add a note</span>}
           </div>
-          {saved[drink.id] && <RateAndNote entry={saved[drink.id]} onChange={(e) => setSaved({ ...saved, [drink.id]: e })} />}
+          {setSaved && saved[drink.id] && <RateAndNote entry={saved[drink.id]} onChange={(e) => setSaved({ ...saved, [drink.id]: e })} />}
         </div>
       )}
 
