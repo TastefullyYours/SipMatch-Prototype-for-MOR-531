@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BUDGETS, FEELINGS, OCCASIONS, SOCIAL, STYLE_CUES } from '../data/options.js'
-import { EXAMPLE_DISHES } from '../data/dishes.js'
+import { EXAMPLE_DISHES, FLAVOR_LABELS, simulateDishAnalysis } from '../data/dishes.js'
 import { BottomBar, Button, ChoiceCard, Chip, ScreenTitle, SectionLabel, Segmented } from '../components/ui.jsx'
 
 export function Mood({ mood, setMood, onNext, onSkip }) {
@@ -108,6 +108,23 @@ export function Tonight({ tonight, setTonight, onNext, onSkip }) {
 
 export function Dish({ dish, setDish, occasion, onNext, onSkip }) {
   const isParty = occasion === 'party'
+  const [analysis, setAnalysis] = useState(null)
+  const [analyzing, setAnalyzing] = useState(false)
+
+  const updateDish = (value) => {
+    setDish(value)
+    setAnalysis(null)
+  }
+
+  const analyze = () => {
+    if (!dish.trim() || analyzing) return
+    setAnalyzing(true)
+    setAnalysis(null)
+    window.setTimeout(() => {
+      setAnalysis(simulateDishAnalysis(dish))
+      setAnalyzing(false)
+    }, 750)
+  }
   return (
     <>
       <ScreenTitle
@@ -127,8 +144,8 @@ export function Dish({ dish, setDish, occasion, onNext, onSkip }) {
         <input
           id="dish"
           value={dish}
-          onChange={(e) => setDish(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && dish.trim() && onNext()}
+          onChange={(e) => updateDish(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && dish.trim() && analyze()}
           placeholder="e.g. spicy chicken tacos"
           autoComplete="off"
           className="w-full rounded-2xl border-2 border-berry/15 bg-white px-4 py-4 text-lg outline-none placeholder:text-muted/60 focus:border-berry"
@@ -138,14 +155,46 @@ export function Dish({ dish, setDish, occasion, onNext, onSkip }) {
       <SectionLabel hint="tap to fill">Need ideas?</SectionLabel>
       <div className="flex flex-wrap gap-2">
         {EXAMPLE_DISHES.map((d) => (
-          <Chip key={d} label={d} selected={dish.toLowerCase() === d.toLowerCase()} onClick={() => setDish(d)} />
+          <Chip key={d} label={d} selected={dish.toLowerCase() === d.toLowerCase()} onClick={() => updateDish(d)} />
         ))}
       </div>
 
+      {(analyzing || analysis) && (
+        <div className="mt-6 rounded-3xl border-2 border-berry/15 bg-white p-4 shadow-sm" aria-live="polite">
+          {analyzing ? (
+            <div className="flex items-center gap-3">
+              <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-berry/20 border-t-berry" />
+              <div>
+                <p className="font-semibold">Simulating flavor analysis…</p>
+                <p className="text-sm text-muted">Reading ingredients and cooking cues locally.</p>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-berry/70">Demo flavor scan</p>
+                  <p className="mt-1 text-sm text-muted">{analysis.summary}</p>
+                </div>
+                <span className="shrink-0 rounded-full bg-berry-light px-2.5 py-1 text-xs font-semibold text-berry">{analysis.confidence}% match</span>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {analysis.tags.map((tag) => (
+                  <span key={tag} className="rounded-full bg-sand px-3 py-1.5 text-sm font-medium">
+                    {FLAVOR_LABELS[tag] || tag}
+                  </span>
+                ))}
+              </div>
+              <p className="mt-3 text-xs text-muted">Prototype only — this result comes from local demo rules, not a live AI service.</p>
+            </>
+          )}
+        </div>
+      )}
+
       <BottomBar>
         <div className="flex flex-col gap-2">
-          <Button disabled={!dish.trim()} onClick={onNext}>
-            Find my match ✨
+          <Button disabled={!dish.trim() || analyzing} onClick={analysis ? onNext : analyze}>
+            {analyzing ? 'Analyzing…' : analysis ? 'Use these flavors & match ✨' : 'Analyze my dish ✨'}
           </Button>
           <Button variant="ghost" onClick={onSkip}>
             {isParty ? "Skip, it's just party snacks 🍿" : 'Skip, no dish yet ⏭️'}

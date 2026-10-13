@@ -474,3 +474,11 @@ The earlier account/quick-pick click-throughs (390px, and 1440px with the Chrome
 - creating an invite-only group (6-character code), seeing it under Your groups, and deleting it
 - a wrong invite code showing an error, leaving a group, and state surviving a reload
 - no horizontal overflow on the Community home at 390px and 1280px
+
+# 2026-10-13 — Local simulation enhancements
+
+- Added a visible, delayed dish flavor-analysis step that converts free-text food and cooking cues into pairing tags before recommendations.
+- Kept the existing local recommendation engine as the source of truth, so the flavor preview and final match use the same deterministic rules.
+- Expanded the premium cart preview from one fixed result to three prepared scenarios: lemon chicken, taco night and mushroom pasta.
+- Added editable cart detections: users can remove incorrect items and add missing items before answering clarifying questions.
+- Kept the prototype API-free. Photos are previewed locally with browser object URLs and are never uploaded.

@@ -24,7 +24,7 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
    - Mood (cheerful / stressed / sad–low energy) + social vs. solo
    - Occasion (just me, duo/date, small group, party)
    - Tonight: budget (pick any of $ / $$ / $$$) + style cues (iced vs. neat, carbonated vs. still, light vs. bold)
-   - Dish (free text; always skippable)
+   - Dish (free text; always skippable) → a visible simulated flavor scan extracts pairing tags before showing results
 6. **Results:** a "Matched to your taste profile" strip with an Edit link, then a top match + 2 alternates, each with *why it works*, *the pairing principle*, *based on your taste* (when it's like a drink you love), *why it fits your mood*, *a fun fact*, *what to look for at the store* and a price tier
    - **Short cards:** an open card leads with **🍹 How to make it** for cocktails and mixed drinks (all 27 cocktails plus G&T, spiced rum & cola, shandy, virgin mojito, zero-proof spritz and espresso tonic: glass, ingredients, numbered steps) or **what to look for at the store** for everything else. The rest (why it works, pairing principle, mood fit, fun fact) sits behind **More about this drink**.
    - **"Don't like these?"** opens 3 more options (one wine, one beer or cider, one spirit or cocktail), each labeled with how it differs from the top pick ("a little sweeter", "a little drier", "less bitter", "lighter", "some bubbles"…)
@@ -32,17 +32,18 @@ Vivino needs a bottle in hand. SipMatch starts earlier: from **your mood, your o
 8. Try a different dish, change budget/style, start over, or edit your profile
 
 **Premium (locked previews)**
-- 🛒 **Snap your cart**: photo upload → scripted scan of a sample cart → clarifying questions → drink matches (partly locked)
+- 🛒 **Snap your cart**: optional photo upload → choose one of 3 local demo carts → simulated scan → edit detected items → clarifying questions → drink matches (partly locked)
 - 🔄 **Here's what I'm drinking**: name a drink → food ideas + recipe (partly locked)
 - 💳 **Paywall**: Free vs. Premium comparison with placeholder pricing
 - 👥 **Community groups & chat** (preview): browse starter groups (Gin Lovers, Natural Wine, Hoppy Hour, Home Mixologists), create your own (name, icon, drink category, description, open or invite-only with a 6-character code), join and leave, and chat. Share any drink into the chat as a card; teammates can ♡ Save it to their own My drinks. Open it from the 👥 button in the header or from the Premium screen. Browsing is open to guests; joining, chatting and creating need an account.
 
 ## How recommendations work
 
-Everything runs in the browser from a local dataset. There are no APIs, no keys and no backend. The only browser storage is the prototype accounts and the community groups/chats (localStorage).
+Everything runs in the browser from a local dataset. There are no APIs, no keys and no backend. The dish "AI" and cart camera experiences are explicitly simulated with local rules and prepared scenarios. Uploaded cart photos are displayed with an object URL in the current browser tab and are never sent anywhere. The only browser storage is the prototype accounts and the community groups/chats (localStorage).
 
 - `src/data/drinks.json`: 67 curated drinks (17 wines, 6 beers + 1 cider, 10 spirits, 27 cocktails, 6 non-alcoholic/coffee) tagged by sweetness (1–5), approximate ABV as served, serving temperature, likely allergens (sulfites, gluten, dairy, juniper, oak), price tier, taste tags, mood fit, social/solo vibe, occasion fit, food-flavor affinities and "classic pairing" dishes.
-- `src/data/dishes.js`: about 140 dish keywords mapped to flavor tags (e.g. `taco → spicy, savory, acidic`, `salmon → fatty, rich`). Unknown dishes fall back to a neutral "savory" profile; a skipped dish uses a "party snacks" profile for parties, and otherwise lets mood, occasion and taste decide.
+- `src/data/dishes.js`: about 140 dish keywords plus extra ingredient/cooking cues mapped to flavor tags (e.g. `taco → spicy, savory, acidic`, `buttery → creamy, fatty, rich`). The dish screen displays these tags as a short simulated flavor-analysis step. Unknown dishes fall back to a neutral "savory" profile; a skipped dish uses a "party snacks" profile for parties, and otherwise lets mood, occasion and taste decide.
+- `src/screens/CartPhoto.jsx`: three prepared local cart scenarios (lemon chicken, taco night and mushroom pasta), a simulated scan animation, editable recognized items, clarification questions and scenario-specific drink results. No computer vision or upload service is used.
 - `src/logic/community.js`: the community store (groups, members, messages, invite codes) kept in localStorage under `sipmatch.community.v1`, with a small subscribe/snapshot store so screens update live, including across open tabs. Four starter groups include simulated "demo" members who seed the chat and reply to you. Because there is no backend, groups and chats are shared between accounts on one browser, not between different people's devices.
 - `src/screens/Community.jsx`: the community home, create-group form and group chat screens.
 - `src/logic/recommend.js`:
