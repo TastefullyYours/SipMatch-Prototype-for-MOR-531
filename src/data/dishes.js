@@ -168,6 +168,52 @@ export const FALLBACK_PROFILE = ['savory']
 // Used when the occasion is "party" and the user skips the dish step.
 export const PARTY_SNACK_PROFILE = ['salty', 'fried', 'fatty']
 
+// Extra language cues used by the prototype's simulated "AI" flavor scan.
+// This stays deliberately small and transparent: no network request or model is involved.
+const FLAVOR_CLUES = {
+  crispy: ['fried', 'salty'],
+  crunchy: ['fried', 'salty'],
+  buttery: ['creamy', 'fatty', 'rich'],
+  cheesy: ['creamy', 'fatty', 'salty'],
+  zesty: ['acidic', 'light'],
+  citrusy: ['acidic', 'light'],
+  roasted: ['smoky', 'rich'],
+  charred: ['smoky', 'rich'],
+  braised: ['rich', 'savory'],
+  caramelized: ['sweet', 'rich'],
+  honey: ['sweet'],
+  maple: ['sweet', 'rich'],
+  miso: ['umami', 'salty'],
+  soy: ['umami', 'salty'],
+  parmesan: ['umami', 'salty', 'rich'],
+  truffle: ['earthy', 'rich'],
+  mushroomy: ['earthy', 'umami'],
+  avocado: ['fatty', 'creamy'],
+  ginger: ['spicy', 'herby'],
+  cilantro: ['herby', 'light'],
+  basil: ['herby', 'light'],
+  mint: ['herby', 'light'],
+  fresh: ['light', 'herby'],
+}
+
+export const FLAVOR_LABELS = {
+  spicy: '🌶️ Spicy',
+  fatty: '🥑 Rich & fatty',
+  rich: '🍲 Rich',
+  salty: '🧂 Salty',
+  acidic: '🍋 Bright & acidic',
+  sweet: '🍯 Sweet',
+  smoky: '🔥 Smoky',
+  light: '🌿 Light',
+  earthy: '🍄 Earthy',
+  umami: '🥢 Umami',
+  fried: '🍳 Crispy / fried',
+  creamy: '🥛 Creamy',
+  herby: '🌱 Herby',
+  meaty: '🥩 Meaty',
+  savory: '🍽️ Savory',
+}
+
 const SORTED_KEYWORDS = Object.keys(DISH_KEYWORDS).sort((a, b) => b.length - a.length)
 
 // Returns { tags: string[], matched: string[], recognized: boolean }
@@ -184,10 +230,30 @@ export function profileDish(dishText) {
       text = text.replace(re, ' ')
     }
   }
+  for (const [clue, clueTags] of Object.entries(FLAVOR_CLUES)) {
+    if (new RegExp(`\\b${clue}\\b`).test(text)) {
+      clueTags.forEach((tag) => tags.add(tag))
+      matched.push(clue)
+    }
+  }
   if (tags.size === 0) {
     return { tags: [...FALLBACK_PROFILE], matched, recognized: false }
   }
   return { tags: [...tags], matched, recognized: true }
+}
+
+// Adds presentation metadata for the visible simulated analysis step on the dish screen.
+// The recommendation engine calls profileDish() again, so the preview and final scoring stay aligned.
+export function simulateDishAnalysis(dishText) {
+  const result = profileDish(dishText)
+  const confidence = result.recognized ? Math.min(96, 78 + result.matched.length * 5) : 62
+  return {
+    ...result,
+    confidence,
+    summary: result.recognized
+      ? `Found ${result.matched.length} food or cooking cue${result.matched.length === 1 ? '' : 's'} and translated them into pairing flavors.`
+      : 'No exact cue was found, so the demo is using a flexible savory profile.',
+  }
 }
 
 // Quick-pick chips on the dish screen.
