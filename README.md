@@ -64,6 +64,10 @@ Sources supplied by the team: [Sensient](https://www.sensientflavorsandextracts.
 ### Facts to double-check
 Drinks whose fun fact should be verified before presenting carry a `"factCheck": "VERIFY: …"` field in `drinks.json`: Mexican lager, IPA, hard cider, mojito, Aperol spritz, hot toddy, red sangria, espresso martini, shandy, Bloody Mary, Manhattan, Negroni, Mai Tai and Lemon Drop.
 
+## Brand
+- **Logo banner:** the SipMatch logo (`src/assets/sipmatch-logo.png`, trimmed from the original artwork) sits in a cocoa-brown banner: full-width on the welcome screen and as the top bar on every other screen. The favicon is the logo's pink drop on cocoa.
+- **Colors:** the logo palette (cocoa `#3b281a`, blush pink `#f58992`, vanilla `#f7efcd`) is used for the banner. The app keeps berry (`#8a1c4a`) for buttons and accents. To tie the two together, text is a warm cocoa ink (`#2f2117`) and berry's light tint leans toward the logo pink (`#fce4e3`). Tokens live in `src/index.css`.
+
 ## Phone and desktop
 The app is designed for phones first. On screens 1024px and wider it switches to a desktop layout: a wider card, question options in 2–3 columns, and results in two columns (top match on the left, alternatives and actions on the right). The same link works on both.
 

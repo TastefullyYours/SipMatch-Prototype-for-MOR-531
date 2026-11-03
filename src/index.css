@@ -5,10 +5,15 @@
   --color-sand: #f3e8d8;
   --color-berry: #8a1c4a;
   --color-berry-dark: #6b1238;
-  --color-berry-light: #f7e3ea;
-  --color-ink: #2b1d22;
-  --color-muted: #7a6a6f;
+  --color-berry-light: #fce4e3; /* blush-leaning tint: bridges berry and the logo pink */
+  --color-ink: #2f2117; /* warm cocoa ink instead of plum-black */
+  --color-muted: #7a6a60;
   --color-gold: #d9a441;
+  /* Logo palette */
+  --color-cocoa: #3b281a;
+  --color-cocoa-light: #574030;
+  --color-blush: #f58992;
+  --color-vanilla: #f7efcd;
   --font-display: "Fraunces", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }

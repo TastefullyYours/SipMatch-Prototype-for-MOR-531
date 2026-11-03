@@ -482,3 +482,29 @@ The earlier account/quick-pick click-throughs (390px, and 1440px with the Chrome
 - Expanded the premium cart preview from one fixed result to three prepared scenarios: lemon chicken, taco night and mushroom pasta.
 - Added editable cart detections: users can remove incorrect items and add missing items before answering clarifying questions.
 - Kept the prototype API-free. Photos are previewed locally with browser object URLs and are never uploaded.
+
+---
+
+## 2026-11-03: Logo banner, brand colors, team launch to-do
+
+**Prompt (verbatim):** "Okay I have me and three more people on my team. Give me a divied up list to-do. Also, update the app and apply the logo. Keep the berry stuff, but make the logo stuff a banner using the logo and colors I chose for the logo. Make the berry work with the pink and the cream and the brown" (with the SipMatch logo image)
+
+**Built:**
+- **Logo asset:** the uploaded logo (800×400) was trimmed to its artwork plus a small margin (586×213) and saved as `src/assets/sipmatch-logo.png`. Colors were sampled from the image: cocoa `#3b281a`, blush `#f58992`, vanilla `#f7efcd`.
+- **Banner:**
+  - The top bar is now a cocoa banner with the logo in the center.
+  - Back, ♥ saved, 👥 community and ✨ Premium are restyled for the dark background: vanilla text, a blush ♥ chip, a gold Premium chip.
+  - On phones narrower than 400px, "Back" and "Premium" shrink to their icons so the logo has room.
+  - The profile/quiz progress strip now sits on cream below the banner.
+- **Welcome screen:** a full-width cocoa logo banner replaces the emoji and text title (a rounded card on desktop). The tagline reads "A Match for **Every Meal**".
+- **Palette harmony:**
+  - Berry stays for buttons and accents.
+  - Body text moved from a plum-black to a warm cocoa ink.
+  - Muted text is warmer.
+  - Berry's light tint now leans toward the logo pink, so pink, berry, cream and brown read as one family.
+- **Favicon** is the logo's pink drop on cocoa; browser theme color is cocoa.
+- **`LAUNCH_TODO.md`:** a 2-week, four-lane checklist (lead/brand/legal, AI dish + cart, accounts + community, content/QA/accessibility) based on what each teammate has already built.
+
+**Decisions (flagged for approval):** cocoa banner on every screen (not only the welcome screen); icon-only Back/Premium on very small phones; tagline accent in berry; favicon made from the logo's drop because the full logo is unreadable at icon size.
+
+**Testing:** build and lint pass. A Playwright click-through (welcome → guest → profile → quiz → results) passed at 360px, 390px and 1440px with no page errors and no header overflow; screenshots were checked visually at each width.
