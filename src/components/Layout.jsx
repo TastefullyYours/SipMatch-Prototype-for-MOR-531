@@ -1,3 +1,5 @@
+import logo from '../assets/sipmatch-logo.png'
+
 // Phone-width app shell: header (back / logo / premium), optional progress bar, content, footer.
 
 // Each part of the flow gets its own label and colour so the profile and the quiz feel separate.
@@ -8,34 +10,39 @@ const PHASES = {
 
 export function Header({ onBack, onLogo, onPremium, onMyDrinks, onCommunity, savedCount = 0, phase }) {
   return (
-    <header className="sticky top-0 z-20 bg-cream/95 backdrop-blur">
-      <div className="flex h-14 items-center gap-2 px-3 lg:h-16 lg:px-8">
-        <div className="flex w-32 items-center gap-1">
+    <header className="sticky top-0 z-20">
+      {/* Logo banner in the logo's own cocoa / blush / vanilla palette */}
+      <div className="grid h-14 grid-cols-[1fr_auto_1fr] items-center gap-2 bg-cocoa px-3 lg:h-16 lg:px-8">
+        <div className="flex min-w-0 items-center gap-1">
           {onBack && (
-            <button onClick={onBack} className="whitespace-nowrap rounded-full px-2 py-1 text-sm font-medium text-muted hover:bg-sand" aria-label="Go back">
-              ← Back
+            <button
+              onClick={onBack}
+              className="whitespace-nowrap rounded-full px-2 py-1 text-sm font-medium text-vanilla/85 hover:bg-white/10"
+              aria-label="Go back"
+            >
+              ←<span className="hidden min-[400px]:inline"> Back</span>
             </button>
           )}
           {onMyDrinks && (
             <button
               onClick={onMyDrinks}
               aria-label={`My drinks (${savedCount} saved)`}
-              className="whitespace-nowrap rounded-full bg-berry-light px-2.5 py-1 text-xs font-semibold text-berry hover:bg-berry/15"
+              className="whitespace-nowrap rounded-full bg-blush px-2.5 py-1 text-xs font-semibold text-cocoa hover:bg-blush/85"
             >
               ♥ {savedCount}
             </button>
           )}
         </div>
-        <button onClick={onLogo} className="flex-1 text-center font-display text-xl font-bold text-berry" disabled={!onLogo}>
-          SipMatch
+        <button onClick={onLogo} className="flex justify-center" disabled={!onLogo} aria-label="SipMatch home">
+          <img src={logo} alt="SipMatch" className="h-9 w-auto lg:h-12" />
         </button>
-        <div className="flex w-32 items-center justify-end gap-1">
+        <div className="flex min-w-0 items-center justify-end gap-1">
           {onCommunity && (
             <button
               onClick={onCommunity}
               aria-label="Community groups"
               title="Community"
-              className="whitespace-nowrap rounded-full bg-berry-light px-2.5 py-1 text-xs font-semibold text-berry hover:bg-berry/15"
+              className="whitespace-nowrap rounded-full bg-white/10 px-2.5 py-1 text-xs font-semibold text-vanilla hover:bg-white/20"
             >
               👥
             </button>
@@ -43,15 +50,17 @@ export function Header({ onBack, onLogo, onPremium, onMyDrinks, onCommunity, sav
           {onPremium && (
             <button
               onClick={onPremium}
-              className="whitespace-nowrap rounded-full bg-gold/20 px-2.5 py-1 text-xs font-semibold text-[#8a6412] hover:bg-gold/30"
+              aria-label="Premium"
+              className="whitespace-nowrap rounded-full bg-gold px-2.5 py-1 text-xs font-semibold text-cocoa hover:bg-gold/85"
             >
-              ✨ Premium
+              ✨<span className="hidden min-[400px]:inline"> Premium</span>
             </button>
           )}
         </div>
       </div>
       {phase && (
-        <div className={`mx-5 mb-2 rounded-2xl px-3 py-2 lg:mx-10 ${PHASES[phase.kind].bg}`}>
+        <div className="bg-cream/95 px-5 pb-2 pt-2 backdrop-blur lg:px-10">
+        <div className={`rounded-2xl px-3 py-2 ${PHASES[phase.kind].bg}`}>
           <div className={`mb-1.5 flex items-center justify-between text-xs font-semibold ${PHASES[phase.kind].text}`}>
             <span>
               {PHASES[phase.kind].icon} {phase.editing ? 'Editing your taste profile' : PHASES[phase.kind].label}
@@ -65,6 +74,7 @@ export function Header({ onBack, onLogo, onPremium, onMyDrinks, onCommunity, sav
               <div key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-500 ${i < phase.step ? PHASES[phase.kind].bar : 'bg-white'}`} />
             ))}
           </div>
+        </div>
         </div>
       )}
     </header>

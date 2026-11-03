@@ -3,6 +3,7 @@ import BirthdayField from '../components/BirthdayField.jsx'
 import { readBirthday } from '../logic/birthday.js'
 import { Button, ScreenTitle } from '../components/ui.jsx'
 import { createAccount, logIn } from '../logic/accounts.js'
+import logo from '../assets/sipmatch-logo.png'
 
 const inputClass =
   'w-full rounded-2xl border-2 border-berry/15 bg-cream px-4 py-3 outline-none placeholder:text-muted/60 focus:border-berry'
@@ -27,18 +28,20 @@ const DemoNote = () => (
 
 export function Welcome({ onSignUp, onLogIn, onGuest }) {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center py-8 text-center">
-      <div className="mb-6 flex gap-1 text-5xl">
-        <span>🍷</span>
-        <span>🍺</span>
-        <span>🍸</span>
+    <div className="flex flex-1 flex-col items-center text-center">
+      {/* Full-width logo banner */}
+      <div className="-mx-5 -mt-4 flex w-[calc(100%+2.5rem)] justify-center rounded-b-[2rem] bg-cocoa px-6 pb-8 pt-10 lg:mx-0 lg:mt-2 lg:w-full lg:rounded-[2rem]">
+        <h1 className="w-full max-w-sm">
+          <img src={logo} alt="SipMatch" className="w-full" />
+        </h1>
       </div>
-      <h1 className="font-display text-5xl font-bold text-berry">SipMatch</h1>
-      <p className="mt-2 font-display text-xl text-ink">A Match for Every Meal</p>
+      <p className="mt-6 font-display text-2xl text-ink">
+        A Match for <span className="text-berry">Every Meal</span>
+      </p>
       <p className="mx-auto mt-4 max-w-xs text-muted">
         Tell us your mood, your plans and what's for dinner. We'll tell you what to grab at the store. No wine degree required.
       </p>
-      <div className="mt-10 flex w-full max-w-sm flex-col gap-2">
+      <div className="mt-8 flex w-full max-w-sm flex-col gap-2">
         <Button onClick={onSignUp}>Create an account</Button>
         <Button variant="secondary" onClick={onLogIn}>
           Log in
